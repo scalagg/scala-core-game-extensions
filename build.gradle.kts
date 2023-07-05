@@ -10,7 +10,7 @@ plugins {
 }
 
 allprojects {
-    group = "gg.tropic.extensions"
+    group = "gg.tropic.game.extensions"
     version = "1.0.6"
 
     repositories {
