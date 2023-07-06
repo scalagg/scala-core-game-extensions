@@ -30,24 +30,34 @@ object FriendsFeature
         FriendUIService.initialLorePipe = {
             listOf(
                 "${CC.GRAY}Level: ${CC.GREEN}${it.profile.level} $levelSymbol",
-                "${CC.GRAY}Coins: ${CC.GOLD}${it.profile.coins} $coinSymbol",
+                "${CC.GRAY}Coins: ${CC.GOLD}${
+                    Numbers.format(it.profile.coins)
+                } $coinSymbol",
                 "",
                 "${CC.AQUA}Level progress:",
-                "${CC.GREEN}${
-                    "%.2f".format(
-                        it.profile.getPercentageCompleteUntilNextLevel()
-                    )
-                }% ${CC.GRAY}[${
+                "${CC.GRAY}[${
                     ProgressBar(
-                        steps = 15,
+                        steps = 20,
                         char = Constants.THICK_VERTICAL_LINE[0],
                         completedColor = CC.GREEN,
                         uncompletedColor = CC.D_GRAY
                     ).build(
                         it.profile.getPercentageCompleteUntilNextLevel().toDouble()
                     )
-                }${CC.GRAY}]",
+                }${CC.GRAY}] ${CC.GREEN}${
+                    "%.2f".format(
+                        it.profile.getPercentageCompleteUntilNextLevel()
+                    )
+                }%",
                 "",
+                "${CC.GREEN}XP: ${CC.WHITE}${
+                    Numbers.format(it.profile.experience)
+                }",
+                "",
+                "${CC.AQUA}Next level: ${CC.WHITE}${it.profile.level + 1}",
+                "${CC.AQUA}Next level XP: ${CC.WHITE}${
+                    Numbers.format(it.profile.getXpRequiredForLevel(it.profile.level))
+                }",
                 "${CC.AQUA}XP needed: ${CC.WHITE}${
                     Numbers.format(it.profile.getXpRequiredToLevelUp())
                 }"
