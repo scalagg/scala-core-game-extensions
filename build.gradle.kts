@@ -24,7 +24,7 @@ allprojects {
 }
 
 dependencies {
-    compileOnly(kotlin("stdlib"))
+    implementation(kotlin("stdlib"))
 
     kapt("gg.scala.commons:bukkit:3.2.1")
     compileOnly("gg.scala.commons:bukkit:3.2.1")
@@ -32,6 +32,7 @@ dependencies {
     compileOnly("gg.scala.achievements:scala-achievements-plugin:1.0.4")
 
     compileOnly("gg.scala.store:spigot:0.1.8")
+    compileOnly("gg.scala.friends:scala-friends:2.0.1")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
 
     compileOnly("gg.scala.spigot:server:1.1.0")

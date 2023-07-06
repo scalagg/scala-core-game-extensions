@@ -20,8 +20,9 @@ import gg.scala.commons.core.plugin.PluginWebsite
 
 @PluginDependency("Lemon")
 @PluginDependency("scala-commons")
+@PluginDependency("Achievements")
 
-@PluginDependency("Achievements", soft = true)
+@PluginDependency("Friends", soft = true)
 @PluginDependency("ScBasics", soft = true)
 @PluginDependency("cloudsync", soft = true)
 class CoreGameExtensions : ExtendedScalaPlugin()
