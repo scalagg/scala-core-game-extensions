@@ -6,8 +6,14 @@ import gg.scala.flavor.service.Service
 import gg.scala.flavor.service.ignore.IgnoreAutoScan
 import gg.scala.friends.menu.FriendUIService
 import gg.tropic.game.extensions.profile.coinSymbol
+import gg.tropic.game.extensions.profile.levelSymbol
 import gg.tropic.game.extensions.profile.profile
+import gg.tropic.game.extensions.progress.ProgressBar
 import net.evilblock.cubed.util.CC
+import net.evilblock.cubed.util.bukkit.Constants
+import net.evilblock.cubed.util.math.Numbers
+import net.evilblock.cubed.util.text.ProgressBarBuilder
+import net.evilblock.cubed.util.text.TextUtil
 
 /**
  * @author GrowlyX
@@ -23,14 +29,31 @@ object FriendsFeature
     {
         FriendUIService.initialLorePipe = {
             listOf(
-                "${CC.GRAY}Level: ${CC.GREEN}${it.profile.level}",
-                "${CC.GOLD}Coins: ${CC.GOLD}${it.profile.coins} $coinSymbol",
+                "${CC.GRAY}Level: ${CC.GREEN}${it.profile.level} $levelSymbol",
+                "${CC.GRAY}Coins: ${CC.GOLD}${it.profile.coins} $coinSymbol",
                 "",
-                "${CC.WHITE}Level progress:",
-                "${CC.GRAY}Complete: ${CC.AQUA}${
-                    "%.2f".format(it.profile.getPercentageCompleteUntilNextLevel())
+                "${CC.AQUA}Level progress:",
+                "${CC.GREEN}${
+                    "%.2f".format(
+                        it.profile.getPercentageCompleteUntilNextLevel()
+                    )
+                }% ${CC.GRAY}[${
+                    ProgressBar(
+                        steps = 15,
+                        char = Constants.THICK_VERTICAL_LINE[0],
+                        completedColor = CC.GREEN,
+                        uncompletedColor = CC.D_GRAY
+                    ).build(
+                        it.profile.getPercentageCompleteUntilNextLevel().toDouble()
+                    )
+                }${CC.GRAY}]",
+                "",
+                "${CC.AQUA}XP needed: ${CC.WHITE}${
+                    Numbers.format(it.profile.getXpRequiredToLevelUp())
                 }"
             )
         }
+
+
     }
 }

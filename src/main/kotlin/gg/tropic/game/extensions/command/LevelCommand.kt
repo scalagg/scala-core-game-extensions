@@ -4,6 +4,7 @@ import gg.scala.commons.acf.annotation.CommandAlias
 import gg.scala.commons.annotations.commands.AutoRegister
 import gg.scala.commons.command.ScalaCommand
 import gg.scala.commons.issuer.ScalaPlayer
+import gg.tropic.game.extensions.profile.levelSymbol
 import gg.tropic.game.extensions.profile.profile
 import net.evilblock.cubed.util.CC
 
@@ -18,7 +19,7 @@ object LevelCommand : ScalaCommand()
     fun onLevel(player: ScalaPlayer)
     {
         player.sendMessage(
-            "${CC.SEC}Level: ${CC.GREEN}${player.profile.level}"
+            "${CC.SEC}Level: ${CC.GREEN}${player.profile.level} $levelSymbol"
         )
     }
 }
