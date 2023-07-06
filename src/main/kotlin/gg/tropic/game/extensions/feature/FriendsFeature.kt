@@ -34,17 +34,17 @@ object FriendsFeature
                     Numbers.format(it.profile.coins)
                 } $coinSymbol",
                 "",
-                "${CC.AQUA}Level progress:",
+                "${CC.B_GREEN}Level progress:",
                 "${CC.GRAY}[${
                     ProgressBar(
-                        steps = 20,
+                        steps = 26,
                         char = Constants.THICK_VERTICAL_LINE[0],
                         completedColor = CC.GREEN,
                         uncompletedColor = CC.D_GRAY
                     ).build(
                         it.profile.getPercentageCompleteUntilNextLevel().toDouble()
                     )
-                }${CC.GRAY}] ${CC.GREEN}${
+                }${CC.GRAY}] ${CC.WHITE}${
                     "%.2f".format(
                         it.profile.getPercentageCompleteUntilNextLevel()
                     )
@@ -54,12 +54,11 @@ object FriendsFeature
                     Numbers.format(it.profile.experience)
                 }",
                 "",
-                "${CC.AQUA}Next level: ${CC.WHITE}${it.profile.level + 1}",
-                "${CC.AQUA}Next level XP: ${CC.WHITE}${
-                    Numbers.format(it.profile.getXpRequiredForLevel(it.profile.level))
-                }",
-                "${CC.AQUA}XP needed: ${CC.WHITE}${
-                    Numbers.format(it.profile.getXpRequiredToLevelUp())
+                "${CC.GREEN}Next level: ${CC.WHITE}${it.profile.level + 1}",
+                "${CC.GREEN}XP required: ${CC.WHITE}${
+                    Numbers.format(
+                        it.profile.getXpRequiredToAdvanceToLevel(it.profile.level + 1)
+                    )
                 }"
             )
         }

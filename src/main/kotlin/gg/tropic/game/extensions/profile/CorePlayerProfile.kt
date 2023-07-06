@@ -9,6 +9,7 @@ import java.util.*
 import java.util.concurrent.CompletableFuture
 import kotlin.math.floor
 import kotlin.math.log10
+import kotlin.math.roundToLong
 import kotlin.math.sqrt
 
 /**
@@ -90,8 +91,10 @@ data class CorePlayerProfile(
         }
     }
 
-    fun getXpRequiredToLevelUp() =
-        getXpRequiredForLevel(level + 1) - experience
+    fun getXpRequiredToLevelUp(): Long
+    {
+        TODO("issue")
+    }
 
     fun getPercentageCompleteUntilNextLevel(): Float
     {
@@ -101,7 +104,15 @@ data class CorePlayerProfile(
         return (current - previousLevel).toFloat() * 100.0F
     }
 
-    fun getXpRequiredForLevel(level: Int): Long
+    fun getFractionCompleteUntilNextLevel(): Float
+    {
+        val current = calculateExactLevelBasedOnXp()
+        val previousLevel = floor(current)
+
+        return (current - previousLevel).toFloat()
+    }
+
+    fun getXpRequiredToAdvanceToLevel(level: Int): Long
     {
         assert(level > 1)
         return (2500 * level) + 5000L
