@@ -1,9 +1,12 @@
 package gg.tropic.game.extensions.profile
 
+import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.storable.IDataStoreObject
+import gg.scala.store.storage.type.DataStoreStorageType
 import gg.tropic.game.extensions.profile.event.LevelUpEvent
 import net.evilblock.cubed.util.CC
 import java.util.*
+import java.util.concurrent.CompletableFuture
 import kotlin.math.floor
 import kotlin.math.log10
 import kotlin.math.sqrt
@@ -29,12 +32,23 @@ data class CorePlayerProfile(
             crossCheckLevel()
         }
 
+    fun removeCoins(coins: Int): CompletableFuture<Void>
+    {
+        assert(coins > 0)
+        this.coins -= coins
+        return save()
+    }
+
+    private fun save() = DataStoreObjectControllerCache
+        .findNotNull<CorePlayerProfile>()
+        .save(this, DataStoreStorageType.MONGO)
+
     @JvmOverloads
     fun addCoins(
         coins: Int,
         reason: String = "",
         feedback: (String) -> Unit = {}
-    )
+    ): CompletableFuture<Void>
     {
         assert(coins > 0)
         this.coins += coins
@@ -49,12 +63,14 @@ data class CorePlayerProfile(
         feedback("${CC.GREEN}+$gainedExperience experience${
             if (reason.isNotBlank()) " ($reason)" else ""
         }")
+        return save()
     }
 
-    fun addExperience(experience: Int)
+    fun addExperience(experience: Int): CompletableFuture<Void>
     {
         assert(experience > 0)
         this.experience += experience
+        return save()
     }
 
     private fun crossCheckLevel()
