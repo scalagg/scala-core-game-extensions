@@ -1,9 +1,11 @@
 package gg.tropic.game.extensions.command
 
 import gg.scala.commons.acf.annotation.CommandAlias
+import gg.scala.commons.acf.annotation.CommandPermission
 import gg.scala.commons.annotations.commands.AutoRegister
 import gg.scala.commons.command.ScalaCommand
 import gg.scala.commons.issuer.ScalaPlayer
+import gg.tropic.game.extensions.profile.event.LevelUpEvent
 import gg.tropic.game.extensions.profile.levelSymbol
 import gg.tropic.game.extensions.profile.profile
 import net.evilblock.cubed.util.CC
@@ -21,5 +23,14 @@ object LevelCommand : ScalaCommand()
         player.sendMessage(
             "${CC.SEC}Level: ${CC.GREEN}${player.profile.level} $levelSymbol"
         )
+    }
+
+    @CommandAlias("simulate-level-up")
+    @CommandPermission("op")
+    fun onSimulateLevel(player: ScalaPlayer)
+    {
+        LevelUpEvent(
+            player.profile, 1, 2
+        ).callEvent()
     }
 }

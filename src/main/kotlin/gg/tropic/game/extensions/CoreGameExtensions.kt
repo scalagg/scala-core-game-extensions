@@ -9,6 +9,8 @@ import gg.scala.commons.core.plugin.PluginWebsite
 import gg.tropic.game.extensions.profile.event.LevelUpEvent
 import me.lucko.helper.Events
 import net.evilblock.cubed.util.CC
+import net.evilblock.cubed.util.bukkit.Tasks
+import net.evilblock.cubed.util.text.TextUtil
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 
@@ -42,17 +44,35 @@ class CoreGameExtensions : ExtendedScalaPlugin()
                 val player = Bukkit.getPlayer(it.profile.identifier)
                     ?: return@handler
 
-                player.sendMessage(arrayOf(
-                    "${CC.GRAY}${CC.STRIKE_THROUGH}${"-".repeat(45)}",
-                    "${CC.GREEN}You leveled up from level ${CC.PRI}${it.from}${CC.GREEN} to ${CC.PRI}${it.to}${CC.GREEN}!",
-                    "${CC.GRAY}${CC.STRIKE_THROUGH}${"-".repeat(45)}"
-                ))
+                player.sendMessage("${CC.GRAY}${CC.STRIKE_THROUGH}${"-".repeat(53)}")
+
+                TextUtil
+                    .sendCenteredMessage(
+                        player,
+                        "${CC.B_GREEN}${CC.MAGIC}AAA${CC.RESET} ${CC.GREEN}You leveled up from level ${CC.AQUA}${it.from}${CC.GREEN} to ${CC.AQUA}${it.to}${CC.GREEN}! ${CC.B_GREEN}${CC.MAGIC}AAA"
+                    )
+
+                TextUtil
+                    .sendCenteredMessage(
+                        player,
+                        "${CC.GRAY}Collect rewards from achievements using ${CC.WHITE}/achieve${CC.GRAY}!"
+                    )
+
+                player.sendMessage("${CC.GRAY}${CC.STRIKE_THROUGH}${"-".repeat(53)}")
 
                 player.playSound(
                     player.location,
-                    Sound.LEVEL_UP,
+                    Sound.FIREWORK_LAUNCH,
                     1.0f, 1.0f
                 )
+
+                Tasks.delayed(15L) {
+                    player.playSound(
+                        player.location,
+                        Sound.FIREWORK_LARGE_BLAST,
+                        1.0f, 1.0f
+                    )
+                }
             }
             .bindWith(this)
     }

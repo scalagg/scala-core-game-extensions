@@ -87,7 +87,7 @@ data class CorePlayerProfile(
             LevelUpEvent(
                 this,
                 previousLevel, this.level
-            ).flow().subscribe()
+            ).callEvent()
         }
     }
 
