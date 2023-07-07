@@ -58,7 +58,7 @@ data class CorePlayerProfile(
             if (reason.isNotBlank()) " ($reason)" else ""
         }")
 
-        val gainedExperience = (50 * log10(coins.toDouble())).toInt()
+        val gainedExperience = (150 * log10(coins.toDouble())).toInt()
         addExperience(gainedExperience)
 
         feedback("${CC.GREEN}+$gainedExperience experience${
