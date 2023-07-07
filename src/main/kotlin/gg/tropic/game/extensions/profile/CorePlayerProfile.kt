@@ -58,7 +58,17 @@ data class CorePlayerProfile(
             if (reason.isNotBlank()) " ($reason)" else ""
         }")
 
-        val gainedExperience = (150 * log10(coins.toDouble())).toInt()
+        val gainedExperience = if (coins <= 300)
+        {
+            (150 * log10(coins.toDouble())).toInt()
+        } else if (coins < 1000)
+        {
+            (300 * log10(coins.toDouble())).toInt()
+        } else
+        {
+            (650 * log10(coins.toDouble())).toInt()
+        }
+
         addExperience(gainedExperience)
 
         feedback("${CC.GREEN}+$gainedExperience experience${
