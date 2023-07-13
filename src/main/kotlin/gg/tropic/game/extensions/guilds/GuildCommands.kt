@@ -64,6 +64,27 @@ object GuildCommands : ScalaCommand()
                 }
         }
 
+    @Subcommand("settings allinvite")
+    @Description("Enable/disable all invite for your guild.")
+    fun onAllInvite(player: ScalaPlayer) = player.guildIdentity
+        .thenCompose {
+            if (it.member(player.uniqueId).role == GuildRole.Leader)
+            {
+                throw ConditionFailedException(
+                    "You do not have permission to change your guild's description!"
+                )
+            }
+
+            it.updateAllInvite()
+                .thenRun {
+                    player.sendMessage(
+                        "$prefix${
+                            if (it.allInvite) "${CC.GREEN}You have enabled all invite!" else "${CC.RED}You have disabled all invite!"
+                        }"
+                    )
+                }
+        }
+
     @Subcommand("invite")
     @CommandCompletion("@players")
     @Description("Invite a player to your guild.")
@@ -75,7 +96,7 @@ object GuildCommands : ScalaCommand()
                         .member(player.uniqueId)
                         .role
 
-                    if (role == GuildRole.Member)
+                    if (!guild.allInvite && role == GuildRole.Member)
                     {
                         throw ConditionFailedException(
                             "You do not have permission to invite players to your guild!"

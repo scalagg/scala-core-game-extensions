@@ -20,6 +20,7 @@ data class Guild(
     var createdOn: Date = Date(),
     var members: MutableMap<UUID, GuildMember> = mutableMapOf(),
     var description: String? = null,
+    var allInvite: Boolean = false,
     var outgoingInvitations: MutableMap<UUID, Long> = mutableMapOf()
 ) : IDataStoreObject
 {
@@ -29,6 +30,12 @@ data class Guild(
     fun updateDescription(newDescription: String) =
         run {
             description = newDescription
+            save()
+        }
+
+    fun updateAllInvite() =
+        run {
+            allInvite = !allInvite
             save()
         }
 
