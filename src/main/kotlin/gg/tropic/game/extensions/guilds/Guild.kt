@@ -16,8 +16,10 @@ data class Guild(
         UUID.randomUUID(),
     val name: String,
     var creator: GuildMember,
+    var createdOn: Date = Date(),
     var members: MutableMap<UUID, GuildMember> = mutableMapOf(),
     var description: String? = null,
+    var outgoingInvitations: Map<UUID, Long> = mutableMapOf()
 ) : IDataStoreObject
 {
     fun updateDescription(newDescription: String) =

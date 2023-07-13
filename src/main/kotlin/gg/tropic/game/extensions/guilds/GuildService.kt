@@ -1,10 +1,14 @@
 package gg.tropic.game.extensions.guilds
 
 import com.mongodb.client.model.Filters
+import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.type.DataStoreStorageType
+import me.lucko.helper.Events
+import net.evilblock.cubed.util.CC
 import org.bson.conversions.Bson
+import org.bukkit.event.player.PlayerJoinEvent
 import java.util.UUID
 
 /**
@@ -14,11 +18,44 @@ import java.util.UUID
 @Service
 object GuildService
 {
+    @Configure
+    fun configure()
+    {
+        Events
+            .subscribe(PlayerJoinEvent::class.java)
+            .handler {
+                guildByUser(it.player.uniqueId)
+                    .thenAccept { guild ->
+                        if (guild == null)
+                        {
+                            guildsUserIsInvitedTo(it.player.uniqueId)
+                                .thenAccept { guilds ->
+                                    if (guilds.isNotEmpty())
+                                    {
+                                        it.player
+                                            .sendMessage(
+                                                "$prefix${CC.GREEN}You have invitations to the following guilds: ${CC.WHITE}${
+                                                    guilds.values.joinToString(transform = Guild::name)
+                                                }"
+                                            )
+                                    }
+                                }
+                        }
+                    }
+            }
+    }
+
     private fun findSingleWithFilter(filter: Bson) =
         DataStoreObjectControllerCache
             .findNotNull<Guild>()
             .mongo()
             .loadWithFilter(filter)
+
+    private fun findMultipleWithFilter(filter: Bson) =
+        DataStoreObjectControllerCache
+            .findNotNull<Guild>()
+            .mongo()
+            .loadAllWithFilter(filter)
 
     fun destroy(guild: Guild) = DataStoreObjectControllerCache
         .findNotNull<Guild>()
@@ -42,6 +79,17 @@ object GuildService
             Filters.or(
                 Filters.eq("creator.uniqueId", user.toString()),
                 Filters.exists("members.$user")
+            )
+        )
+
+    fun guildsUserIsInvitedTo(user: UUID) =
+        findMultipleWithFilter(
+            Filters.and(
+                Filters.exists("outgoingInvitations.$user"),
+                Filters.gte(
+                    "outgoingInvitations.$user",
+                    System.currentTimeMillis().toString()
+                )
             )
         )
 }

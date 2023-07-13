@@ -2,22 +2,22 @@ package gg.tropic.game.extensions.guilds
 
 import gg.scala.commons.acf.CommandHelp
 import gg.scala.commons.acf.ConditionFailedException
-import gg.scala.commons.acf.annotation.CommandAlias
-import gg.scala.commons.acf.annotation.CommandCompletion
-import gg.scala.commons.acf.annotation.CommandPermission
-import gg.scala.commons.acf.annotation.Default
-import gg.scala.commons.acf.annotation.Description
-import gg.scala.commons.acf.annotation.HelpCommand
-import gg.scala.commons.acf.annotation.Subcommand
+import gg.scala.commons.acf.annotation.*
 import gg.scala.commons.annotations.commands.AssignPermission
 import gg.scala.commons.annotations.commands.AutoRegister
 import gg.scala.commons.command.ScalaCommand
 import gg.scala.commons.issuer.ScalaPlayer
 import gg.scala.lemon.filter.ChatMessageFilterHandler
 import gg.scala.lemon.player.wrapper.AsyncLemonPlayer
+import gg.scala.lemon.util.QuickAccess
+import gg.scala.lemon.util.QuickAccess.username
 import net.evilblock.cubed.util.CC
+import net.evilblock.cubed.util.time.DateUtil
+import net.evilblock.cubed.util.time.TimeUtil
 import java.util.*
 import java.util.concurrent.CompletableFuture
+import java.util.stream.Collectors
+
 
 /**
  * @author GrowlyX
@@ -148,9 +148,37 @@ object GuildCommands : ScalaCommand()
 
     private fun ScalaPlayer.describe(guild: Guild)
     {
-        sendMessage(
-            "${CC.GREEN}${guild.name}",
-            "$guild"
-        )
+        sendMessage("${CC.GREEN}${guild.name}")
+
+        guild.description?.apply {
+            sendMessage(CC.GRAY + this)
+            sendMessage("")
+        }
+
+        sendMessage(CC.GRAY + "Created: " + CC.WHITE + TimeUtil.formatIntoDateString(guild.createdOn))
+        sendMessage(CC.GRAY + "Members: " + CC.GREEN + (guild.members.size + 1) + "/∞")
+        sendMessage(CC.GRAY + "Leader: " + CC.PRI + QuickAccess.fetchColoredName(guild.creator.uniqueId) + " " + (if (guild.creator.online().join()) CC.GREEN else CC.RED) + "■")
+        sendMessage("  ")
+
+        for (value in GuildRole.values())
+        {
+            if (value !== GuildRole.Leader)
+            {
+                val roleMembers = guild.members.values
+                    .filter {
+                        it.role == value
+                    }
+
+                val prefix = CC.WHITE + value.name + "s (${roleMembers.size}): "
+
+                val finalMessage = prefix + if (roleMembers.isEmpty())
+                    "${CC.RED}None" else roleMembers
+                    .joinToString(separator = "${CC.GRAY}, ") {
+                        QuickAccess.fetchColoredName(it.uniqueId) + " " + (if (it.online().join()) CC.GREEN else CC.RED) + "■"
+                    }
+
+                sendMessage(finalMessage)
+            }
+        }
     }
 }
