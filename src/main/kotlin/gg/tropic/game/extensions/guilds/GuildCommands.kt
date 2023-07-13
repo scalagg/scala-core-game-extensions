@@ -3,10 +3,13 @@ package gg.tropic.game.extensions.guilds
 import gg.scala.commons.acf.CommandHelp
 import gg.scala.commons.acf.ConditionFailedException
 import gg.scala.commons.acf.annotation.CommandAlias
+import gg.scala.commons.acf.annotation.CommandCompletion
+import gg.scala.commons.acf.annotation.CommandPermission
 import gg.scala.commons.acf.annotation.Default
 import gg.scala.commons.acf.annotation.Description
 import gg.scala.commons.acf.annotation.HelpCommand
 import gg.scala.commons.acf.annotation.Subcommand
+import gg.scala.commons.annotations.commands.AssignPermission
 import gg.scala.commons.annotations.commands.AutoRegister
 import gg.scala.commons.command.ScalaCommand
 import gg.scala.commons.issuer.ScalaPlayer
@@ -21,7 +24,8 @@ import java.util.concurrent.CompletableFuture
  * @since 7/13/2023
  */
 @AutoRegister
-@CommandAlias("guild")
+@CommandPermission("guilds.command.guild")
+@CommandAlias("guild|g|club|guilds|clan|clans")
 object GuildCommands : ScalaCommand()
 {
     @Default
@@ -31,6 +35,27 @@ object GuildCommands : ScalaCommand()
         help.showHelp()
     }
 
+    @Subcommand("leave|disband")
+    @Description("Leave or disband your guild.")
+    fun onLeave(player: ScalaPlayer) = player.guildIdentity
+        .thenCompose {
+            if (it.creator.uniqueId == player.uniqueId)
+            {
+                return@thenCompose GuildService
+                    .destroy(it)
+                    .thenRun {
+                        player.sendMessage("$prefix{CC.RED}You've deleted your guild!")
+                    }
+            }
+
+            it
+                .removeMember(player.uniqueId)
+                .thenRun {
+                    player.sendMessage("$prefix${CC.RED}You left the ${CC.BOLD}${it.name}${CC.RED} guild!")
+                }
+        }
+
+    @AssignPermission
     @Subcommand("create")
     @Description("Create a new guild.")
     fun onCreate(player: ScalaPlayer, name: String) = GuildService
@@ -71,13 +96,20 @@ object GuildCommands : ScalaCommand()
                 )
             }
 
-            Guild(
+            // hacky way because save() returns CompletableFuture<Void>
+            val guild = Guild(
                 name = name,
                 creator = GuildMember(
                     player.uniqueId,
                     role = GuildRole.Leader
                 )
-            ).save()
+            )
+            guild.save().thenApply { guild }
+        }
+        .thenAccept {
+            player.sendMessage(
+                "$prefix${CC.GREEN}You created a new guild with the name: ${CC.GOLD}${it.name}"
+            )
         }
 
     @Subcommand("info")
@@ -88,6 +120,7 @@ object GuildCommands : ScalaCommand()
         }
 
     @Subcommand("find")
+    @CommandCompletion("@players")
     @Description("Find a player's guild.")
     fun onFind(player: ScalaPlayer, target: AsyncLemonPlayer) =
         target.validatePlayers(player.bukkit(), false) {

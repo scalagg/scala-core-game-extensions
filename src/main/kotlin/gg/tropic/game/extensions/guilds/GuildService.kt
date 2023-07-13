@@ -3,6 +3,7 @@ package gg.tropic.game.extensions.guilds
 import com.mongodb.client.model.Filters
 import gg.scala.flavor.service.Service
 import gg.scala.store.controller.DataStoreObjectControllerCache
+import gg.scala.store.storage.type.DataStoreStorageType
 import org.bson.conversions.Bson
 import java.util.UUID
 
@@ -18,6 +19,13 @@ object GuildService
             .findNotNull<Guild>()
             .mongo()
             .loadWithFilter(filter)
+
+    fun destroy(guild: Guild) = DataStoreObjectControllerCache
+        .findNotNull<Guild>()
+        .delete(
+            guild.identifier,
+            DataStoreStorageType.MONGO
+        )
 
     fun guildByName(name: String) =
         findSingleWithFilter(
