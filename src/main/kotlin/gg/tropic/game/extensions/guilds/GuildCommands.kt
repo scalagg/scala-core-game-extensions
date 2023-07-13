@@ -85,6 +85,54 @@ object GuildCommands : ScalaCommand()
                 }
         }
 
+    @Subcommand("kick")
+    @Description("Kick a player from your guild.")
+    fun onKick(player: ScalaPlayer, target: AsyncLemonPlayer) = target
+        .validatePlayers(player.bukkit(), false) {
+            player.guildIdentity
+                .thenCompose { guild ->
+                    val role = guild
+                        .member(player.uniqueId)
+                        .role
+
+                    if (role == GuildRole.Member)
+                    {
+                        throw ConditionFailedException(
+                            "You do not have permission to kick players from your guild!"
+                        )
+                    }
+
+                    if (it.uniqueId == player.uniqueId)
+                    {
+                        throw ConditionFailedException(
+                            "You cannot kick yourself from a guild!"
+                        )
+                    }
+
+                    if (guild.creator.uniqueId == it.uniqueId)
+                    {
+                        throw ConditionFailedException(
+                            "You cannot kick the leader of the guild!"
+                        )
+                    }
+
+                    if (!guild.members.containsKey(it.uniqueId))
+                    {
+                        throw ConditionFailedException(
+                            "${CC.YELLOW}${it.name}${CC.RED} is not in your guild!"
+                        )
+                    }
+
+                    guild.removeMember(it.uniqueId)
+                }
+                .thenAccept { _ ->
+                    player.sendMessage(
+                        "$prefix${CC.YELLOW}${it.name}${CC.GREEN} was kicked from your guild!"
+                    )
+                }
+                .join()
+        }
+
     @Subcommand("invite")
     @CommandCompletion("@players")
     @Description("Invite a player to your guild.")
