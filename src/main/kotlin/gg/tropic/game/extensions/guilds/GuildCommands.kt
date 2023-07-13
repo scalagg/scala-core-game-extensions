@@ -195,6 +195,42 @@ object GuildCommands : ScalaCommand()
                 player.describe(it)
             }
 
+    @Subcommand("join")
+    @Description("Join a guild you have an invite to.")
+    fun onJoin(player: ScalaPlayer, name: String) =
+        GuildService
+            .guildByName(name)
+            .thenAccept { guild ->
+                if (guild == null)
+                {
+                    throw ConditionFailedException(
+                        "No guild by the name ${CC.YELLOW}$name${CC.RED} exists."
+                    )
+                }
+
+                if (guild.outgoingInvitations.containsKey(player.uniqueId))
+                {
+                    val invitation = guild.outgoingInvitations[player.uniqueId]!!
+                    if (invitation < System.currentTimeMillis())
+                    {
+                        throw ConditionFailedException(
+                            "Your invite to the guild ${CC.YELLOW}${guild.name}${CC.RED} has expired."
+                        )
+                    }
+                } else
+                {
+                    throw ConditionFailedException(
+                        "You do not have an invite to the guild ${CC.YELLOW}${guild.name}${CC.RED}!"
+                    )
+                }
+
+                guild.outgoingInvitations.remove(player.uniqueId)
+                guild.addMember(player.uniqueId)
+                    .thenAccept {
+                        player.sendMessage("$prefix${CC.GREEN}You joined the guild ${CC.YELLOW}${guild.name}${CC.GREEN}!")
+                    }
+            }
+
     private val ScalaPlayer.guildIdentity: CompletableFuture<Guild>
         get() = GuildService
             .guildByUser(uniqueId)
