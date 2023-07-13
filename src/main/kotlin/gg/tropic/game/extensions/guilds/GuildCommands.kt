@@ -49,7 +49,14 @@ object GuildCommands : ScalaCommand()
                         )
                     }
 
-                    if (guild.members.containsKey(it.uniqueId))
+                    if (it.uniqueId == player.uniqueId)
+                    {
+                        throw ConditionFailedException(
+                            "You cannot invite yourself to a guild!"
+                        )
+                    }
+
+                    if (guild.members.containsKey(it.uniqueId) || guild.creator.uniqueId == it.uniqueId)
                     {
                         throw ConditionFailedException(
                             "${CC.YELLOW}${it.name}${CC.RED} is already in your guild!"
@@ -201,6 +208,17 @@ object GuildCommands : ScalaCommand()
         GuildService
             .guildByName(name)
             .thenAccept { guild ->
+                if (
+                    GuildService
+                        .guildByUser(player.uniqueId)
+                        .join() != null
+                )
+                {
+                    throw ConditionFailedException(
+                        "You are already in a guild. You must leave your guild before joining a new one."
+                    )
+                }
+
                 if (guild == null)
                 {
                     throw ConditionFailedException(
