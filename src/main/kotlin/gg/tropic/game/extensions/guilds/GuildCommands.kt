@@ -82,7 +82,7 @@ object GuildCommands : ScalaCommand()
                         .addOutgoingInvite(it.uniqueId)
                         .thenApply { guild }
                 }
-                .thenAccept { guild ->
+                .thenCompose { guild ->
                     QuickAccess
                         .sendGlobalPlayerFancyMessage(
                             FancyMessage()
@@ -99,7 +99,8 @@ object GuildCommands : ScalaCommand()
                                 ),
                             it.uniqueId
                         )
-
+                }
+                .thenAccept { _ ->
                     player.sendMessage(
                         "$prefix${CC.YELLOW}${it.name}${CC.GREEN} was invited to your guild!"
                     )
