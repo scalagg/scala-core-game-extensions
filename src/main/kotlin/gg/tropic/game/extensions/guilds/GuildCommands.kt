@@ -33,6 +33,37 @@ object GuildCommands : ScalaCommand()
         help.showHelp()
     }
 
+    @Subcommand("settings description")
+    @Description("Set your guild's description.")
+    fun onDescription(player: ScalaPlayer, description: String) = player.guildIdentity
+        .thenCompose {
+            if (it.member(player.uniqueId).role == GuildRole.Member)
+            {
+                throw ConditionFailedException(
+                    "You do not have permission to change your guild's description!"
+                )
+            }
+
+            if (
+                ChatMessageFilterHandler.handleMessageFilter(
+                    player.bukkit(), description, false
+                )
+            )
+            {
+                throw ConditionFailedException(
+                    "You cannot have profanity in your guild description!"
+                )
+            }
+
+            it.updateDescription(description)
+                .thenRun {
+                    player.sendMessage(
+                        "$prefix${CC.GREEN}You have updated your guild description to:",
+                        description
+                    )
+                }
+        }
+
     @Subcommand("invite")
     @CommandCompletion("@players")
     @Description("Invite a player to your guild.")

@@ -72,13 +72,4 @@ data class Guild(
             this,
             DataStoreStorageType.MONGO
         )
-    // TODO: no filtering on cache layer, so what do we do with this?
-        /*.thenCompose {
-            DataStoreObjectControllerCache
-                .findNotNull<Guild>()
-                .save(
-                    this,
-                    DataStoreStorageType.REDIS
-                )
-        }*/
 }
