@@ -86,6 +86,7 @@ object GuildCommands : ScalaCommand()
         }
 
     @Subcommand("kick")
+    @CommandCompletion("@players")
     @Description("Kick a player from your guild.")
     fun onKick(player: ScalaPlayer, target: AsyncLemonPlayer) = target
         .validatePlayers(player.bukkit(), false) {
