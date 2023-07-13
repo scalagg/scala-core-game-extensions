@@ -7,6 +7,8 @@ import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.type.DataStoreStorageType
 import me.lucko.helper.Events
 import net.evilblock.cubed.util.CC
+import net.evilblock.cubed.util.bukkit.FancyMessage
+import net.md_5.bungee.api.chat.ClickEvent
 import org.bson.conversions.Bson
 import org.bukkit.event.player.PlayerJoinEvent
 import java.util.UUID
@@ -32,12 +34,28 @@ object GuildService
                                 .thenAccept { guilds ->
                                     if (guilds.isNotEmpty())
                                     {
-                                        it.player
-                                            .sendMessage(
-                                                "$prefix${CC.GREEN}You have invitations to the following guilds: ${CC.WHITE}${
-                                                    guilds.values.joinToString(transform = Guild::name)
-                                                }"
+                                        FancyMessage()
+                                            .withMessage(
+                                                "$prefix${CC.GREEN}You have invitations to the following guilds: ${CC.WHITE}"
                                             )
+                                            .apply {
+                                                guilds.values
+                                                    .forEachIndexed { index, guild ->
+                                                        withMessage("${guild.name}${
+                                                            if (index != guilds.values.size - 1) ", " else ""
+                                                        }")
+                                                        andHoverOf(
+                                                            "${CC.GREEN}Join the ${guild.name} guild!"
+                                                        )
+                                                        andCommandOf(
+                                                            ClickEvent.Action.RUN_COMMAND,
+                                                            "/guild join ${guild.name}"
+                                                        )
+                                                    }
+                                            }
+                                            .sendToPlayer(it.player)
+
+                                        it.player.sendMessage("$prefix${CC.I_GRAY}Click on one of the names to join the guild!")
                                     }
                                 }
                         }

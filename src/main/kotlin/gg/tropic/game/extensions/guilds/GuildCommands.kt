@@ -32,6 +32,7 @@ object GuildCommands : ScalaCommand()
     }
 
     @Subcommand("invite")
+    @CommandCompletion("@players")
     @Description("Invite a player to your guild.")
     fun onInvite(player: ScalaPlayer, target: AsyncLemonPlayer) = target
         .validatePlayers(player.bukkit(), false) {
