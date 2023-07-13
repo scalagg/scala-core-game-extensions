@@ -10,14 +10,10 @@ import gg.scala.commons.issuer.ScalaPlayer
 import gg.scala.lemon.filter.ChatMessageFilterHandler
 import gg.scala.lemon.player.wrapper.AsyncLemonPlayer
 import gg.scala.lemon.util.QuickAccess
-import gg.scala.lemon.util.QuickAccess.username
 import net.evilblock.cubed.util.CC
-import net.evilblock.cubed.util.time.DateUtil
 import net.evilblock.cubed.util.time.TimeUtil
 import java.util.*
 import java.util.concurrent.CompletableFuture
-import java.util.stream.Collectors
-
 
 /**
  * @author GrowlyX
@@ -34,6 +30,53 @@ object GuildCommands : ScalaCommand()
     {
         help.showHelp()
     }
+
+    @Subcommand("invite")
+    @Description("Invite a player to your guild.")
+    fun onInvite(player: ScalaPlayer, target: AsyncLemonPlayer) = target
+        .validatePlayers(player.bukkit(), false) {
+            player.guildIdentity
+                .thenCompose { guild ->
+                    val role = guild
+                        .member(player.uniqueId)
+                        .role
+
+                    if (role == GuildRole.Member)
+                    {
+                        throw ConditionFailedException(
+                            "You do not have permission to invite players to your guild!"
+                        )
+                    }
+
+                    if (guild.members.containsKey(it.uniqueId))
+                    {
+                        throw ConditionFailedException(
+                            "${CC.YELLOW}${it.name}${CC.RED} is already in your guild!"
+                        )
+                    }
+
+                    if (guild.outgoingInvitations.containsKey(it.uniqueId))
+                    {
+                        val invitation = guild.outgoingInvitations[it.uniqueId]!!
+                        if (invitation > System.currentTimeMillis())
+                        {
+                            throw ConditionFailedException(
+                                "There is already an invite to ${CC.YELLOW}${it.name}${CC.RED}. Please wait ${
+                                    TimeUtil.formatIntoAbbreviatedString(((invitation - System.currentTimeMillis()) / 1000).toInt())
+                                } before inviting the user again."
+                            )
+                        }
+                    }
+
+                    // TODO: send network msg
+                    guild
+                        .addOutgoingInvite(it.uniqueId)
+                }
+                .thenRun {
+                    player.sendMessage("$prefix${CC.YELLOW}${it.name}${CC.GREEN} was invited to your guild!")
+                }
+                .join()
+        }
 
     @Subcommand("leave|disband")
     @Description("Leave or disband your guild.")
@@ -133,6 +176,23 @@ object GuildCommands : ScalaCommand()
 
             player.describe(guild)
         }
+
+    @Subcommand("show")
+    @CommandCompletion("@players")
+    @Description("Show info about a particular guild.")
+    fun onFind(player: ScalaPlayer, name: String) =
+        GuildService
+            .guildByName(name)
+            .thenAccept {
+                if (it == null)
+                {
+                    throw ConditionFailedException(
+                        "No guild by the name ${CC.YELLOW}$name${CC.RED} exists."
+                    )
+                }
+
+                player.describe(it)
+            }
 
     private val ScalaPlayer.guildIdentity: CompletableFuture<Guild>
         get() = GuildService

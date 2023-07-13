@@ -4,6 +4,7 @@ import gg.scala.commons.annotations.Model
 import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.storable.IDataStoreObject
 import gg.scala.store.storage.type.DataStoreStorageType
+import java.time.Duration
 import java.util.*
 
 /**
@@ -19,9 +20,12 @@ data class Guild(
     var createdOn: Date = Date(),
     var members: MutableMap<UUID, GuildMember> = mutableMapOf(),
     var description: String? = null,
-    var outgoingInvitations: Map<UUID, Long> = mutableMapOf()
+    var outgoingInvitations: MutableMap<UUID, Long> = mutableMapOf()
 ) : IDataStoreObject
 {
+    fun member(uniqueId: UUID) = if (creator.uniqueId == uniqueId)
+        creator else members[uniqueId]!!
+
     fun updateDescription(newDescription: String) =
         run {
             description = newDescription
@@ -52,6 +56,13 @@ data class Guild(
             previousCreator.role = GuildRole.Member
             members[previousCreator.uniqueId] = previousCreator
 
+            save()
+        }
+
+    fun addOutgoingInvite(user: UUID) =
+        run {
+            outgoingInvitations[user] =
+                System.currentTimeMillis() + Duration.ofMinutes(5).toMillis()
             save()
         }
 
