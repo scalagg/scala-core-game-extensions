@@ -44,7 +44,7 @@ object GuildCommands : ScalaCommand()
                 return@thenCompose GuildService
                     .destroy(it)
                     .thenRun {
-                        player.sendMessage("$prefix{CC.RED}You've deleted your guild!")
+                        player.sendMessage("$prefix${CC.RED}You've deleted your guild!")
                     }
             }
 
