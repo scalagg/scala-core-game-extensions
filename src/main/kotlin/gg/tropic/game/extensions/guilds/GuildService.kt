@@ -87,9 +87,9 @@ object GuildService
             Filters.eq("name", name)
         )
 
-    fun guildById(id: UUID) =
+    fun guildById(id: Int) =
         findSingleWithFilter(
-            Filters.eq("identifier", id.toString())
+            Filters.eq("id", id.toString())
         )
 
     fun guildByUser(user: UUID) =

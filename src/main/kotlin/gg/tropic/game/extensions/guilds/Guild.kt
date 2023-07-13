@@ -16,6 +16,7 @@ data class Guild(
     override val identifier: UUID =
         UUID.randomUUID(),
     val name: String,
+    val id: Int = GuildIds.incrementGuid(),
     var creator: GuildMember,
     var createdOn: Date = Date(),
     var members: MutableMap<UUID, GuildMember> = mutableMapOf(),
