@@ -11,7 +11,9 @@ import gg.scala.lemon.filter.ChatMessageFilterHandler
 import gg.scala.lemon.player.wrapper.AsyncLemonPlayer
 import gg.scala.lemon.util.QuickAccess
 import net.evilblock.cubed.util.CC
+import net.evilblock.cubed.util.bukkit.FancyMessage
 import net.evilblock.cubed.util.time.TimeUtil
+import net.md_5.bungee.api.chat.ClickEvent
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
@@ -76,12 +78,31 @@ object GuildCommands : ScalaCommand()
                         }
                     }
 
-                    // TODO: send network msg
                     guild
                         .addOutgoingInvite(it.uniqueId)
+                        .thenApply { guild }
                 }
-                .thenRun {
-                    player.sendMessage("$prefix${CC.YELLOW}${it.name}${CC.GREEN} was invited to your guild!")
+                .thenAccept { guild ->
+                    QuickAccess
+                        .sendGlobalPlayerFancyMessage(
+                            FancyMessage()
+                                .withMessage(
+                                    "$prefix${CC.WHITE}${player.bukkit().displayName}${CC.GREEN} sent you an invite to join the guild ${CC.YELLOW}${guild.name}${CC.GREEN}!"
+                                )
+                                .withMessage(" ${CC.I_GRAY}(Click to join)")
+                                .andHoverOf(
+                                    "${CC.GREEN}Join the ${guild.name} guild!"
+                                )
+                                .andCommandOf(
+                                    ClickEvent.Action.RUN_COMMAND,
+                                    "/guild join ${guild.name}"
+                                ),
+                            it.uniqueId
+                        )
+
+                    player.sendMessage(
+                        "$prefix${CC.YELLOW}${it.name}${CC.GREEN} was invited to your guild!"
+                    )
                 }
                 .join()
         }
