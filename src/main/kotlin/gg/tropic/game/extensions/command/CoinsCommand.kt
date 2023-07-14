@@ -7,6 +7,7 @@ import gg.scala.commons.annotations.commands.AutoRegister
 import gg.scala.commons.command.ScalaCommand
 import gg.scala.commons.issuer.ScalaPlayer
 import gg.scala.lemon.player.LemonPlayer
+import gg.tropic.game.extensions.profile.booster.XpBoosterMenu
 import gg.tropic.game.extensions.profile.coinSymbol
 import gg.tropic.game.extensions.profile.profile
 import net.evilblock.cubed.util.CC
@@ -25,6 +26,10 @@ object CoinsCommand : ScalaCommand()
             "${CC.SEC}Coins: ${CC.GOLD}${player.profile.coins} $coinSymbol"
         )
     }
+
+    @CommandAlias("boosters|xpboosters")
+    fun onXpBoosters(player: ScalaPlayer) =
+        XpBoosterMenu().openMenu(player.bukkit())
 
     @CommandAlias("add-coins")
     @CommandCompletion("@players")

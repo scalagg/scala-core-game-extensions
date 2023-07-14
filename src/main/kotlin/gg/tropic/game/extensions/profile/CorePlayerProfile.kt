@@ -3,13 +3,14 @@ package gg.tropic.game.extensions.profile
 import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.storable.IDataStoreObject
 import gg.scala.store.storage.type.DataStoreStorageType
+import gg.tropic.game.extensions.profile.booster.XpBooster
 import gg.tropic.game.extensions.profile.event.LevelUpEvent
 import net.evilblock.cubed.util.CC
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import kotlin.math.floor
 import kotlin.math.log10
-import kotlin.math.roundToLong
+import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 /**
@@ -33,6 +34,28 @@ data class CorePlayerProfile(
             crossCheckLevel()
         }
 
+    var activeXpBooster: XpBooster? = null
+        get()
+        {
+            if (field == null)
+                return null
+
+            if (field!!.expiration < System.currentTimeMillis())
+                return null
+
+            return field
+        }
+
+    val availableXpBoosters = mutableListOf<XpBooster>()
+
+    fun activateBooster(booster: XpBooster)
+    {
+        availableXpBoosters.remove(booster)
+
+        activeXpBooster = booster
+        booster.activate()
+    }
+
     fun removeCoins(coins: Int): CompletableFuture<Void>
     {
         assert(coins > 0)
@@ -40,7 +63,7 @@ data class CorePlayerProfile(
         return save()
     }
 
-    private fun save() = DataStoreObjectControllerCache
+    fun save() = DataStoreObjectControllerCache
         .findNotNull<CorePlayerProfile>()
         .save(this, DataStoreStorageType.MONGO)
 
@@ -69,11 +92,16 @@ data class CorePlayerProfile(
             (650 * log10(coins.toDouble())).toInt()
         }
 
-        addExperience(gainedExperience)
+        addExperience(
+            (gainedExperience * if (activeXpBooster != null) activeXpBooster!!.multiplier else 1.0f).roundToInt()
+        )
 
         feedback("${CC.GREEN}+$gainedExperience experience${
-            if (reason.isNotBlank()) " ($reason)" else ""
+            if (reason.isNotBlank()) " ($reason${
+                if (activeXpBooster != null) ", ${"%.2f".format(activeXpBooster!!.multiplier)}x xp booster" else ""
+            })" else ""
         }")
+
         return save()
     }
 
