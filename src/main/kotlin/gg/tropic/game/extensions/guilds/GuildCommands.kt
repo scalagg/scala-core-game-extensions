@@ -128,7 +128,7 @@ object GuildCommands : ScalaCommand()
                         .removeMember(it.uniqueId)
                         .thenCompose { _ ->
                             guild.sendMessage(
-                                "${CC.YELLOW}${player.bukkit().name}${CC.RED} was kicked from the guild by ${CC.YELLOW}${player.bukkit().name}${CC.RED}!"
+                                "${CC.YELLOW}${it.name}${CC.RED} was kicked from the guild by ${CC.YELLOW}${player.bukkit().name}${CC.RED}!"
                             )
                         }
                 }
@@ -330,7 +330,6 @@ object GuildCommands : ScalaCommand()
         }
 
     @Subcommand("show")
-    @CommandCompletion("@players")
     @Description("Show info about a particular guild.")
     fun onFind(player: ScalaPlayer, name: String) =
         GuildService
