@@ -67,7 +67,7 @@ class XpBoosterMenu : PaginatedMenu()
                     .of(Material.PAPER)
                     .name("${CC.GREEN}${
                         "%.2f".format(it.multiplier)
-                    }s Booster")
+                    }x Booster")
                     .addToLore(
                         "${CC.WHITE}Expires after:",
                         "${CC.WHITE}${
@@ -112,6 +112,6 @@ class XpBoosterMenu : PaginatedMenu()
         return buttons
     }
 
-    override fun size(buttons: Map<Int, Button>)= 36
+    override fun size(buttons: Map<Int, Button>) = 36
     override fun getMaxItemsPerPage(player: Player) = 14
 }

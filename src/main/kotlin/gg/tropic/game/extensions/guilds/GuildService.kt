@@ -1,6 +1,7 @@
 package gg.tropic.game.extensions.guilds
 
 import com.mongodb.client.model.Filters
+import gg.scala.basics.plugin.profile.BasicsProfile
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.scala.store.controller.DataStoreObjectControllerCache
@@ -97,6 +98,16 @@ object GuildService
             Filters.or(
                 Filters.eq("creator.uniqueId", user.toString()),
                 Filters.exists("members.$user")
+            )
+        )
+
+    fun guildRequestsDisabled(user: UUID) = DataStoreObjectControllerCache
+        .findNotNull<BasicsProfile>()
+        .mongo()
+        .loadWithFilter(
+            Filters.and(
+                Filters.eq("identifier", user.toString()),
+                Filters.eq("settings.guilds:invites", "DISABLED")
             )
         )
 

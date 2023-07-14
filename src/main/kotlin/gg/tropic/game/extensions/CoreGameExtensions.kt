@@ -27,11 +27,11 @@ import org.bukkit.Sound
 @PluginWebsite("https://tropic.gg")
 
 @PluginDependency("Lemon")
+@PluginDependency("ScBasics")
 @PluginDependency("scala-commons")
 @PluginDependency("Achievements")
 
 @PluginDependency("Friends", soft = true)
-@PluginDependency("ScBasics", soft = true)
 @PluginDependency("cloudsync", soft = true)
 class CoreGameExtensions : ExtendedScalaPlugin()
 {

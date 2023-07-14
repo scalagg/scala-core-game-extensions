@@ -33,7 +33,7 @@ dependencies {
 
     compileOnly("gg.scala.store:spigot:0.1.8")
     compileOnly("gg.scala.friends:scala-friends:2.0.1")
-    compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
+    compileOnly("gg.scala.basics.plugin:scala-basics-plugin:1.0.5")
 
     compileOnly("gg.scala.spigot:server:1.1.0")
 

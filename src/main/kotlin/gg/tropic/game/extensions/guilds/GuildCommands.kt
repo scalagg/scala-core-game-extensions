@@ -179,9 +179,20 @@ object GuildCommands : ScalaCommand()
                         }
                     }
 
-                    guild
-                        .addOutgoingInvite(it.uniqueId)
-                        .thenApply { guild }
+                    GuildService
+                        .guildRequestsDisabled(it.uniqueId)
+                        .thenCompose { profile ->
+                            if (profile != null)
+                            {
+                                throw ConditionFailedException(
+                                    "${CC.YELLOW}${it.name}${CC.RED} has their guild invites disabled!"
+                                )
+                            }
+
+                            guild
+                                .addOutgoingInvite(it.uniqueId)
+                                .thenApply { guild }
+                        }
                 }
                 .thenCompose { guild ->
                     QuickAccess
