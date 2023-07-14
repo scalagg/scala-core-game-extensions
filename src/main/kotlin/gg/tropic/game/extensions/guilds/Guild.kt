@@ -1,11 +1,13 @@
 package gg.tropic.game.extensions.guilds
 
 import gg.scala.commons.annotations.Model
+import gg.scala.lemon.util.QuickAccess.sendGlobalPlayerMessage
 import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.storable.IDataStoreObject
 import gg.scala.store.storage.type.DataStoreStorageType
 import java.time.Duration
 import java.util.*
+import java.util.concurrent.CompletableFuture
 
 /**
  * @author GrowlyX
@@ -27,6 +29,16 @@ data class Guild(
 {
     fun member(uniqueId: UUID) = if (creator.uniqueId == uniqueId)
         creator else members[uniqueId]!!
+
+    fun sendMessage(message: String) = CompletableFuture
+        .allOf(
+            sendGlobalPlayerMessage("$prefix$message", creator.uniqueId),
+            *members.keys
+                .map {
+                    sendGlobalPlayerMessage("$prefix$message", it)
+                }
+                .toTypedArray()
+        )
 
     fun updateDescription(newDescription: String) =
         run {

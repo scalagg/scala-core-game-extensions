@@ -124,12 +124,13 @@ object GuildCommands : ScalaCommand()
                         )
                     }
 
-                    guild.removeMember(it.uniqueId)
-                }
-                .thenAccept { _ ->
-                    player.sendMessage(
-                        "$prefix${CC.YELLOW}${it.name}${CC.GREEN} was kicked from your guild!"
-                    )
+                    guild
+                        .removeMember(it.uniqueId)
+                        .thenCompose { _ ->
+                            guild.sendMessage(
+                                "${CC.YELLOW}${player.bukkit().name}${CC.RED} was kicked from the guild by ${CC.YELLOW}${player.bukkit().name}${CC.RED}!"
+                            )
+                        }
                 }
                 .join()
         }
@@ -189,10 +190,14 @@ object GuildCommands : ScalaCommand()
                                 )
                             }
 
-                            guild
-                                .addOutgoingInvite(it.uniqueId)
-                                .thenApply { guild }
+                            guild.addOutgoingInvite(it.uniqueId)
                         }
+                        .thenCompose {  _ ->
+                            guild.sendMessage(
+                                "${CC.YELLOW}${it.name}${CC.GREEN} was invited to the guild!"
+                            )
+                        }
+                        .thenApply { guild }
                 }
                 .thenCompose { guild ->
                     QuickAccess
@@ -212,11 +217,6 @@ object GuildCommands : ScalaCommand()
                             it.uniqueId
                         )
                 }
-                .thenAccept { _ ->
-                    player.sendMessage(
-                        "$prefix${CC.YELLOW}${it.name}${CC.GREEN} was invited to your guild!"
-                    )
-                }
                 .join()
         }
 
@@ -228,6 +228,11 @@ object GuildCommands : ScalaCommand()
             {
                 return@thenCompose GuildService
                     .destroy(it)
+                    .thenCompose {  _ ->
+                        it.sendMessage(
+                            "${CC.RED}Your guild was deleted! You are no longer in any guild."
+                        )
+                    }
                     .thenRun {
                         player.sendMessage("$prefix${CC.RED}You've deleted your guild!")
                     }
@@ -235,6 +240,11 @@ object GuildCommands : ScalaCommand()
 
             it
                 .removeMember(player.uniqueId)
+                .thenCompose { _ ->
+                    it.sendMessage(
+                        "${CC.YELLOW}${player.bukkit().name}${CC.RED} left the guild!"
+                    )
+                }
                 .thenRun {
                     player.sendMessage("$prefix${CC.RED}You left the ${CC.BOLD}${it.name}${CC.RED} guild!")
                 }
@@ -377,7 +387,13 @@ object GuildCommands : ScalaCommand()
                 }
 
                 guild.outgoingInvitations.remove(player.uniqueId)
-                guild.addMember(player.uniqueId)
+                guild
+                    .addMember(player.uniqueId)
+                    .thenCompose { _ ->
+                        guild.sendMessage(
+                            "${CC.YELLOW}${player.bukkit().name}${CC.GREEN} joined the guild!"
+                        )
+                    }
                     .thenAccept {
                         player.sendMessage("$prefix${CC.GREEN}You joined the guild ${CC.YELLOW}${guild.name}${CC.GREEN}!")
                     }
