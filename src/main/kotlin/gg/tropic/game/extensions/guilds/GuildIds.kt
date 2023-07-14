@@ -15,8 +15,6 @@ object GuildIds
         .instance.kvConnection
         .sync()
 
-    fun guid() = lock.get("guild:guildid")
-
     fun incrementGuid() =
         synchronized(lock) {
             if (lock.get("guild:guildid") == null)

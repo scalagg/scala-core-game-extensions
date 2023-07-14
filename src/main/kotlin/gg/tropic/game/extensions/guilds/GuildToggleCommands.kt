@@ -48,7 +48,6 @@ object GuildToggleCommands : ScalaCommand()
             )
         }
 
-        VisibilityHandler.updateAllTo(player.bukkit())
         profile.save()
     }
 }
