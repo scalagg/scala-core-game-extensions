@@ -20,6 +20,10 @@ object CosmeticRegistry
 
     fun categories() = categories.values.toList()
 
+    fun allEquipOnLoginCosmetics() = cosmetics
+        .flatMap { it.value }
+        .filterIsInstance<EquipOnLoginCosmetic>()
+
     fun findRelatedTo(category: CosmeticCategory) =
         cosmetics[category] ?: listOf()
 

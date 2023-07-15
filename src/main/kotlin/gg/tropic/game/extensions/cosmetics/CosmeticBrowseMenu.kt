@@ -18,6 +18,7 @@ class CosmeticBrowseMenu(
     init
     {
         placeholdBorders = true
+        updateAfterClick = true
     }
 
     override fun size(buttons: Map<Int, Button>) = 36
@@ -89,8 +90,6 @@ class CosmeticBrowseMenu(
                                     Sound.NOTE_PLING,
                                     1.0f, 1.0f
                                 )
-
-                                openMenu(player)
                                 return@toButton
                             }
                         }
@@ -104,8 +103,6 @@ class CosmeticBrowseMenu(
                             it.equipInternal(player)
                             player.sendMessage("${CC.GREEN}You eqipped this cosmetic!")
                         }
-
-                        openMenu(player)
                     }
             }
 
