@@ -66,8 +66,13 @@ class CosmeticBrowseMenu(
                                 "${CC.RED}Click to un-equip!" else
                                     "${CC.GREEN}Click to equip!"
                         )
+
+                        if (it is DynamicCosmetic<*>)
+                        {
+                            addToLore("${CC.YELLOW}Right-Click to customize!")
+                        }
                     }
-                    .toButton { _, _ ->
+                    .toButton { _, type ->
                         if (it is PurchasableCosmetic)
                         {
                             if (!it.isOwnedBy(player))
@@ -94,14 +99,23 @@ class CosmeticBrowseMenu(
                             }
                         }
 
+                        if (it is DynamicCosmetic<*>)
+                        {
+                            if (type!!.isRightClick)
+                            {
+                                it.openEditor(player)
+                                return@toButton
+                            }
+                        }
+
                         if (it.equipped(player))
                         {
                             it.unequipInternal(player)
-                            player.sendMessage("${CC.RED}You un-eqipped this cosmetic!")
+                            player.sendMessage("${CC.RED}You un-equipped this cosmetic!")
                         } else
                         {
                             it.equipInternal(player)
-                            player.sendMessage("${CC.GREEN}You eqipped this cosmetic!")
+                            player.sendMessage("${CC.GREEN}You equipped this cosmetic!")
                         }
                     }
             }
@@ -113,7 +127,7 @@ class CosmeticBrowseMenu(
     {
         if (manualClose)
         {
-            Tasks.delayed(1L) {
+            Tasks.sync {
                 CosmeticCategoryMenu().openMenu(player)
             }
         }

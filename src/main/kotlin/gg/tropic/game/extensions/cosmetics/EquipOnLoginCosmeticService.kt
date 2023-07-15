@@ -3,6 +3,7 @@ package gg.tropic.game.extensions.cosmetics
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import me.lucko.helper.Events
+import org.bukkit.entity.Player
 import org.bukkit.event.EventPriority
 import org.bukkit.event.player.PlayerJoinEvent
 
@@ -13,6 +14,21 @@ import org.bukkit.event.player.PlayerJoinEvent
 @Service
 object EquipOnLoginCosmeticService
 {
+    fun callOnLoginFor(player: Player) = CosmeticRegistry
+        .allEquipOnLoginCosmetics()
+        .forEach { cosmetic ->
+            cosmetic as CosmeticLike
+            if (
+                cosmetic.shouldEquipOnLogin(player) &&
+                cosmetic.equipped(player)
+            )
+            {
+                cosmetic.equip(player)
+            }
+        }
+
+    var defaultFunctionality = true
+
     @Configure
     fun configure()
     {
@@ -22,18 +38,10 @@ object EquipOnLoginCosmeticService
                 EventPriority.LOWEST
             )
             .handler {
-                CosmeticRegistry
-                    .allEquipOnLoginCosmetics()
-                    .forEach { cosmetic ->
-                        cosmetic as CosmeticLike
-                        if (
-                            cosmetic.shouldEquipOnLogin(it.player) &&
-                            cosmetic.equipped(it.player)
-                        )
-                        {
-                            cosmetic.equip(it.player)
-                        }
-                    }
+                if (!defaultFunctionality)
+                    return@handler
+
+                callOnLoginFor(it.player)
             }
     }
 }

@@ -3,6 +3,7 @@ package gg.tropic.game.extensions.profile
 import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.storable.IDataStoreObject
 import gg.scala.store.storage.type.DataStoreStorageType
+import gg.tropic.game.extensions.cosmetics.DynamicCosmeticConfigStore
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import gg.tropic.game.extensions.profile.booster.XpBooster
 import gg.tropic.game.extensions.profile.event.LevelUpEvent
@@ -30,6 +31,8 @@ data class CorePlayerProfile(
 
     val equippedCosmetics = mutableListOf<ImmutableResource>()
     val ownedCosmetics = mutableListOf<ImmutableResource>()
+
+    val cosmeticConfigs = mutableMapOf<String, DynamicCosmeticConfigStore>()
 
     var experience: Long = 0L
         private set(value)
@@ -140,10 +143,7 @@ data class CorePlayerProfile(
 
     fun getPercentageCompleteUntilNextLevel(): Float
     {
-        val current = calculateExactLevelBasedOnXp()
-        val previousLevel = floor(current)
-
-        return (current - previousLevel).toFloat() * 100.0F
+        return getFractionCompleteUntilNextLevel() * 100.0F
     }
 
     fun getFractionCompleteUntilNextLevel(): Float
