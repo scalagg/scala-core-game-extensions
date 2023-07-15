@@ -42,28 +42,30 @@ object LeatherArmorSetCosmetic : PurchasableCosmetic, EquipOnLogin
                 configuration.b
             )
 
-            fun ItemStack.colorLeatherArmor(color: Color): ItemStack {
-                val meta = itemMeta as LeatherArmorMeta
+            fun colorLeatherArmor(itemStack: ItemStack, color: Color): ItemStack {
+                val meta = itemStack.itemMeta as LeatherArmorMeta
                 meta.color = color
-                itemMeta = meta
-                return this
+                itemStack.itemMeta = meta
+                return itemStack
             }
 
-            player.inventory.chestplate = ItemBuilder(Material.LEATHER_CHESTPLATE)
-                .build()
-                .colorLeatherArmor(color)
+            player.inventory.chestplate = colorLeatherArmor(
+                ItemStack(Material.LEATHER_CHESTPLATE), color
+            )
 
-            player.inventory.leggings = ItemBuilder(Material.LEATHER_LEGGINGS)
-                .build()
-                .colorLeatherArmor(color)
+            player.inventory.leggings = colorLeatherArmor(
+                ItemStack(Material.LEATHER_LEGGINGS), color
+            )
 
-            player.inventory.helmet = ItemBuilder(Material.LEATHER_HELMET)
-                .build()
-                .colorLeatherArmor(color)
+            println("applying color $color")
 
-            player.inventory.boots = ItemBuilder(Material.LEATHER_BOOTS)
-                .build()
-                .colorLeatherArmor(color)
+            player.inventory.helmet = colorLeatherArmor(
+                ItemStack(Material.LEATHER_HELMET), color
+            )
+
+            player.inventory.boots = colorLeatherArmor(
+                ItemStack(Material.LEATHER_BOOTS), color
+            )
 
             player.updateInventory()
         }

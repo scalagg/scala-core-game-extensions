@@ -48,14 +48,14 @@ abstract class DynamicCosmeticConfigEditorMenu<T : DynamicCosmeticConfigStore>(
 
     override fun onClose(player: Player, manualClose: Boolean)
     {
+        with(player.profile) {
+            cosmeticConfigs[cosmetic.resource.toString()] = configuration
+            save()
+        }
+
         if (manualClose)
         {
             Tasks.sync {
-                with(player.profile) {
-                    cosmeticConfigs[cosmetic.resource.toString()] = configuration
-                    save()
-                }
-
                 CosmeticBrowseMenu(category).openMenu(player)
             }
         }
