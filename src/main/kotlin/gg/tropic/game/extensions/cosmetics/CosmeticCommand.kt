@@ -11,7 +11,7 @@ import gg.scala.commons.issuer.ScalaPlayer
  * @since 7/14/2023
  */
 @AutoRegister
-@CommandAlias("cosmetic|cosmetics")
+@CommandAlias("cosmetic|cosmetics|armor")
 object CosmeticCommand : ScalaCommand()
 {
     @Default

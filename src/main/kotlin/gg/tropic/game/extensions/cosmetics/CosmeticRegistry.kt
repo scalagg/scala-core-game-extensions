@@ -1,7 +1,6 @@
 package gg.tropic.game.extensions.cosmetics
 
 import gg.scala.commons.annotations.custom.CustomAnnotationProcessors
-import gg.scala.commons.preconfigure.PreConfigureSubTypeProcessor
 import gg.scala.flavor.service.Configure
 import gg.tropic.game.extensions.cosmetics.autoregister.AutoRegisterCategory
 import gg.tropic.game.extensions.cosmetics.autoregister.AutoRegisterCosmetic
@@ -22,7 +21,7 @@ object CosmeticRegistry
 
     fun allEquipOnLoginCosmetics() = cosmetics
         .flatMap { it.value }
-        .filterIsInstance<EquipOnLoginCosmetic>()
+        .filterIsInstance<EquipOnLogin>()
 
     fun findRelatedTo(category: CosmeticCategory) =
         cosmetics[category] ?: listOf()

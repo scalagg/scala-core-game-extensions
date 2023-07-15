@@ -1,10 +1,9 @@
-package gg.tropic.game.extensions.cosmetics.testing
+package gg.tropic.game.extensions.cosmetics.armor
 
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticCategory
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
-import gg.tropic.game.extensions.cosmetics.EquipOnLoginCosmetic
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Material
@@ -14,7 +13,7 @@ import org.bukkit.Material
  * @since 7/14/2023
  */
 @Service
-object ArmorCosmeticCategory : CosmeticCategory, EquipOnLoginCosmetic
+object ArmorCosmeticCategory : CosmeticCategory
 {
     @Configure
     fun configure()
@@ -26,8 +25,10 @@ object ArmorCosmeticCategory : CosmeticCategory, EquipOnLoginCosmetic
 
     override val name = "Armor"
     override val description = listOf(
-        "Special armor items!"
+        "Wear armor sets in the hub",
+        "or at spawn on your favorite",
+        "gamemode!"
     )
     override val icon = ItemBuilder
-        .of(Material.LEATHER_CHESTPLATE)
+        .of(Material.GOLD_CHESTPLATE)
 }

@@ -3,6 +3,7 @@ package gg.tropic.game.extensions.cosmetics
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import me.lucko.helper.Events
+import org.bukkit.event.EventPriority
 import org.bukkit.event.player.PlayerJoinEvent
 
 /**
@@ -16,7 +17,10 @@ object EquipOnLoginCosmeticService
     fun configure()
     {
         Events
-            .subscribe(PlayerJoinEvent::class.java)
+            .subscribe(
+                PlayerJoinEvent::class.java,
+                EventPriority.LOWEST
+            )
             .handler {
                 CosmeticRegistry
                     .allEquipOnLoginCosmetics()
@@ -28,7 +32,6 @@ object EquipOnLoginCosmeticService
                         )
                         {
                             cosmetic.equip(it.player)
-                            println("equiping")
                         }
                     }
             }

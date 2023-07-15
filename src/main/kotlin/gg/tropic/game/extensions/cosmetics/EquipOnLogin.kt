@@ -6,7 +6,7 @@ import org.bukkit.entity.Player
  * @author GrowlyX
  * @since 7/14/2023
  */
-interface EquipOnLoginCosmetic
+interface EquipOnLogin
 {
     fun shouldEquipOnLogin(player: Player): Boolean
     {
