@@ -14,6 +14,24 @@ interface CosmeticLike : ResourceHolder, FrontendComponent
     fun unequip(player: Player)
     fun equip(player: Player)
 
+    fun unequipInternal(player: Player)
+    {
+        unequip(player)
+        with(player.profile) {
+            equippedCosmetics.remove(resource)
+            save()
+        }
+    }
+
+    fun equipInternal(player: Player)
+    {
+        equip(player)
+        with(player.profile) {
+            equippedCosmetics.add(resource)
+            save()
+        }
+    }
+
     fun canEquip(player: Player) = player.profile
         .run {
             !equippedCosmetics.contains(resource)

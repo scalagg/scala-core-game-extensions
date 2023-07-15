@@ -41,7 +41,9 @@ class CosmeticCategoryMenu : PaginatedMenu()
                         "",
                         "${CC.GREEN}Click to browse!"
                     )
-                    .toButton()
+                    .toButton { _, _ ->
+                        CosmeticBrowseMenu(it).openMenu(player)
+                    }
             }
 
         return buttons
