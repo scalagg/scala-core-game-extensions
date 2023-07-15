@@ -2,6 +2,7 @@ package gg.tropic.game.extensions.command
 
 import gg.scala.commons.acf.ConditionFailedException
 import gg.scala.commons.acf.annotation.CommandAlias
+import gg.scala.commons.acf.annotation.CommandCompletion
 import gg.scala.commons.acf.annotation.CommandPermission
 import gg.scala.commons.annotations.commands.AutoRegister
 import gg.scala.commons.command.ScalaCommand
@@ -25,6 +26,7 @@ import org.bukkit.command.CommandSender
 object BoosterAddCommand : ScalaCommand()
 {
     @CommandAlias("add-booster")
+    @CommandCompletion("@players")
     @CommandPermission("core.command.addbooster")
     fun onAddBooster(
         player: CommandSender,

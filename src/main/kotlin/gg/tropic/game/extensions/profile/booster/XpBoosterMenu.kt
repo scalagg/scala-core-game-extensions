@@ -69,14 +69,14 @@ class XpBoosterMenu : PaginatedMenu()
                         "%.2f".format(it.multiplier)
                     }x Booster")
                     .addToLore(
-                        "${CC.WHITE}Expires after:",
-                        "${CC.WHITE}${
+                        "${CC.WHITE}Duration:",
+                        "${CC.D_AQUA}${
                             TimeUtil.formatIntoAbbreviatedString(
                                 (it.duration / 1000).toInt()
                             )
                         }",
                         "",
-                        "${CC.GREEN}[Activate]"
+                        "${CC.GREEN}[Click to activate]"
                     )
                     .toButton { _, _ ->
                         if (player.profile.activeXpBooster != null)
