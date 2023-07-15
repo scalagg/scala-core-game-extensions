@@ -3,6 +3,7 @@ package gg.tropic.game.extensions.profile
 import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.storable.IDataStoreObject
 import gg.scala.store.storage.type.DataStoreStorageType
+import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import gg.tropic.game.extensions.profile.booster.XpBooster
 import gg.tropic.game.extensions.profile.event.LevelUpEvent
 import net.evilblock.cubed.util.CC
@@ -26,6 +27,9 @@ data class CorePlayerProfile(
 
     var level: Int = 1
         private set
+
+    val equippedCosmetics = mutableListOf<ImmutableResource>()
+    val ownedCosmetics = mutableListOf<ImmutableResource>()
 
     var experience: Long = 0L
         private set(value)
