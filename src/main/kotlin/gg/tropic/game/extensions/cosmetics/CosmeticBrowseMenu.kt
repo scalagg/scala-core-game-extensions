@@ -119,5 +119,5 @@ class CosmeticBrowseMenu(
         }
     }
 
-    override fun getPrePaginatedTitle(player: Player) = "Cosmetics"
+    override fun getPrePaginatedTitle(player: Player) = "${category.name} Cosmetics"
 }

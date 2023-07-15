@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent
  * @since 7/14/2023
  */
 @Service
-object EquipOnLoginService
+object EquipOnLoginCosmeticService
 {
     @Configure
     fun configure()
@@ -28,6 +28,7 @@ object EquipOnLoginService
                         )
                         {
                             cosmetic.equip(it.player)
+                            println("equiping")
                         }
                     }
             }
