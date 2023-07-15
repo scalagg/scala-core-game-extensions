@@ -53,6 +53,13 @@ abstract class DynamicCosmeticConfigEditorMenu<T : DynamicCosmeticConfigStore>(
             save()
         }
 
+        if (cosmetic.equipped(player))
+        {
+            // refresh to respect new configuration changes
+            cosmetic.unequip(player)
+            cosmetic.equip(player)
+        }
+
         if (manualClose)
         {
             Tasks.sync {

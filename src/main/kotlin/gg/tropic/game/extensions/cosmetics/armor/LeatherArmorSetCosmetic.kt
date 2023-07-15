@@ -20,7 +20,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta
  * @since 7/14/2023
  */
 @Service
-object LeatherArmorSetCosmetic : PurchasableCosmetic, EquipOnLogin
+object LeatherArmorSetCosmetic : PurchasableCosmetic
 {
     data class LeatherArmorConfig(
         var r: Int = 0,
@@ -32,7 +32,7 @@ object LeatherArmorSetCosmetic : PurchasableCosmetic, EquipOnLogin
             LeatherArmorConfig::class.java
     }
 
-    object DynamicLeatherArmorCosmetic : DynamicCosmetic<LeatherArmorConfig>(LeatherArmorSetCosmetic)
+    object DynamicLeatherArmorCosmetic : DynamicCosmetic<LeatherArmorConfig>(LeatherArmorSetCosmetic), EquipOnLogin
     {
         override fun equip(player: Player, configuration: LeatherArmorConfig)
         {
@@ -56,8 +56,6 @@ object LeatherArmorSetCosmetic : PurchasableCosmetic, EquipOnLogin
             player.inventory.leggings = colorLeatherArmor(
                 ItemStack(Material.LEATHER_LEGGINGS), color
             )
-
-            println("applying color $color")
 
             player.inventory.helmet = colorLeatherArmor(
                 ItemStack(Material.LEATHER_HELMET), color
