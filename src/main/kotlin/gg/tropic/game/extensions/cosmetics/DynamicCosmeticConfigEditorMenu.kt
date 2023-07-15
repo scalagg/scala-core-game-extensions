@@ -7,6 +7,9 @@ import net.evilblock.cubed.util.bukkit.Tasks
 import org.bukkit.entity.Player
 
 /**
+ * Abstract menu class which saves the customized [DynamicCosmeticConfigStore] instance
+ * of type T to the player's profile when the menu is closed by the player.
+ *
  * @author GrowlyX
  * @since 7/15/2023
  */
