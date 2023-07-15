@@ -109,24 +109,15 @@ object LeatherArmorSetCosmetic : PurchasableCosmetic
 
     override fun unequip(player: Player)
     {
-        Tasks.delayed(1L) {
-            player.inventory.chestplate = null
-            player.inventory.leggings = null
-            player.inventory.helmet = null
-            player.inventory.boots = null
-            player.updateInventory()
-        }
+        player.inventory.chestplate = null
+        player.inventory.leggings = null
+        player.inventory.helmet = null
+        player.inventory.boots = null
+        player.updateInventory()
     }
 
     override fun equip(player: Player)
     {
-        Tasks.delayed(1L) {
-            player.inventory.chestplate = ItemStack(Material.LEATHER_CHESTPLATE)
-            player.inventory.leggings = ItemStack(Material.LEATHER_LEGGINGS)
-            player.inventory.helmet = ItemStack(Material.LEATHER_HELMET)
-            player.inventory.boots = ItemStack(Material.LEATHER_BOOTS)
-            player.updateInventory()
-        }
     }
 
     override val resource =
