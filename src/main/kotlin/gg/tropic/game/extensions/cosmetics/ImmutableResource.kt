@@ -9,15 +9,14 @@ package gg.tropic.game.extensions.cosmetics
  */
 data class ImmutableResource(
     val namespace: String,
-    val resource: String?
+    val resource: String
 )
 {
-    constructor(namespace: String) : this(namespace, null)
+    constructor(namespace: String) : this(namespace, "*")
 
     fun withinSameDomainOf(other: ImmutableResource) = other.namespace == namespace
     fun grantsAccessTo(resource: ImmutableResource) =
-        resource.namespace == namespace && (this.resource == null || resource.resource == this.resource)
+        resource.namespace == namespace && (this.resource == "*" || resource.resource == this.resource)
 
-    override fun toString() =
-        "$namespace:${if (resource != null) "$resource" else "*"}"
+    override fun toString() = "$namespace:$resource"
 }
