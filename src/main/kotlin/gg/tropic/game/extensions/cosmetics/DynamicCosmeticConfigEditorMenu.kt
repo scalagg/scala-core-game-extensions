@@ -13,7 +13,7 @@ import org.bukkit.entity.Player
 abstract class DynamicCosmeticConfigEditorMenu<T : DynamicCosmeticConfigStore>(
     private val category: CosmeticCategory,
     private val cosmetic: DynamicCosmetic<T>,
-    private val configuration: T
+    val configuration: T
 ) : PaginatedMenu()
 {
 
