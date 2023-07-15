@@ -46,7 +46,7 @@ class CosmeticBrowseMenu(
                             {
                                 addToLore(
                                     "${CC.RED}You don't own this!",
-                                    "${CC.WHITE}Price: ${CC.GOLD}${it.price}⛀",
+                                    "${CC.WHITE}Price: ${CC.GOLD}${it.price} ⛀",
                                     "${CC.WHITE}Can afford: ${
                                         if (it.canPurchase(player)) "${CC.GREEN}Yes" else "${CC.RED}No"
                                     }",
