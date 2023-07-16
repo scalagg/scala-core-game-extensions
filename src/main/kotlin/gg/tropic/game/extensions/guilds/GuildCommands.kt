@@ -24,12 +24,10 @@ import java.util.concurrent.CompletableFuture
 @AutoRegister
 @CommandPermission("guilds.command.guild")
 @CommandAlias("guild|g|club|guilds|clan|clans")
-object GuildCommands : ScalaCommand()
-{
+object GuildCommands : ScalaCommand() {
     @Default
     @HelpCommand
-    fun onHelp(help: CommandHelp)
-    {
+    fun onHelp(help: CommandHelp) {
         help.showHelp()
     }
 
@@ -37,8 +35,7 @@ object GuildCommands : ScalaCommand()
     @Description("Set your guild's description.")
     fun onDescription(player: ScalaPlayer, description: String) = player.guildIdentity
         .thenCompose {
-            if (it.member(player.uniqueId).role == GuildRole.Member)
-            {
+            if (it.member(player.uniqueId).role == GuildRole.Member) {
                 throw ConditionFailedException(
                     "You do not have permission to change your guild's description!"
                 )
@@ -48,8 +45,7 @@ object GuildCommands : ScalaCommand()
                 ChatMessageFilterHandler.handleMessageFilter(
                     player.bukkit(), description, false
                 )
-            )
-            {
+            ) {
                 throw ConditionFailedException(
                     "You cannot have profanity in your guild description!"
                 )
@@ -68,8 +64,7 @@ object GuildCommands : ScalaCommand()
     @Description("Enable/disable all invite for your guild.")
     fun onAllInvite(player: ScalaPlayer) = player.guildIdentity
         .thenCompose {
-            if (it.member(player.uniqueId).role == GuildRole.Leader)
-            {
+            if (it.member(player.uniqueId).role == GuildRole.Leader) {
                 throw ConditionFailedException(
                     "You do not have permission to change your guild's description!"
                 )
@@ -96,29 +91,25 @@ object GuildCommands : ScalaCommand()
                         .member(player.uniqueId)
                         .role
 
-                    if (role == GuildRole.Member)
-                    {
+                    if (role == GuildRole.Member) {
                         throw ConditionFailedException(
                             "You do not have permission to kick players from your guild!"
                         )
                     }
 
-                    if (it.uniqueId == player.uniqueId)
-                    {
+                    if (it.uniqueId == player.uniqueId) {
                         throw ConditionFailedException(
                             "You cannot kick yourself from a guild!"
                         )
                     }
 
-                    if (guild.creator.uniqueId == it.uniqueId)
-                    {
+                    if (guild.creator.uniqueId == it.uniqueId) {
                         throw ConditionFailedException(
                             "You cannot kick the leader of the guild!"
                         )
                     }
 
-                    if (!guild.members.containsKey(it.uniqueId))
-                    {
+                    if (!guild.members.containsKey(it.uniqueId)) {
                         throw ConditionFailedException(
                             "${CC.YELLOW}${it.name}${CC.RED} is not in your guild!"
                         )
@@ -146,32 +137,27 @@ object GuildCommands : ScalaCommand()
                         .member(player.uniqueId)
                         .role
 
-                    if (!guild.allInvite && role == GuildRole.Member)
-                    {
+                    if (!guild.allInvite && role == GuildRole.Member) {
                         throw ConditionFailedException(
                             "You do not have permission to invite players to your guild!"
                         )
                     }
 
-                    if (it.uniqueId == player.uniqueId)
-                    {
+                    if (it.uniqueId == player.uniqueId) {
                         throw ConditionFailedException(
                             "You cannot invite yourself to a guild!"
                         )
                     }
 
-                    if (guild.members.containsKey(it.uniqueId) || guild.creator.uniqueId == it.uniqueId)
-                    {
+                    if (guild.members.containsKey(it.uniqueId) || guild.creator.uniqueId == it.uniqueId) {
                         throw ConditionFailedException(
                             "${CC.YELLOW}${it.name}${CC.RED} is already in your guild!"
                         )
                     }
 
-                    if (guild.outgoingInvitations.containsKey(it.uniqueId))
-                    {
+                    if (guild.outgoingInvitations.containsKey(it.uniqueId)) {
                         val invitation = guild.outgoingInvitations[it.uniqueId]!!
-                        if (invitation > System.currentTimeMillis())
-                        {
+                        if (invitation > System.currentTimeMillis()) {
                             throw ConditionFailedException(
                                 "There is already an invite to ${CC.YELLOW}${it.name}${CC.RED}. Please wait ${
                                     TimeUtil.formatIntoAbbreviatedString(((invitation - System.currentTimeMillis()) / 1000).toInt())
@@ -183,8 +169,7 @@ object GuildCommands : ScalaCommand()
                     GuildService
                         .guildRequestsDisabled(it.uniqueId)
                         .thenCompose { profile ->
-                            if (profile != null)
-                            {
+                            if (profile != null) {
                                 throw ConditionFailedException(
                                     "${CC.YELLOW}${it.name}${CC.RED} has their guild invites disabled!"
                                 )
@@ -192,12 +177,11 @@ object GuildCommands : ScalaCommand()
 
                             guild.addOutgoingInvite(it.uniqueId)
                         }
-                        .thenCompose {  _ ->
+                        .thenCompose { _ ->
                             guild.sendMessage(
                                 "${CC.YELLOW}${it.name}${CC.GREEN} was invited to the guild!"
                             )
                         }
-                        .thenApply { guild }
                 }
                 .thenCompose { guild ->
                     QuickAccess
@@ -224,11 +208,10 @@ object GuildCommands : ScalaCommand()
     @Description("Leave or disband your guild.")
     fun onLeave(player: ScalaPlayer) = player.guildIdentity
         .thenCompose {
-            if (it.creator.uniqueId == player.uniqueId)
-            {
+            if (it.creator.uniqueId == player.uniqueId) {
                 return@thenCompose GuildService
                     .destroy(it)
-                    .thenCompose {  _ ->
+                    .thenCompose { _ ->
                         it.sendMessage(
                             "${CC.RED}Your guild was deleted! You are no longer in any guild."
                         )
@@ -256,8 +239,7 @@ object GuildCommands : ScalaCommand()
     fun onCreate(player: ScalaPlayer, name: String) = GuildService
         .guildByUser(player.uniqueId)
         .thenCompose {
-            if (it != null)
-            {
+            if (it != null) {
                 throw ConditionFailedException(
                     "You are already in a guild!"
                 )
@@ -266,15 +248,13 @@ object GuildCommands : ScalaCommand()
             GuildService.guildByName(name)
         }
         .thenCompose {
-            if (it != null)
-            {
+            if (it != null) {
                 throw ConditionFailedException(
                     "A guild by the name ${CC.YELLOW}$name${CC.RED} already exists!"
                 )
             }
 
-            if (name.length > 16)
-            {
+            if (name.length > 16) {
                 throw ConditionFailedException(
                     "The guild name must be less than 16 characters!"
                 )
@@ -284,8 +264,7 @@ object GuildCommands : ScalaCommand()
                 ChatMessageFilterHandler.handleMessageFilter(
                     player.bukkit(), name, false
                 )
-            )
-            {
+            ) {
                 throw ConditionFailedException(
                     "You cannot have profanity in your guild name!"
                 )
@@ -335,8 +314,7 @@ object GuildCommands : ScalaCommand()
         GuildService
             .guildByName(name)
             .thenAccept {
-                if (it == null)
-                {
+                if (it == null) {
                     throw ConditionFailedException(
                         "No guild by the name ${CC.YELLOW}$name${CC.RED} exists."
                     )
@@ -355,31 +333,26 @@ object GuildCommands : ScalaCommand()
                     GuildService
                         .guildByUser(player.uniqueId)
                         .join() != null
-                )
-                {
+                ) {
                     throw ConditionFailedException(
                         "You are already in a guild. You must leave your guild before joining a new one."
                     )
                 }
 
-                if (guild == null)
-                {
+                if (guild == null) {
                     throw ConditionFailedException(
                         "No guild by the name ${CC.YELLOW}$name${CC.RED} exists."
                     )
                 }
 
-                if (guild.outgoingInvitations.containsKey(player.uniqueId))
-                {
+                if (guild.outgoingInvitations.containsKey(player.uniqueId)) {
                     val invitation = guild.outgoingInvitations[player.uniqueId]!!
-                    if (invitation < System.currentTimeMillis())
-                    {
+                    if (invitation < System.currentTimeMillis()) {
                         throw ConditionFailedException(
                             "Your invite to the guild ${CC.YELLOW}${guild.name}${CC.RED} has expired."
                         )
                     }
-                } else
-                {
+                } else {
                     throw ConditionFailedException(
                         "You do not have an invite to the guild ${CC.YELLOW}${guild.name}${CC.RED}!"
                     )
@@ -402,16 +375,14 @@ object GuildCommands : ScalaCommand()
         get() = GuildService
             .guildByUser(uniqueId)
             .thenApply {
-                if (it == null)
-                {
+                if (it == null) {
                     throw ConditionFailedException("You are not in a guild!")
                 }
 
                 it
             }
 
-    private fun ScalaPlayer.describe(guild: Guild)
-    {
+    private fun ScalaPlayer.describe(guild: Guild) {
         sendMessage("${CC.GREEN}${guild.name}")
 
         guild.description?.apply {
@@ -425,10 +396,8 @@ object GuildCommands : ScalaCommand()
         sendMessage(CC.GRAY + "Leader: " + CC.PRI + QuickAccess.fetchColoredName(guild.creator.uniqueId) + " " + (if (guild.creator.online().join()) CC.GREEN else CC.RED) + "■")
         sendMessage("  ")
 
-        for (value in GuildRole.values())
-        {
-            if (value !== GuildRole.Leader)
-            {
+        for (value in GuildRole.values()) {
+            if (value !== GuildRole.Leader) {
                 val roleMembers = guild.members.values
                     .filter {
                         it.role == value
@@ -446,4 +415,21 @@ object GuildCommands : ScalaCommand()
             }
         }
     }
+    @Subcommand("message")
+    @Description("Send a message to all members of your guild.")
+    fun onMessage(player: ScalaPlayer, message: String) = player.guildIdentity
+        .thenCompose { guild ->
+            if (guild == null) {
+                throw ConditionFailedException(
+                    "You are not in a guild!"
+                )
+            }
+
+            guild.sendMessage(message)
+                .thenRun {
+                    player.sendMessage(
+                        "$prefix${CC.GREEN}You have sent a message to your guild members."
+                    )
+                }
+        }
 }
