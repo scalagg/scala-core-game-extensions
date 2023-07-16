@@ -135,6 +135,22 @@ object GuildCommands : ScalaCommand()
                 .join()
         }
 
+    @CommandAlias("guildchat|gc|gchat")
+    @Subcommand("chat")
+    @Description("Send a chat message to your guild members")
+    fun onGuildChat(player: ScalaPlayer, message: String) = player.guildIdentity
+        .thenCompose { guild ->
+            if (guild == null) {
+                throw ConditionFailedException(
+                    "You are not in a guild!"
+                )
+            }
+
+            guild.sendMessage(
+                "${CC.GREEN}${player.bukkit().name}: ${CC.WHITE}$message"
+            )
+        }
+
     @Subcommand("settings promote|demote|role")
     @CommandCompletion("@players *")
     @Description("Promote/demote a player in your guild.")
