@@ -135,6 +135,55 @@ object GuildCommands : ScalaCommand()
                 .join()
         }
 
+    @Subcommand("transfer")
+    @CommandCompletion("@players")
+    @Description("Transfer your guild to another player.")
+    fun onTransfer(player: ScalaPlayer, target: AsyncLemonPlayer) = target
+        .validatePlayers(player.bukkit(), false) {
+            player.guildIdentity
+                .thenCompose { guild ->
+                    val member = guild
+                        .member(player.uniqueId)
+
+                    if (member.role == GuildRole.Leader)
+                    {
+                        throw ConditionFailedException(
+                            "You do not have permission to transfer the guild!"
+                        )
+                    }
+
+                    if (it.uniqueId == player.uniqueId)
+                    {
+                        throw ConditionFailedException(
+                            "You cannot transfer the guild to yourself!"
+                        )
+                    }
+
+                    if (!guild.members.containsKey(it.uniqueId))
+                    {
+                        throw ConditionFailedException(
+                            "${CC.YELLOW}${it.name}${CC.RED} is not in your guild!"
+                        )
+                    }
+
+                    val targetMember = guild.member(it.uniqueId)
+                    guild.members.remove(it.uniqueId)
+
+                    targetMember.role = GuildRole.Leader
+                    member.role = GuildRole.Admin
+
+                    guild.creator = targetMember
+                    guild.members[player.bukkit().uniqueId] = member
+                    guild.save().thenApply { guild }
+                }
+                .thenCompose { guild ->
+                    guild.sendMessage(
+                        "${CC.RED}The guild was transferred to: ${CC.BOLD}${it.name}${CC.RED}!"
+                    )
+                }
+                .join()
+        }
+
     @CommandAlias("guildchat|gc|gchat")
     @Subcommand("chat")
     @Description("Send a chat message to your guild members")
