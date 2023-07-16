@@ -98,6 +98,12 @@ object LeatherArmorSetCosmetic : PurchasableCosmetic
                             "${CC.GREEN}Click to enter custom color!"
                         )
                         .toButton { _, _ ->
+                            if (!player.hasPermission("core.cosmetics.armor.color.custom"))
+                            {
+                                player.sendMessage("${CC.RED}You do not have permission to use this feature! Purchase ${CC.GOLD}Pro${CC.RED} rank to gain access.")
+                                return@toButton
+                            }
+
                             player.closeInventory()
                             InputPrompt()
                                 .withText(
