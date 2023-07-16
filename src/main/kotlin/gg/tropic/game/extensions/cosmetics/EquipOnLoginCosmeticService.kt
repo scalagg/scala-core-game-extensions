@@ -20,7 +20,8 @@ object EquipOnLoginCosmeticService
             cosmetic as CosmeticLike
             if (
                 cosmetic.shouldEquipOnLogin(player) &&
-                cosmetic.equipped(player)
+                cosmetic.equipped(player) &&
+                CosmeticLocalConfig.enableCosmeticResources
             )
             {
                 cosmetic.equip(player)

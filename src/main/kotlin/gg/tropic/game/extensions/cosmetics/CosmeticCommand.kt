@@ -28,6 +28,13 @@ object CosmeticCommand : ScalaCommand()
             )
         }
 
+        if (!CosmeticLocalConfig.enableCosmeticResources)
+        {
+            throw ConditionFailedException(
+                "This command is unavailable on game servers!"
+            )
+        }
+
         CosmeticCategoryMenu().openMenu(player.bukkit())
     }
 }
