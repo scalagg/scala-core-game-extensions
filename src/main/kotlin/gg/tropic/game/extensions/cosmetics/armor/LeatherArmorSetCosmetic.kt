@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.armor
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.*
@@ -9,6 +10,7 @@ import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.ColorUtil
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import net.evilblock.cubed.util.bukkit.Tasks
+import net.evilblock.cubed.util.bukkit.prompt.InputPrompt
 import org.bukkit.Color
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -76,19 +78,80 @@ object LeatherArmorSetCosmetic : PurchasableCosmetic
                 serveConfiguration(player)
             )
             {
+                init
+                {
+                    autoUpdate = true
+                }
+
+                override fun getGlobalButtons(player: Player): Map<Int, Button>
+                {
+                    val buttons = mutableMapOf<Int, Button>()
+                    buttons[4] = ItemBuilder
+                        .of(
+                            XMaterial.WHITE_WOOL
+                        )
+                        .name("${CC.WHITE}Custom color")
+                        .addToLore(
+                            "${CC.GRAY}Enter your own hex color",
+                            "${CC.GRAY}to use as your armor color!",
+                            "",
+                            "${CC.GREEN}Click to enter custom color!"
+                        )
+                        .toButton { _, _ ->
+                            player.closeInventory()
+                            InputPrompt()
+                                .withText(
+                                    "${CC.GREEN}Enter a hex code ${CC.GRAY}(example: #FFFFF)${CC.GREEN}:"
+                                )
+                                .acceptInput { _, hex ->
+                                    with(java.awt.Color.decode(hex)) {
+                                        configuration.r = red
+                                        configuration.g = green
+                                        configuration.b = blue
+
+                                        player.sendMessage(
+                                            "${CC.GREEN}You selected a custom color!"
+                                        )
+                                        openMenu(player)
+                                    }
+                                }
+                                .start(player)
+                        }
+
+                    return buttons
+                }
+
                 override fun populate(player: Player, buttons: MutableMap<Int, Button>)
                 {
-                    buttons.putAll(
-                        SelectColorMenu {
-                            configuration.r = it.red
-                            configuration.g = it.green
-                            configuration.b = it.blue
+                    ColorUtil.getPredefinedColors()
+                        .forEach {
+                            buttons[buttons.size] = ItemBuilder
+                                .of(
+                                    Material.WOOL
+                                )
+                                .data(
+                                    ColorUtil.toWoolData(
+                                        ColorUtil.toChatColor(it)
+                                    ).toShort()
+                                )
+                                .name(
+                                    "${ColorUtil.toChatColor(it)}${
+                                        ColorUtil.getColorName(it)
+                                            .lowercase()
+                                            .capitalize()
+                                            .replace("_", " ")
+                                    }"
+                                )
+                                .toButton { _, _ ->
+                                    configuration.r = it.red
+                                    configuration.g = it.green
+                                    configuration.b = it.blue
 
-                            player.sendMessage(
-                                "${CC.GREEN}You selected: ${ColorUtil.toChatColor(it)}${ColorUtil.getColorName(it)}"
-                            )
-                        }.getButtons(player)
-                    )
+                                    player.sendMessage(
+                                        "${CC.GREEN}You selected: ${ColorUtil.toChatColor(it)}${ColorUtil.getColorName(it)}"
+                                    )
+                                }
+                        }
                 }
             }.openMenu(player)
         }

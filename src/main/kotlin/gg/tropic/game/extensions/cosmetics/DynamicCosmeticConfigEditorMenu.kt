@@ -48,20 +48,20 @@ abstract class DynamicCosmeticConfigEditorMenu<T : DynamicCosmeticConfigStore>(
 
     override fun onClose(player: Player, manualClose: Boolean)
     {
-        with(player.profile) {
-            cosmeticConfigs[cosmetic.resource.toString()] = configuration
-            save()
-        }
-
-        if (cosmetic.equipped(player))
-        {
-            // refresh to respect new configuration changes
-            cosmetic.unequip(player)
-            cosmetic.equip(player)
-        }
-
         if (manualClose)
         {
+            with(player.profile) {
+                cosmeticConfigs[cosmetic.resource.toString()] = configuration
+                save()
+            }
+
+            if (cosmetic.equipped(player))
+            {
+                // refresh to respect new configuration changes
+                cosmetic.unequip(player)
+                cosmetic.equip(player)
+            }
+
             Tasks.sync {
                 CosmeticBrowseMenu(category).openMenu(player)
             }
