@@ -135,6 +135,57 @@ object GuildCommands : ScalaCommand()
                 .join()
         }
 
+    @Subcommand("settings promote|demote|role")
+    @CommandCompletion("@players *")
+    @Description("Promote/demote a player in your guild.")
+    fun onRole(player: ScalaPlayer, target: AsyncLemonPlayer, newRole: GuildRole) = target
+        .validatePlayers(player.bukkit(), false) {
+            if (player.uniqueId == it.uniqueId)
+            {
+                throw ConditionFailedException(
+                    "You cannot manage your self role!"
+                )
+            }
+
+            player.guildIdentity
+                .thenCompose { guild ->
+                    val role = guild
+                        .member(player.uniqueId)
+                        .role
+
+                    if (role != GuildRole.Leader)
+                    {
+                        throw ConditionFailedException(
+                            "You do not have permission to manage player roles in your guild!"
+                        )
+                    }
+
+                    if (newRole != GuildRole.Leader)
+                    {
+                        throw ConditionFailedException(
+                            "You cannot set another user as the guild leader! Use ${CC.BOLD}/guild transfer${CC.RED} to transfer your guild."
+                        )
+                    }
+
+                    if (!guild.members.containsKey(it.uniqueId))
+                    {
+                        throw ConditionFailedException(
+                            "${CC.YELLOW}${it.name}${CC.RED} is not a member of your guild!"
+                        )
+                    }
+
+                    guild.member(it.uniqueId).role = newRole
+                    guild.save().thenApply { guild }
+                }
+                .thenCompose { guild ->
+                    guild.sendMessage(
+                        "${CC.YELLOW}${it.name}'s${CC.GREEN} guild role has been set to: ${CC.AQUA}${newRole.name}"
+                    )
+                }
+                .join()
+
+        }
+
     @Subcommand("invite")
     @CommandCompletion("@players")
     @Description("Invite a player to your guild.")
