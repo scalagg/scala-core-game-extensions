@@ -18,7 +18,7 @@ interface CosmeticLike : ResourceHolder, FrontendComponent
     {
         unequip(player)
         with(player.profile) {
-            equippedCosmetics.remove(resource)
+            setEquipped(player, false)
             save()
         }
     }
@@ -27,7 +27,7 @@ interface CosmeticLike : ResourceHolder, FrontendComponent
     {
         equip(player)
         with(player.profile) {
-            equippedCosmetics.add(resource)
+            setEquipped(player, true)
             save()
         }
     }

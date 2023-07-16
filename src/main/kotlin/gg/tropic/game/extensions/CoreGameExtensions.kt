@@ -31,6 +31,7 @@ import org.bukkit.Sound
 @PluginDependency("scala-commons")
 @PluginDependency("Achievements")
 
+@PluginDependency("ScChatTags", soft = true)
 @PluginDependency("Friends", soft = true)
 @PluginDependency("cloudsync", soft = true)
 class CoreGameExtensions : ExtendedScalaPlugin()
