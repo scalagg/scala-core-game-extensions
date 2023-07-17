@@ -3,6 +3,7 @@ package gg.tropic.game.extensions.profile
 import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.storable.IDataStoreObject
 import gg.scala.store.storage.type.DataStoreStorageType
+import gg.tropic.game.extensions.cosmetics.CosmeticTickState
 import gg.tropic.game.extensions.cosmetics.DynamicCosmeticConfigStore
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import gg.tropic.game.extensions.profile.booster.XpBooster
@@ -33,6 +34,22 @@ data class CorePlayerProfile(
     val ownedCosmetics = mutableListOf<ImmutableResource>()
 
     val cosmeticConfigs = mutableMapOf<String, DynamicCosmeticConfigStore>()
+
+    @Transient
+    private var backingLocalTickerConfigs: MutableMap<String, CosmeticTickState>? = null
+        get()
+        {
+            if (field == null)
+            {
+                field = mutableMapOf()
+                return field!!
+            }
+
+            return field!!
+        }
+
+    val localTickerConfigs: MutableMap<String, CosmeticTickState>
+        get() = backingLocalTickerConfigs!!
 
     var experience: Long = 0L
         private set(value)
