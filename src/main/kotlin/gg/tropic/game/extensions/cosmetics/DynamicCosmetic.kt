@@ -12,16 +12,14 @@ import org.bukkit.entity.Player
  * @author GrowlyX
  * @since 7/15/2023
  */
-abstract class DynamicCosmetic<T : DynamicCosmeticConfigStore>(
-    private val cosmetic: CosmeticLike
-) : CosmeticLike by cosmetic
+interface DynamicCosmetic<T : DynamicCosmeticConfigStore> : CosmeticLike
 {
     override fun equip(player: Player)
     {
         equip(player, serveConfiguration(player))
     }
 
-    open fun serveConfiguration(player: Player): T
+    fun serveConfiguration(player: Player): T
     {
         player.profile.cosmeticConfigs
             .putIfAbsent(
@@ -33,8 +31,8 @@ abstract class DynamicCosmetic<T : DynamicCosmeticConfigStore>(
             .cosmeticConfigs[resource.toString()]!! as T
     }
 
-    abstract fun openEditor(player: Player)
+    fun openEditor(player: Player)
 
-    abstract fun buildDefaultConfiguration(): T
-    abstract fun equip(player: Player, configuration: T)
+    fun buildDefaultConfiguration(): T
+    fun equip(player: Player, configuration: T)
 }
