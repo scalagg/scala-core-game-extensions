@@ -1,6 +1,7 @@
 package gg.tropic.game.extensions.cosmetics
 
 import net.evilblock.cubed.menu.Button
+import net.evilblock.cubed.menu.menus.ConfirmMenu
 import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Tasks
@@ -85,16 +86,25 @@ class CosmeticBrowseMenu(
                                     return@toButton
                                 }
 
-                                it.purchase(player)
+                                ConfirmMenu(
+                                    title = "Purchase: ${it.name}",
+                                    extraInfo = listOf(),
+                                    confirm = true
+                                ) { confirmed ->
+                                    if (confirmed)
+                                    {
+                                        it.purchase(player)
 
-                                player.sendMessage(
-                                    "${CC.GREEN}You have purchased the ${CC.WHITE}${it.name}${CC.GREEN} cosmetic item!"
-                                )
-                                player.playSound(
-                                    player.location,
-                                    Sound.NOTE_PLING,
-                                    1.0f, 1.0f
-                                )
+                                        player.sendMessage(
+                                            "${CC.GREEN}You have purchased the ${CC.WHITE}${it.name}${CC.GREEN} cosmetic item!"
+                                        )
+                                        player.playSound(
+                                            player.location,
+                                            Sound.NOTE_PLING,
+                                            1.0f, 1.0f
+                                        )
+                                    }
+                                }
                                 return@toButton
                             }
                         }
