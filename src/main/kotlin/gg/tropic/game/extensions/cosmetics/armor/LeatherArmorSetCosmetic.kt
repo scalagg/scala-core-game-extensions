@@ -20,7 +20,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta
  * @since 7/14/2023
  */
 @Service
-object LeatherArmorSetCosmetic : PurchasableCosmetic, DynamicCosmetic<LeatherArmorSetCosmetic.LeatherArmorConfig>
+object LeatherArmorSetCosmetic : PurchasableCosmetic, DynamicCosmetic<LeatherArmorSetCosmetic.LeatherArmorConfig>, EquipOnLogin
 {
     data class LeatherArmorConfig(
         var r: Int = 0,
