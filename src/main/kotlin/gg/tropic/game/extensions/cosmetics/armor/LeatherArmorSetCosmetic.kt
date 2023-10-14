@@ -14,13 +14,17 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.LeatherArmorMeta
+import java.util.*
 
 /**
  * @author GrowlyX
  * @since 7/14/2023
  */
 @Service
-object LeatherArmorSetCosmetic : PurchasableCosmetic, DynamicCosmetic<LeatherArmorSetCosmetic.LeatherArmorConfig>, EquipOnLogin
+object LeatherArmorSetCosmetic :
+    PurchasableCosmetic,
+    DynamicCosmetic<LeatherArmorSetCosmetic.LeatherArmorConfig>,
+    EquipOnLogin
 {
     data class LeatherArmorConfig(
         var r: Int = 0,
@@ -40,7 +44,8 @@ object LeatherArmorSetCosmetic : PurchasableCosmetic, DynamicCosmetic<LeatherArm
             configuration.b
         )
 
-        fun colorLeatherArmor(itemStack: ItemStack, color: Color): ItemStack {
+        fun colorLeatherArmor(itemStack: ItemStack, color: Color): ItemStack
+        {
             val meta = itemStack.itemMeta as LeatherArmorMeta
             meta.color = color
             itemStack.itemMeta = meta
@@ -140,7 +145,7 @@ object LeatherArmorSetCosmetic : PurchasableCosmetic, DynamicCosmetic<LeatherArm
                                 "${ColorUtil.toChatColor(it)}${
                                     ColorUtil.getColorName(it)
                                         .lowercase()
-                                        .capitalize()
+                                        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                                         .replace("_", " ")
                                 }"
                             )

@@ -29,37 +29,41 @@ object GuildService
             .handler {
                 guildByUser(it.player.uniqueId)
                     .thenAccept { guild ->
-                        if (guild == null)
+                        if (guild != null)
                         {
-                            guildsUserIsInvitedTo(it.player.uniqueId)
-                                .thenAccept { guilds ->
-                                    if (guilds.isNotEmpty())
-                                    {
-                                        FancyMessage()
-                                            .withMessage(
-                                                "$prefix${CC.GREEN}You have invitations to the following guilds: ${CC.WHITE}"
-                                            )
-                                            .apply {
-                                                guilds.values
-                                                    .forEachIndexed { index, guild ->
-                                                        withMessage("${guild.name}${
-                                                            if (index != guilds.values.size - 1) ", " else ""
-                                                        }")
-                                                        andHoverOf(
-                                                            "${CC.GREEN}Join the ${guild.name} guild!"
-                                                        )
-                                                        andCommandOf(
-                                                            ClickEvent.Action.RUN_COMMAND,
-                                                            "/guild join ${guild.name}"
-                                                        )
-                                                    }
-                                            }
-                                            .sendToPlayer(it.player)
-
-                                        it.player.sendMessage("$prefix${CC.I_GRAY}Click on one of the names to join the guild!")
-                                    }
-                                }
+                            return@thenAccept
                         }
+
+                        guildsUserIsInvitedTo(it.player.uniqueId)
+                            .thenAccept ctx@{ guilds ->
+                                if (guilds.isEmpty())
+                                {
+                                    return@ctx
+                                }
+
+                                FancyMessage()
+                                    .withMessage(
+                                        "$prefix${CC.GREEN}You have invitations to the following guilds: ${CC.WHITE}"
+                                    )
+                                    .apply {
+                                        guilds.values
+                                            .forEachIndexed { index, guild ->
+                                                withMessage("${guild.name}${
+                                                    if (index != guilds.values.size - 1) ", " else ""
+                                                }")
+                                                andHoverOf(
+                                                    "${CC.GREEN}Join the ${guild.name} guild!"
+                                                )
+                                                andCommandOf(
+                                                    ClickEvent.Action.RUN_COMMAND,
+                                                    "/guild join ${guild.name}"
+                                                )
+                                            }
+                                    }
+                                    .sendToPlayer(it.player)
+
+                                it.player.sendMessage("$prefix${CC.I_GRAY}Click on one of the names to join the guild!")
+                            }
                     }
             }
     }
