@@ -180,10 +180,6 @@ object LeatherArmorSetCosmetic : PurchasableCosmetic, DynamicCosmetic<LeatherArm
         player.updateInventory()
     }
 
-    override fun equip(player: Player)
-    {
-    }
-
     override val resource =
         ImmutableResource("armor", "leather")
 
