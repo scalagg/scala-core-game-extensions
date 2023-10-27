@@ -45,31 +45,26 @@ object RainbowArmorSetCosmetic :
         }
 
         state.color = hue2rgb(state.colorHsl)
-
-        if (System.currentTimeMillis() >= state.nextBroadcast) {
-            state.nextBroadcast = System.currentTimeMillis() + 200L
-
-            player.inventory.helmet =
-                colorLeatherArmor(
-                    ItemBuilder.of(Material.LEATHER_HELMET).name(name).build(),
-                    state.color
-                )
-            player.inventory.chestplate =
-                colorLeatherArmor(
-                    ItemBuilder.of(Material.LEATHER_CHESTPLATE).name(name).build(),
-                    state.color
-                )
-            player.inventory.leggings =
-                colorLeatherArmor(
-                    ItemBuilder.of(Material.LEATHER_LEGGINGS).name(name).build(),
-                    state.color
-                )
-            player.inventory.boots =
-                colorLeatherArmor(
-                    ItemBuilder.of(Material.LEATHER_BOOTS).name(name).build(),
-                    state.color
-                )
-        }
+        player.inventory.helmet =
+            colorLeatherArmor(
+                ItemBuilder.of(Material.LEATHER_HELMET).name(name).build(),
+                state.color
+            )
+        player.inventory.chestplate =
+            colorLeatherArmor(
+                ItemBuilder.of(Material.LEATHER_CHESTPLATE).name(name).build(),
+                state.color
+            )
+        player.inventory.leggings =
+            colorLeatherArmor(
+                ItemBuilder.of(Material.LEATHER_LEGGINGS).name(name).build(),
+                state.color
+            )
+        player.inventory.boots =
+            colorLeatherArmor(
+                ItemBuilder.of(Material.LEATHER_BOOTS).name(name).build(),
+                state.color
+            )
     }
 
     override fun typeOf() = RainbowData::class
