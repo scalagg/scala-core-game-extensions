@@ -18,6 +18,11 @@ object CosmeticTickService
     {
         val executor = Executors.newSingleThreadScheduledExecutor()
         executor.scheduleAtFixedRate({
+            if (!CosmeticLocalConfig.enableCosmeticResources)
+            {
+                return@scheduleAtFixedRate
+            }
+
             for (player in Players.all())
             {
                 CosmeticRegistry.categories()
@@ -27,7 +32,6 @@ object CosmeticTickService
                     .forEach {
                         it.tickWithServedTickState(player)
                     }
-
             }
         }, 0L, 50L, TimeUnit.MILLISECONDS)
     }
