@@ -104,7 +104,7 @@ class CosmeticBrowseMenu(
                                             1.0f, 1.0f
                                         )
                                     }
-                                }
+                                }.openMenu(player)
                                 return@toButton
                             }
                         }

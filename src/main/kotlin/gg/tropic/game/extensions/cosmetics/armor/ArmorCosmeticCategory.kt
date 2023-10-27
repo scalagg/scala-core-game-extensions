@@ -23,10 +23,10 @@ object ArmorCosmeticCategory : CosmeticCategory
 
     override val resource = ImmutableResource("armor")
 
-    override val name = "Armor"
+    override val name = "Suits"
     override val description = listOf(
-        "Wear armor sets in the hub",
-        "or at spawn on your favorite",
+        "Wear suit sets in the hub",
+        "or at spawn in your favorite",
         "gamemode!"
     )
     override val icon = ItemBuilder
