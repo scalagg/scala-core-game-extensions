@@ -4,6 +4,7 @@ import gg.scala.commons.annotations.custom.CustomAnnotationProcessors
 import gg.scala.flavor.service.Configure
 import gg.tropic.game.extensions.cosmetics.autoregister.AutoRegisterCategory
 import gg.tropic.game.extensions.cosmetics.autoregister.AutoRegisterCosmetic
+import org.bukkit.entity.Player
 
 /**
  * Holds default mappings of cosmetic categories to
@@ -25,6 +26,16 @@ object CosmeticRegistry
 
     fun findRelatedTo(category: CosmeticCategory) =
         cosmetics[category] ?: listOf()
+
+    fun getSingleEquipped(category: CosmeticCategory, player: Player) = cosmetics[category]!!
+        .firstOrNull {
+            it.equipped(player)
+        }
+
+    fun getAllEquipped(category: CosmeticCategory, player: Player) = cosmetics[category]!!
+        .filter {
+            it.equipped(player)
+        }
 
     fun registerCategory(category: CosmeticCategory)
     {

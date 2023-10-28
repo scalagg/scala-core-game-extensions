@@ -25,6 +25,11 @@ object CosmeticTickService
 
             for (player in Players.all())
             {
+                if (CosmeticCommand.preventCosmeticUsage(player))
+                {
+                    continue
+                }
+
                 CosmeticRegistry.categories()
                     .flatMap { it.cosmetics() }
                     .filterIsInstance<SessionScopeTickableCosmetic<*>>()

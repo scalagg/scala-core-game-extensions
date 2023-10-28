@@ -15,10 +15,7 @@ allprojects {
 
     repositories {
         mavenCentral()
-        maven {
-            url = uri("https://repo.dmulloy2.net/repository/public/")
-        }
-
+        maven("https://repo.dmulloy2.net/repository/public/")
         configureScalaRepository()
     }
 }
@@ -37,6 +34,7 @@ dependencies {
     compileOnly("gg.scala.basics.plugin:scala-basics-plugin:1.0.5")
 
     compileOnly("gg.scala.spigot:server:1.1.0")
+    compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
 
     compileOnly("gg.scala.lemon:bukkit:1.6.2")
     compileOnly("gg.scala.cloudsync:spigot:1.0.1")
