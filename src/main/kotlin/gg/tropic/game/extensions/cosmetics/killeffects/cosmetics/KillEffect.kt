@@ -20,5 +20,5 @@ interface KillEffect :
     {
     }
 
-    fun applyTo(player: Player, target: Player)
+    fun applyTo(viewers: List<Player>, target: Player)
 }

@@ -11,7 +11,7 @@ plugins {
 
 allprojects {
     group = "gg.tropic.game.extensions"
-    version = "1.2.1"
+    version = "1.2.3"
 
     repositories {
         mavenCentral()

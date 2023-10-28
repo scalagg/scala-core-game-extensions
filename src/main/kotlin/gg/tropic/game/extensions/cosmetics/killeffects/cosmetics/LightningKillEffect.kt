@@ -22,9 +22,11 @@ import kotlin.random.Random
 @Service
 object LightningKillEffect : KillEffect
 {
-    override fun applyTo(player: Player, target: Player)
+    override fun applyTo(viewers: List<Player>, target: Player)
     {
-        spawnLightning(target, target.location)
+        viewers.forEach {
+            spawnLightning(it, target.location)
+        }
     }
 
     fun spawnLightning(player: Player, location: Location)
@@ -54,8 +56,7 @@ object LightningKillEffect : KillEffect
         )
     }
 
-    override val resource: ImmutableResource
-        get() = TODO("Not yet implemented")
+    override val resource = ImmutableResource("killeffects", "lightning")
     override val name = "Lightning"
     override val description = listOf(
         "Become Zeus! Vaporize your opponent",
