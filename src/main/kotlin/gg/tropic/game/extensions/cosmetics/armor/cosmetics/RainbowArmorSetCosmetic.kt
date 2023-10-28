@@ -35,10 +35,10 @@ object RainbowArmorSetCosmetic :
         )
     }
 
-    override val price = 4500.0f
+    override val price = 10000.0f
     override fun tick(player: Player, state: RainbowData)
     {
-        state.colorHsl += 0.02
+        state.colorHsl += 0.005
 
         if (state.colorHsl > 1) {
             state.colorHsl = 0.0
