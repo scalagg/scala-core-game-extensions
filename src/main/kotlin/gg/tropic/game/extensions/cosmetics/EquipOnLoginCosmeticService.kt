@@ -28,6 +28,8 @@ object EquipOnLoginCosmeticService
             }
         }
 
+    var defaultFunctionality = true
+
     @Configure
     fun configure()
     {
@@ -36,6 +38,7 @@ object EquipOnLoginCosmeticService
                 PlayerJoinEvent::class.java,
                 EventPriority.LOWEST
             )
+            .filter { defaultFunctionality }
             .handler {
                 callOnLoginFor(it.player)
             }
