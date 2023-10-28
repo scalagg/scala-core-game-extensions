@@ -28,8 +28,6 @@ object EquipOnLoginCosmeticService
             }
         }
 
-    var defaultFunctionality = true
-
     @Configure
     fun configure()
     {
@@ -39,9 +37,6 @@ object EquipOnLoginCosmeticService
                 EventPriority.LOWEST
             )
             .handler {
-                if (!defaultFunctionality)
-                    return@handler
-
                 callOnLoginFor(it.player)
             }
     }

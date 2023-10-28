@@ -15,6 +15,13 @@ interface SessionScopeTickableCosmetic<S : CosmeticTickState> : CosmeticLike
 
     fun tickWithServedTickState(player: Player) = tick(player, serveTickState(player))
 
+    override fun unequipInternal(player: Player)
+    {
+        super.unequipInternal(player)
+        player.profile.localTickerConfigs
+            .remove(resource.toString())
+    }
+
     fun serveTickState(player: Player): S
     {
         val state = player.profile
