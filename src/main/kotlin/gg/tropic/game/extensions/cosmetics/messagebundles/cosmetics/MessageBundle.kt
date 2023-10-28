@@ -1,6 +1,7 @@
 package gg.tropic.game.extensions.cosmetics.messagebundles.cosmetics
 
 import gg.tropic.game.extensions.cosmetics.CosmeticLike
+import gg.tropic.game.extensions.cosmetics.MultiEquipCosmetic
 import gg.tropic.game.extensions.cosmetics.PurchasableCosmetic
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.ItemBuilder
@@ -11,7 +12,7 @@ import org.bukkit.entity.Player
  * @author GrowlyX
  * @since 10/26/2023
  */
-interface MessageBundle : CosmeticLike, PurchasableCosmetic
+interface MessageBundle : CosmeticLike, PurchasableCosmetic, MultiEquipCosmetic
 {
     val phrases: List<String>
 

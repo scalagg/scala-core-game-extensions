@@ -124,6 +124,23 @@ class CosmeticBrowseMenu(
                             player.sendMessage("${CC.RED}You un-equipped this cosmetic!")
                         } else
                         {
+                            if (it !is MultiEquipCosmetic)
+                            {
+                                val equippedOnCosmetic = CosmeticRegistry
+                                    .findRelatedTo(category)
+                                    .firstOrNull { cosmetic ->
+                                        cosmetic.equipped(player)
+                                    }
+
+                                if (equippedOnCosmetic != null)
+                                {
+                                    player.sendMessage(
+                                        "${CC.RED}You must un-equip the ${CC.BOLD}${equippedOnCosmetic.name}${CC.RED} cosmetic before equipping another one!"
+                                    )
+                                    return@toButton
+                                }
+                            }
+
                             it.equipInternal(player)
                             player.sendMessage("${CC.GREEN}You equipped this cosmetic!")
                         }

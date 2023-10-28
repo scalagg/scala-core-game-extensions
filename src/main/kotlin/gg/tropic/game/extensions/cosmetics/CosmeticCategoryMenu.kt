@@ -35,7 +35,7 @@ class CosmeticCategoryMenu : PaginatedMenu()
                 buttons[buttons.size] = it.create()
                     .addToLore(
                         "",
-                        "${CC.WHITE}Collected: ${CC.D_AQUA}$owned/$allCosmeticsCount ${CC.GRAY}(${
+                        "${CC.WHITE}Collected: ${CC.PRI}$owned/$allCosmeticsCount ${CC.GRAY}(${
                             "%.2f".format(percentageCollected)
                         }%)",
                         "",
