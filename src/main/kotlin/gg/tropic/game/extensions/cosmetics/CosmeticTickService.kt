@@ -18,25 +18,29 @@ object CosmeticTickService
     {
         val executor = Executors.newSingleThreadScheduledExecutor()
         executor.scheduleAtFixedRate({
-            if (!CosmeticLocalConfig.enableCosmeticResources)
-            {
-                return@scheduleAtFixedRate
-            }
-
-            for (player in Players.all())
-            {
-                if (CosmeticCommand.preventCosmeticUsage(player))
+            runCatching {
+                if (!CosmeticLocalConfig.enableCosmeticResources)
                 {
-                    continue
+                    return@scheduleAtFixedRate
                 }
 
-                CosmeticRegistry.categories()
-                    .flatMap { it.cosmetics() }
-                    .filterIsInstance<SessionScopeTickableCosmetic<*>>()
-                    .filter { it.equipped(player) }
-                    .forEach {
-                        it.tickWithServedTickState(player)
+                for (player in Players.all())
+                {
+                    if (CosmeticCommand.preventCosmeticUsage(player))
+                    {
+                        continue
                     }
+
+                    CosmeticRegistry.categories()
+                        .flatMap { it.cosmetics() }
+                        .filterIsInstance<SessionScopeTickableCosmetic<*>>()
+                        .filter { it.equipped(player) }
+                        .forEach {
+                            it.tickWithServedTickState(player)
+                        }
+                }
+            }.onFailure {
+                it.printStackTrace()
             }
         }, 0L, 50L, TimeUnit.MILLISECONDS)
     }

@@ -103,6 +103,10 @@ class CosmeticBrowseMenu(
                                             Sound.NOTE_PLING,
                                             1.0f, 1.0f
                                         )
+
+                                        Tasks.sync {
+                                            openMenu(player)
+                                        }
                                     }
                                 }.openMenu(player)
                                 return@toButton
