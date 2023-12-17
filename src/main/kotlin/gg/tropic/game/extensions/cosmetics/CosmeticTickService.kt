@@ -2,6 +2,7 @@ package gg.tropic.game.extensions.cosmetics
 
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
+import gg.tropic.game.extensions.profile.CorePlayerProfileService
 import me.lucko.helper.utils.Players
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -30,6 +31,10 @@ object CosmeticTickService
                     {
                         continue
                     }
+
+                    CorePlayerProfileService
+                        .find(player)
+                        ?: return@runCatching
 
                     CosmeticRegistry.categories()
                         .flatMap { it.cosmetics() }

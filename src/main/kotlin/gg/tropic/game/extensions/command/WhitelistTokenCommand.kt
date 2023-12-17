@@ -3,6 +3,7 @@ package gg.tropic.game.extensions.command
 import gg.scala.commons.acf.ConditionFailedException
 import gg.scala.commons.acf.annotation.CommandAlias
 import gg.scala.commons.acf.annotation.CommandCompletion
+import gg.scala.commons.acf.annotation.CommandPermission
 import gg.scala.commons.acf.annotation.Default
 import gg.scala.commons.acf.annotation.Subcommand
 import gg.scala.commons.annotations.commands.AssignPermission
@@ -23,7 +24,7 @@ import org.bukkit.command.CommandSender
 @CommandAlias("whitelisttokens|wltoken|wltokens|wlts")
 object WhitelistTokenCommand : ScalaCommand()
 {
-    @AssignPermission
+    @CommandPermission("core.command.whitelisttokens")
     @CommandCompletion("@players")
     @Subcommand("give")
     fun onGive(sender: CommandSender, target: AsyncLemonPlayer, amount: Int) =
