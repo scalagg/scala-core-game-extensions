@@ -4,8 +4,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     java
     `maven-publish`
-    kotlin("jvm") version "1.8.20"
-    kotlin("kapt") version "1.8.20"
+    kotlin("jvm") version "1.9.20"
+    kotlin("kapt") version "1.9.20"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -21,7 +21,7 @@ allprojects {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
+    compileOnly(kotlin("stdlib"))
 
     kapt("gg.scala.commons:bukkit:3.2.1")
     compileOnly("gg.scala.commons:bukkit:3.2.1")
