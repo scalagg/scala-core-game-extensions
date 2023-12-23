@@ -59,7 +59,7 @@ interface KillEffect :
                         Button.playNeutral(player)
                     }
             }
-        }
+        }.openMenu(player)
     }
 
     override fun buildDefaultConfiguration() = KillEffectConfig()

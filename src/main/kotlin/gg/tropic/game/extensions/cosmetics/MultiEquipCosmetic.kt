@@ -5,5 +5,3 @@ package gg.tropic.game.extensions.cosmetics
  * @since 10/27/2023
  */
 interface MultiEquipCosmetic
-{
-}
