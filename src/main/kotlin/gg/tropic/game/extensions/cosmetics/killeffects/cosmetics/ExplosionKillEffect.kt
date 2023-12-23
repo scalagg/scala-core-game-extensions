@@ -5,6 +5,7 @@ import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import gg.tropic.game.extensions.cosmetics.killeffects.KillEffectCosmeticCategory
+import gg.tropic.game.extensions.cosmetics.utilities.DeathAnimatorUtilities
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import net.evilblock.cubed.util.bukkit.Tasks
 import org.bukkit.Material
@@ -51,11 +52,7 @@ object ExplosionKillEffect : KillEffect
             .multiply(1.5)
             .setY(0.7)
 
-        Tasks.delayed(25L) {
-            viewers.forEach { viewer ->
-                viewer.hidePlayer(target)
-            }
-        }
+        DeathAnimatorUtilities.animate(target)
 
         target.velocity = location
     }

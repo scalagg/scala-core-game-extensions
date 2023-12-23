@@ -5,6 +5,7 @@ import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import gg.tropic.game.extensions.cosmetics.killeffects.KillEffectCosmeticCategory
+import gg.tropic.game.extensions.cosmetics.utilities.DeathAnimatorUtilities
 import me.lucko.helper.Schedulers
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Effect
@@ -52,6 +53,7 @@ object BloodKillEffect : KillEffect
                         viewer.hidePlayer(target)
                     }
 
+                    DeathAnimatorUtilities.animate(target)
                     task.closeAndReportException()
                     return@runRepeating
                 }
