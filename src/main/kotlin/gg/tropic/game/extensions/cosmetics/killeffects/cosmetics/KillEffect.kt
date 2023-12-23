@@ -19,7 +19,8 @@ interface KillEffect :
 {
 
     data class KillEffectConfig(
-        var flightEnabled: Boolean = true
+        var flight: Boolean? = true,
+        var clearInventory: Boolean? = true
     ) : DynamicCosmeticConfigStore
     {
         override fun getAbstractType() =
@@ -52,10 +53,20 @@ interface KillEffect :
                 buttons[0] = ItemBuilder
                     .of(Material.FEATHER)
                     .name("${CC.YELLOW}Flight: ${
-                        if (configuration.flightEnabled) "${CC.GREEN}Enabled" else "${CC.RED}Disabled"
+                        if (configuration.flight != false) "${CC.GREEN}Enabled" else "${CC.RED}Disabled"
                     }")
                     .toButton { _, _ ->
-                        configuration.flightEnabled = !configuration.flightEnabled
+                        configuration.flight = !(configuration.flight ?: true)
+                        Button.playNeutral(player)
+                    }
+
+                buttons[1] = ItemBuilder
+                    .of(Material.CHEST)
+                    .name("${CC.YELLOW}Clear Inventory: ${
+                        if (configuration.clearInventory != false) "${CC.GREEN}Enabled" else "${CC.RED}Disabled"
+                    }")
+                    .toButton { _, _ ->
+                        configuration.clearInventory = !(configuration.clearInventory ?: true)
                         Button.playNeutral(player)
                     }
             }
