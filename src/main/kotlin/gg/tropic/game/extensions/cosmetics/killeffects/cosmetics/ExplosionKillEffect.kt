@@ -28,7 +28,7 @@ object ExplosionKillEffect : KillEffect
         )
     }
 
-    override fun applyTo(viewers: List<Player>, target: Player)
+    override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
     {
         ParticleEffect.EXPLOSION_HUGE
             .display(
@@ -45,12 +45,13 @@ object ExplosionKillEffect : KillEffect
             )
         }
 
-        val location = target.location
+        val location = killer.location
             .direction
-            .multiply(-1.5)
+            .clone()
+            .multiply(1.5)
             .setY(0.7)
 
-        Tasks.delayed(17L) {
+        Tasks.delayed(25L) {
             viewers.forEach { viewer ->
                 viewer.hidePlayer(target)
             }

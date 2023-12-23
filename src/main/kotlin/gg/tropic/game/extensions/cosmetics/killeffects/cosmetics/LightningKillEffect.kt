@@ -22,7 +22,7 @@ import kotlin.random.Random
 @Service
 object LightningKillEffect : KillEffect
 {
-    override fun applyTo(viewers: List<Player>, target: Player)
+    override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
     {
         viewers.forEach {
             spawnLightning(it, target.location)

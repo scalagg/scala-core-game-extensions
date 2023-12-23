@@ -64,5 +64,5 @@ interface KillEffect :
 
     override fun buildDefaultConfiguration() = KillEffectConfig()
 
-    fun applyTo(viewers: List<Player>, target: Player)
+    fun applyTo(viewers: List<Player>, killer: Player, target: Player)
 }

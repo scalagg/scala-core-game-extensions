@@ -39,7 +39,7 @@ object BloodKillEffect : KillEffect
         )
     }
 
-    override fun applyTo(viewers: List<Player>, target: Player)
+    override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
     {
         var ticks = 0
 
