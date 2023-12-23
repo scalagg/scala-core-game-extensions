@@ -29,7 +29,7 @@ object LightningKillEffect : KillEffect
         }
     }
 
-    fun spawnLightning(player: Player, location: Location)
+    private fun spawnLightning(player: Player, location: Location)
     {
         val lightningPacket = PacketContainer(PacketType.Play.Server.SPAWN_ENTITY_WEATHER)
         lightningPacket.modifier.writeDefaults()

@@ -1,6 +1,7 @@
 package gg.tropic.game.extensions.cosmetics.killeffects.cosmetics
 
 import gg.scala.flavor.service.Configure
+import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import gg.tropic.game.extensions.cosmetics.killeffects.KillEffectCosmeticCategory
@@ -15,6 +16,7 @@ import org.bukkit.entity.Player
  * @author GrowlyX
  * @since 12/22/2023
  */
+@Service
 object BloodKillEffect : KillEffect
 {
     @Configure
