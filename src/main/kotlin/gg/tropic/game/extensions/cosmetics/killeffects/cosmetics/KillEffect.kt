@@ -15,7 +15,8 @@ import org.bukkit.entity.Player
 interface KillEffect :
     CosmeticLike,
     PurchasableCosmetic,
-    DynamicCosmetic<KillEffect.KillEffectConfig>
+    DynamicCosmetic<KillEffect.KillEffectConfig>,
+    MultiEquipCosmetic
 {
 
     data class KillEffectConfig(
