@@ -16,7 +16,7 @@ import org.bukkit.entity.Player
 object CosmeticRegistry
 {
     private val categories = mutableMapOf<String, CosmeticCategory>()
-    private val cosmetics = mutableMapOf<CosmeticCategory, List<CosmeticLike>>()
+    val cosmetics = mutableMapOf<CosmeticCategory, List<CosmeticLike>>()
 
     fun categories() = categories.values.toList()
 
@@ -28,6 +28,12 @@ object CosmeticRegistry
         cosmetics[category] ?: listOf()
 
     fun getSingleEquipped(category: CosmeticCategory, player: Player) = cosmetics[category]!!
+        .firstOrNull {
+            it.equipped(player)
+        }
+
+    inline fun <reified T : CosmeticLike> getSingleEquipped(category: CosmeticCategory, player: Player) = cosmetics[category]!!
+        .filterIsInstance<T>()
         .firstOrNull {
             it.equipped(player)
         }
