@@ -15,7 +15,9 @@ interface FrontendComponent
 
     fun create() = ItemBuilder
         .copyOf(icon)
-        .name("${CC.GREEN}$name")
+        .name("${CC.GREEN}$name${
+            if (this is NewlyReleased) "${CC.BD_GREEN} (NEW!)" else ""
+        }")
         .setLore(
             description.map { "${CC.GRAY}$it" }
         )

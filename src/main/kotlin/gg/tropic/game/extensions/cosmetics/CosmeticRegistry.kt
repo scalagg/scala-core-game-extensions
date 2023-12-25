@@ -32,7 +32,7 @@ object CosmeticRegistry
             it.equipped(player)
         }
 
-    inline fun <reified T : CosmeticLike> getSingleEquipped(category: CosmeticCategory, player: Player) = cosmetics[category]!!
+    inline fun <reified T : CosmeticLike> getSingleEquippedAs(category: CosmeticCategory, player: Player) = cosmetics[category]!!
         .filterIsInstance<T>()
         .firstOrNull {
             it.equipped(player)

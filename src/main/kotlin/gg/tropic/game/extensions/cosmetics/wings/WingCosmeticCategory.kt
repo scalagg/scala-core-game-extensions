@@ -32,7 +32,7 @@ object WingCosmeticCategory : CosmeticCategory
             .filter(EventUtils::hasPlayerMoved)
             .handler {
                 CosmeticRegistry
-                    .getSingleEquipped<WingParticleEffects>(this, it.player)
+                    .getSingleEquippedAs<WingParticleEffects>(this, it.player)
                     ?.apply {
                         serveTickState(it.player).lastMovement = System.currentTimeMillis()
                     }
