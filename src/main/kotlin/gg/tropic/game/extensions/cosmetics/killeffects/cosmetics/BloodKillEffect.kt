@@ -53,7 +53,6 @@ object BloodKillEffect : KillEffect
                         viewer.hidePlayer(target)
                     }
 
-                    DeathAnimatorUtilities.animate(target)
                     task.closeAndReportException()
                     return@runRepeating
                 }

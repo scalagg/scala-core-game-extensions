@@ -28,8 +28,6 @@ object LightningKillEffect : KillEffect
         viewers.forEach {
             spawnLightning(it, target.location)
         }
-
-        DeathAnimatorUtilities.animate(target)
     }
 
     private fun spawnLightning(player: Player, location: Location)

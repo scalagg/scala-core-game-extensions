@@ -52,8 +52,6 @@ object ExplosionKillEffect : KillEffect
             .multiply(1.5)
             .setY(0.7)
 
-        DeathAnimatorUtilities.animate(target)
-
         target.velocity = location
     }
 

@@ -11,7 +11,7 @@ plugins {
 
 allprojects {
     group = "gg.tropic.game.extensions"
-    version = "1.2.7"
+    version = "1.2.8"
 
     repositories {
         mavenCentral()
@@ -22,6 +22,7 @@ allprojects {
 
 dependencies {
     compileOnly(kotlin("stdlib"))
+    compileOnly(fileTree("lib"))
 
     kapt("gg.scala.commons:bukkit:3.2.1")
     compileOnly("gg.scala.commons:bukkit:3.2.1")
