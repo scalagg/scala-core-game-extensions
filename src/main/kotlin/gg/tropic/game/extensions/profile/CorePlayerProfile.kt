@@ -30,6 +30,8 @@ data class CorePlayerProfile(
     var level: Int = 1
         private set
 
+    var customTagTokens: Int? = 0
+
     val equippedCosmetics = mutableListOf<ImmutableResource>()
     val ownedCosmetics = mutableListOf<ImmutableResource>()
 
@@ -71,6 +73,8 @@ data class CorePlayerProfile(
         }
 
     val availableXpBoosters = mutableListOf<XpBooster>()
+
+    fun getCustomTagTokens(): Int = customTagTokens ?: 0
 
     fun activateBooster(booster: XpBooster)
     {
