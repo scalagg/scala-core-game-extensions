@@ -8,7 +8,5 @@ data class Verification(
     val timestamp: Long
 )
 {
-    enum class VerificationStatus {
-        Rejected, Accepted
-    }
+
 }

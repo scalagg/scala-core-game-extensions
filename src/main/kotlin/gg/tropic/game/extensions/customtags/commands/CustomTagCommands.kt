@@ -1,6 +1,7 @@
 package gg.tropic.game.extensions.customtags.commands
 
 import gg.scala.commons.acf.annotation.CommandAlias
+import gg.scala.commons.acf.annotation.CommandPermission
 import gg.scala.commons.annotations.commands.AutoRegister
 import gg.scala.commons.command.ScalaCommand
 import gg.tropic.game.extensions.customtags.CustomChatTagService
@@ -12,8 +13,11 @@ import java.util.concurrent.CompletableFuture
 object CustomTagCommands : ScalaCommand()
 {
     @CommandAlias("customtags")
-    fun onCustomTagMenuOpen(player: Player): CompletableFuture<Void> =
-        CustomChatTagService.getChatTagsFromPlayer(player.uniqueId).thenAccept {
-            CustomTagsMenu(it).openMenu(player)
-        }
+    @CommandPermission("core.command.customtags")
+    fun onCustomTagMenuOpen(player: Player) =
+        CustomChatTagService
+            .getChatTagsFromPlayer(player.uniqueId)
+            .thenAccept {
+                CustomTagsMenu(it).openMenu(player)
+            }
 }

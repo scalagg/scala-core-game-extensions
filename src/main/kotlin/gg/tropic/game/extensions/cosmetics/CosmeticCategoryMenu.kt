@@ -43,6 +43,7 @@ class CosmeticCategoryMenu : PaginatedMenu()
                     )
                     .toButton { _, _ ->
                         CosmeticBrowseMenu(it).openMenu(player)
+                        Button.playNeutral(player)
                     }
             }
 

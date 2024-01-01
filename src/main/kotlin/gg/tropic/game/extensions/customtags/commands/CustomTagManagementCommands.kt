@@ -47,7 +47,7 @@ object CustomTagManagementCommands : ScalaCommand()
             account.customTagTokens = 0
         }
 
-        account.customTagTokens = account.customTagTokens!! + 1
+        account.customTagTokens = account.customTagTokens!! + amount
         account.save().join()
 
         sender.sendMessage("${QuickAccess.computeColoredName(it.uniqueId, it.name).join()} ${CC.GREEN}has been issued ${CC.YELLOW}$amount ${CC.GREEN}custom tag tokens!")

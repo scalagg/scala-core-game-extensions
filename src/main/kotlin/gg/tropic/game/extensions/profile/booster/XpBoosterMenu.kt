@@ -81,6 +81,7 @@ class XpBoosterMenu : PaginatedMenu()
                     .toButton { _, _ ->
                         if (player.profile.activeXpBooster != null)
                         {
+                            Button.playFail(player)
                             player.sendMessage(
                                 "${CC.RED}You already have an active booster! Please wait until it expires before activating a new one."
                             )
