@@ -49,7 +49,7 @@ object CustomChatTagService
                     FancyMessage()
                         .withMessage(
                             "${CC.B_AQUA}Custom Tags ${CC.GRAY}${Constants.DOUBLE_ARROW_RIGHT} ${CC.D_AQUA}You have ${CC.AQUA}${
-                                retrieveAllChatTags().join().size
+                                retrieveExclusivelyPendingTags().join().size
                             } ${CC.D_AQUA}tags to process. ${CC.GREEN}(Click to view)"
                         )
                         .andCommandOf(
