@@ -64,15 +64,7 @@ object CustomTagManagementCommands : ScalaCommand()
     @CommandPermission("core.command.managecustomtags")
     fun onManageCustomTags(sender: Player) = CustomChatTagService.retrieveAllChatTags()
         .thenAccept {
-            if (it.isEmpty())
-            {
-                throw ConditionFailedException(
-                    "There are currently no pending tags to accept!"
-                )
-            } else
-            {
-                CustomTagManagementMenu(it).openMenu(sender)
-            }
+            CustomTagManagementMenu(it).openMenu(sender)
         }
 }
 

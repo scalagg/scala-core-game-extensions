@@ -102,6 +102,8 @@ class CustomTagsMenu(
                 "${CC.GRAY}Redeems one of your custom chat tag",
                 "${CC.GRAY}tokens!",
                 "",
+                "${CC.GRAY}Your Tokens: ${CC.WHITE}${CorePlayerProfileService.find(player)?.getCustomTagTokens() ?: 0}",
+                "",
                 "${CC.GREEN}Click to create!"
             )
             .toButton { _, _ ->
