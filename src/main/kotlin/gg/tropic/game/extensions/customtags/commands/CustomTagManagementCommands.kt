@@ -62,7 +62,7 @@ object CustomTagManagementCommands : ScalaCommand()
 
     @CommandAlias("managecustomtags")
     @CommandPermission("core.command.managecustomtags")
-    fun onManageCustomTags(sender: Player) = CustomChatTagService.retrieveAllChatTags()
+    fun onManageCustomTags(sender: Player) = CustomChatTagService.retrieveExclusivelyPendingTags()
         .thenAccept {
             CustomTagManagementMenu(it).openMenu(sender)
         }

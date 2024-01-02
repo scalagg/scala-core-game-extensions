@@ -25,7 +25,7 @@ class CustomTagManagementMenu(private val allTags: List<CustomChatTag>) : Pagina
     {
         val buttons = mutableMapOf<Int, Button>()
 
-        allTags.filter { it.verification == null }.forEach { tag ->
+        allTags.forEach { tag ->
             buttons[buttons.size] = ItemBuilder.of(Material.NAME_TAG)
                 .name(LegacyComponentSerializer.legacySection().serialize(tag.design)).apply {
                     this.addToLore("${CC.GRAY}Creator: ${CC.WHITE}${QuickAccess.nameOrConsole(tag.ownerId)}")
