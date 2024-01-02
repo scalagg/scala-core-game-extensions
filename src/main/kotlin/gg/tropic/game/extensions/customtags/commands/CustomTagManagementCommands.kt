@@ -11,7 +11,7 @@ import gg.scala.lemon.util.QuickAccess
 import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.type.DataStoreStorageType
 import gg.tropic.game.extensions.customtags.CustomChatTagService
-import gg.tropic.game.extensions.customtags.menu.CustomTagManagementMenu
+import gg.tropic.game.extensions.customtags.menu.PendingCustomTagMenu
 import gg.tropic.game.extensions.profile.CorePlayerProfile
 import gg.tropic.game.extensions.profile.profile
 import net.evilblock.cubed.util.CC
@@ -62,9 +62,10 @@ object CustomTagManagementCommands : ScalaCommand()
 
     @CommandAlias("managecustomtags")
     @CommandPermission("core.command.managecustomtags")
-    fun onManageCustomTags(sender: Player) = CustomChatTagService.retrieveExclusivelyPendingTags()
+    fun onManageCustomTags(sender: Player) = CustomChatTagService
+        .getAllPendingChatTags()
         .thenAccept {
-            CustomTagManagementMenu(it).openMenu(sender)
+            PendingCustomTagMenu(it).openMenu(sender)
         }
 }
 

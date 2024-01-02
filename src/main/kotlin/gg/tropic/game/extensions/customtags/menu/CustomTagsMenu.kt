@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.customtags.menu
 
+import gg.scala.lemon.LemonConstants
 import gg.scala.lemon.filter.ChatMessageFilterHandler
 import gg.tropic.game.extensions.customtags.CustomChatTag
 import gg.tropic.game.extensions.customtags.CustomChatTagService
@@ -26,9 +27,14 @@ class CustomTagsMenu(
     override fun getAllPagesButtons(player: Player): Map<Int, Button>
     {
         val buttons = mutableMapOf<Int, Button>()
+        val profile = CorePlayerProfileService.find(player)
+            ?: return buttons
 
-
-        customChatTags.sortedBy { if (it.verification != null && it.verification!!.status == VerificationStatus.Accepted) 0 else 1 }
+        customChatTags
+            .sortedBy {
+                if (it.verification != null && it.verification!!.status == VerificationStatus.Accepted)
+                    0 else 1
+            }
             .forEach { tag ->
                 buttons[buttons.size] = ItemBuilder
                     .of(
@@ -36,20 +42,23 @@ class CustomTagsMenu(
                             tag.verification != null &&
                             tag.verification!!.status == VerificationStatus.Rejected
                         )
-                            Material.COAL
+                            Material.COAL_BLOCK
                         else
                             Material.NAME_TAG
                     )
+                    .apply {
+                        if (profile.equippedTag?.identifier == tag.identifier)
+                            glow()
+                    }
                     .name(
                         LegacyComponentSerializer
                             .legacySection()
                             .serialize(tag.design)
                     )
                     .apply {
-
                         this.addToLore(
-                            "${CC.GRAY}This will set your current tag to",
-                            "${CC.GRAY}the one that you created!",
+                            "${CC.GRAY}This is a custom tag you",
+                            "${CC.GRAY}have created!",
                             ""
                         )
 
@@ -62,6 +71,12 @@ class CustomTagsMenu(
                         {
                             if (tag.verification!!.status == VerificationStatus.Accepted)
                             {
+                                if (profile.equippedTag?.identifier == tag.identifier)
+                                {
+                                    addToLore("${CC.GREEN}Click to un-equip!")
+                                    return@apply
+                                }
+
                                 this.addToLore(
                                     "${CC.GREEN}Click to equip!"
                                 )
@@ -75,10 +90,28 @@ class CustomTagsMenu(
                                     "${CC.B_RED}token."
                                 )
                             }
-
-
                         }
-                    }.toButton()
+                    }
+                    .toButton { _, _ ->
+                        if (tag.verification!!.status == VerificationStatus.Accepted)
+                        {
+                            if (profile.equippedTag?.identifier == tag.identifier)
+                            {
+                                profile.equippedTag = null
+                                profile.save()
+
+                                Button.playNeutral(player)
+                                openMenu(player)
+                                return@toButton
+                            }
+
+                            profile.equippedTag = tag
+                            profile.save()
+
+                            Button.playNeutral(player)
+                            openMenu(player)
+                        }
+                    }
             }
         return buttons
     }
@@ -86,11 +119,13 @@ class CustomTagsMenu(
 
     override fun getPrePaginatedTitle(player: Player): String
     {
-        return "Viewing Your Custom Tags..."
+        return "Viewing your custom tags"
     }
 
-    override fun getGlobalButtons(player: Player): Map<Int, Button>?
+    override fun getGlobalButtons(player: Player): Map<Int, Button>
     {
+        val tagTokens = CorePlayerProfileService.find(player)?.getCustomTagTokens() ?: 0
+
         return hashMapOf(4 to ItemBuilder
             .copyOf(
                 object : AddButton()
@@ -102,7 +137,10 @@ class CustomTagsMenu(
                 "${CC.GRAY}Redeems one of your custom chat tag",
                 "${CC.GRAY}tokens!",
                 "",
-                "${CC.GRAY}Your Tokens: ${CC.WHITE}${CorePlayerProfileService.find(player)?.getCustomTagTokens() ?: 0}",
+                if (tagTokens == 0)
+                    "${CC.RED}Purchase tokens at: ${CC.B_WHITE}${LemonConstants.STORE_LINK}"
+                else
+                    "${CC.WHITE}Tokens: ${CC.PRI}$tagTokens",
                 "",
                 "${CC.GREEN}Click to create!"
             )
@@ -116,9 +154,6 @@ class CustomTagsMenu(
                     Button.playFail(player)
                     return@toButton
                 }
-
-                player.closeInventory()
-                Button.playNeutral(player)
 
                 InputPrompt()
                     .withText("${CC.GREEN}Please enter the design that you would like this chat tag to have:")
