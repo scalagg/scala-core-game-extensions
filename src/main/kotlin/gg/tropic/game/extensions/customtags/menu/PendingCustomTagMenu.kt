@@ -74,7 +74,7 @@ class PendingCustomTagMenu(private val pendingTags: List<CustomChatTag>) : Pagin
                                 }
                                 .thenComposeAsync {
                                     QuickAccess.sendGlobalPlayerMessage(
-                                        "${CC.RED}One of your custom tags has been rejected! Use ${CC.GRAY}/customtags${CC.RED} to view which one!",
+                                        "${CC.RED}One of your custom tags has been rejected! Use ${CC.GRAY}/customtags${CC.RED} to view which one! ${CC.BOLD}Your token has been refunded.",
                                         tag.ownerId
                                     )
                                 }
