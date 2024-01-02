@@ -27,58 +27,62 @@ class CustomTagsMenu(
     {
         val buttons = mutableMapOf<Int, Button>()
 
-        customChatTags.forEach { tag ->
-            buttons[buttons.size] = ItemBuilder
-                .of(
-                    if (
-                        tag.verification != null &&
-                        tag.verification.status == VerificationStatus.Rejected
-                    )
-                        Material.COAL
-                    else
-                        Material.NAME_TAG
-                )
-                .name(
-                    LegacyComponentSerializer
-                        .legacySection()
-                        .serialize(tag.design)
-                )
-                .apply {
-                    this.addToLore(
-                        "${CC.GRAY}This will set your current tag to",
-                        "${CC.GRAY}the one that you created!",
-                        ""
-                    )
 
-                    if (tag.verification == null)
-                    {
-                        this.addToLore(
-                            "${CC.YELLOW}Pending verification!",
+        customChatTags.sortedBy { if (it.verification != null && it.verification!!.status == VerificationStatus.Accepted) 0 else 1 }
+            .forEach { tag ->
+                buttons[buttons.size] = ItemBuilder
+                    .of(
+                        if (
+                            tag.verification != null &&
+                            tag.verification!!.status == VerificationStatus.Rejected
                         )
-                    } else
-                    {
-                        if (tag.verification.status == VerificationStatus.Accepted)
+                            Material.COAL
+                        else
+                            Material.NAME_TAG
+                    )
+                    .name(
+                        LegacyComponentSerializer
+                            .legacySection()
+                            .serialize(tag.design)
+                    )
+                    .apply {
+
+                        this.addToLore(
+                            "${CC.GRAY}This will set your current tag to",
+                            "${CC.GRAY}the one that you created!",
+                            ""
+                        )
+
+                        if (tag.verification == null)
                         {
                             this.addToLore(
-                                "${CC.GREEN}Click to equip!"
+                                "${CC.YELLOW}Pending verification!",
                             )
                         } else
                         {
-                            this.addToLore(
-                                "${CC.RED}Sorry, this custom tag has",
-                                "${CC.RED}been rejected by staff.",
-                                "",
-                                "${CC.B_RED}You have been refunded your",
-                                "${CC.B_RED}token."
-                            )
-                        }
-                    }
-                }
-                .toButton()
-        }
+                            if (tag.verification!!.status == VerificationStatus.Accepted)
+                            {
+                                this.addToLore(
+                                    "${CC.GREEN}Click to equip!"
+                                )
+                            } else
+                            {
+                                this.addToLore(
+                                    "${CC.RED}Sorry, this custom tag has",
+                                    "${CC.RED}been rejected by staff.",
+                                    "",
+                                    "${CC.B_RED}You have been refunded your",
+                                    "${CC.B_RED}token."
+                                )
+                            }
 
+
+                        }
+                    }.toButton()
+            }
         return buttons
     }
+
 
     override fun getPrePaginatedTitle(player: Player): String
     {
@@ -124,10 +128,11 @@ class CustomTagsMenu(
                         }
 
                         if (ChatMessageFilterHandler.handleMessageFilter(
-                            player = player,
-                            message = input,
-                            reportToStaff = false
-                        ))
+                                player = player,
+                                message = input,
+                                reportToStaff = false
+                            )
+                        )
                         {
                             player.sendMessage("${CC.RED}Your chat tag must not contain any profanity!")
                             return@acceptInput
@@ -157,7 +162,13 @@ class CustomTagsMenu(
 
                                 coreProfile.customTagTokens = (coreProfile.customTagTokens ?: 1) - 1
                                 coreProfile.save().thenRun {
-                                    player.sendMessage("${CC.GREEN}You have requested the chat tag: ${Color.translate(input)}")
+                                    player.sendMessage(
+                                        "${CC.GREEN}You have requested the chat tag: ${
+                                            Color.translate(
+                                                input
+                                            )
+                                        }"
+                                    )
                                     player.sendMessage("${CC.GRAY}Note: it may take up to 24 hours for a staff member to verify your chat tag.")
 
                                     player.playSound(

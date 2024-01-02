@@ -11,7 +11,7 @@ data class CustomChatTag(
     override val identifier: UUID = UUID.randomUUID(),
     @Indexed val ownerId: UUID,
     val design: Component,
-    val verification: Verification? = null
+    var verification: Verification? = null
 ) : IDataStoreObject
 {
 }

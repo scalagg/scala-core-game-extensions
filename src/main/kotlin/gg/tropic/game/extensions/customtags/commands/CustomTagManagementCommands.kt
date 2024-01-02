@@ -10,11 +10,14 @@ import gg.scala.lemon.player.wrapper.AsyncLemonPlayer
 import gg.scala.lemon.util.QuickAccess
 import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.type.DataStoreStorageType
+import gg.tropic.game.extensions.customtags.CustomChatTagService
+import gg.tropic.game.extensions.customtags.menu.CustomTagManagementMenu
 import gg.tropic.game.extensions.profile.CorePlayerProfile
 import gg.tropic.game.extensions.profile.profile
 import net.evilblock.cubed.util.CC
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
 @AutoRegister
 object CustomTagManagementCommands : ScalaCommand()
@@ -27,7 +30,7 @@ object CustomTagManagementCommands : ScalaCommand()
         target: AsyncLemonPlayer,
         amount: Int
     ) = target.validatePlayers(
-       sender, false
+        sender, false
     ) {
         val account = Bukkit.getPlayer(it.uniqueId)
             ?.profile
@@ -50,6 +53,26 @@ object CustomTagManagementCommands : ScalaCommand()
         account.customTagTokens = account.customTagTokens!! + amount
         account.save().join()
 
-        sender.sendMessage("${QuickAccess.computeColoredName(it.uniqueId, it.name).join()} ${CC.GREEN}has been issued ${CC.YELLOW}$amount ${CC.GREEN}custom tag tokens!")
+        sender.sendMessage(
+            "${
+                QuickAccess.computeColoredName(it.uniqueId, it.name).join()
+            } ${CC.GREEN}has been issued ${CC.YELLOW}$amount ${CC.GREEN}custom tag tokens!"
+        )
     }
+
+    @CommandAlias("managecustomtags")
+    @CommandPermission("core.command.managecustomtags")
+    fun onManageCustomTags(sender: Player) = CustomChatTagService.retrieveAllChatTags()
+        .thenAccept {
+            if (it.isEmpty())
+            {
+                throw ConditionFailedException(
+                    "There are currently no pending tags to accept!"
+                )
+            } else
+            {
+                CustomTagManagementMenu(it).openMenu(sender)
+            }
+        }
 }
+

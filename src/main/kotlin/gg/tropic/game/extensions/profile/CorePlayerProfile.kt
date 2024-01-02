@@ -6,6 +6,7 @@ import gg.scala.store.storage.type.DataStoreStorageType
 import gg.tropic.game.extensions.cosmetics.CosmeticTickState
 import gg.tropic.game.extensions.cosmetics.DynamicCosmeticConfigStore
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
+import gg.tropic.game.extensions.customtags.CustomChatTag
 import gg.tropic.game.extensions.profile.booster.XpBooster
 import gg.tropic.game.extensions.profile.event.LevelUpEvent
 import net.evilblock.cubed.util.CC
@@ -31,6 +32,7 @@ data class CorePlayerProfile(
         private set
 
     var customTagTokens: Int? = 0
+    var equippedTag: CustomChatTag? = null
 
     val equippedCosmetics = mutableListOf<ImmutableResource>()
     val ownedCosmetics = mutableListOf<ImmutableResource>()

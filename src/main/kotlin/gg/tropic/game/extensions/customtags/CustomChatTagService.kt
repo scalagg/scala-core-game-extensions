@@ -16,6 +16,12 @@ object CustomChatTagService
         )
         .thenApply { it.values.toList() }
 
+    fun retrieveAllChatTags() = DataStoreObjectControllerCache
+        .findNotNull<CustomChatTag>()
+        .mongo()
+        .loadAll()
+        .thenApply { it.values.toList() }
+
     fun save(tag: CustomChatTag) = DataStoreObjectControllerCache
         .findNotNull<CustomChatTag>()
         .save(tag)
