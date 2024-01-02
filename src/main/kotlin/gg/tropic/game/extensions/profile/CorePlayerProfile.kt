@@ -157,11 +157,6 @@ data class CorePlayerProfile(
         }
     }
 
-    fun getXpRequiredToLevelUp(): Long
-    {
-        TODO("issue")
-    }
-
     fun getPercentageCompleteUntilNextLevel(): Float
     {
         return getFractionCompleteUntilNextLevel() * 100.0F

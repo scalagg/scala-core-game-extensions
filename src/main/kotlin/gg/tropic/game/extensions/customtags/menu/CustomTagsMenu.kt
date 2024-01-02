@@ -14,6 +14,7 @@ import net.evilblock.cubed.util.Color
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import net.evilblock.cubed.util.bukkit.prompt.InputPrompt
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.entity.Player
@@ -116,7 +117,7 @@ class CustomTagsMenu(
                 InputPrompt()
                     .withText("${CC.GREEN}Please enter the design that you would like this chat tag to have:")
                     .acceptInput { _, input ->
-                        if (input.length >= 16)
+                        if (ChatColor.stripColor(input).length >= 16)
                         {
                             player.sendMessage("${CC.RED}Your chat tag must not be greater than 16 characters long!")
                             return@acceptInput
