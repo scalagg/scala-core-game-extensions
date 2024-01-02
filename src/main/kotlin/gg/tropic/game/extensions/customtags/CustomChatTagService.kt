@@ -34,7 +34,7 @@ object CustomChatTagService
         .save(tag)
 
     fun retrieveExclusivelyPendingTags() = retrieveAllChatTags()
-        .thenApply { tags -> tags.filter { it.verification != null } }
+        .thenApply { tags -> tags.filter { it.verification == null } }
 
     @Configure
     fun configure()
