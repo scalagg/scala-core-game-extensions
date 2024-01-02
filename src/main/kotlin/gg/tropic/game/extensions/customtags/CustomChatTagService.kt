@@ -52,7 +52,8 @@ object CustomChatTagService
                 return@provider previousProvider(it)
             }
 
-            coreProfile.equippedTag!!.design
+            Component.text(" ")
+                .append(coreProfile.equippedTag!!.design)
         }
 
         Events

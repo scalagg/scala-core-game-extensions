@@ -10,6 +10,7 @@ import gg.scala.lemon.player.wrapper.AsyncLemonPlayer
 import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.type.DataStoreStorageType
 import gg.tropic.game.extensions.profile.CorePlayerProfile
+import gg.tropic.game.extensions.profile.CorePlayerProfileService
 import gg.tropic.game.extensions.profile.booster.XpBooster
 import gg.tropic.game.extensions.profile.profile
 import net.evilblock.cubed.util.CC
@@ -36,33 +37,24 @@ object BoosterAddCommand : ScalaCommand()
     ) = target.validatePlayers(
         player, false
     ) {
-        val account = Bukkit.getPlayer(it.uniqueId)
-            ?.profile
-            ?: DataStoreObjectControllerCache
-                .findNotNull<CorePlayerProfile>()
-                .load(
-                    it.uniqueId,
-                    DataStoreStorageType.MONGO
+        CorePlayerProfileService
+            .useAsyncThenSaveGlobally(it.uniqueId) { account ->
+                account.availableXpBoosters.add(
+                    XpBooster(
+                        multiplier = multiplier,
+                        duration = duration.get()
+                    )
                 )
-                .join()
-            ?: throw ConditionFailedException(
-                "${CC.YELLOW}${it.name}${CC.RED} does not have a core profile."
-            )
-
-        account.availableXpBoosters.add(
-            XpBooster(
-                multiplier = multiplier,
-                duration = duration.get()
-            )
-        )
-        account.save().join()
-
-        player.sendMessage(
-            "${CC.GREEN}You've granted ${CC.YELLOW}${it.name}${CC.GREEN} a ${
-                "%.2f".format(multiplier)
-            }x booster for the next ${
-                TimeUtil.formatIntoAbbreviatedString((duration.get() / 1000).toInt())
-            }."
-        )
+            }
+            .thenRun {
+                player.sendMessage(
+                    "${CC.GREEN}You've granted ${CC.YELLOW}${it.name}${CC.GREEN} a ${
+                        "%.2f".format(multiplier)
+                    }x booster for the next ${
+                        TimeUtil.formatIntoAbbreviatedString((duration.get() / 1000).toInt())
+                    }."
+                )
+            }
+            .join()
     }
 }

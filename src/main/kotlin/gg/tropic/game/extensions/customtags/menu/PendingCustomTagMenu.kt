@@ -54,32 +54,30 @@ class PendingCustomTagMenu(private val pendingTags: List<CustomChatTag>) : Pagin
                                     LegacyComponentSerializer.legacySection().serialize(tag.design)
                                 }${CC.GREEN}!"
                             )
+
+                            QuickAccess.sendGlobalPlayerMessage(
+                                "${CC.GREEN}One of your custom tags has been accepted! Use ${CC.GRAY}/customtags${CC.GREEN} to view them!",
+                                tag.ownerId
+                            )
                         } else
                         {
-                            player.sendMessage(
-                                "${CC.RED}You have rejected the tag ${
-                                    LegacyComponentSerializer.legacySection().serialize(tag.design)
-                                }${CC.RED}!"
-                            )
-
-                            val coreTargetProfile = CorePlayerProfileService.find(tag.ownerId)
-
-                            if (coreTargetProfile == null)
-                            {
-                                Button.playFail(player)
-                                player.sendMessage(
-                                    "${CC.RED}Unable to refund the custom tag token for ${CC.YELLOW}${
-                                        QuickAccess.nameOrConsole(
-                                            tag.ownerId
-                                        )
-                                    }${CC.RED}."
-                                )
-                            } else
-                            {
-                                Button.playSuccess(player)
-                                coreTargetProfile.customTagTokens = coreTargetProfile.getCustomTagTokens() + 1
-                                coreTargetProfile.save()
-                            }
+                            CorePlayerProfileService
+                                .useAsyncThenSaveGlobally(tag.ownerId) { account ->
+                                    account.customTagTokens = account.getCustomTagTokens() + 1
+                                }
+                                .thenRun {
+                                    player.sendMessage(
+                                        "${CC.RED}You have rejected the tag ${
+                                            LegacyComponentSerializer.legacySection().serialize(tag.design)
+                                        }${CC.RED}!"
+                                    )
+                                }
+                                .thenComposeAsync {
+                                    QuickAccess.sendGlobalPlayerMessage(
+                                        "${CC.RED}One of your custom tags has been rejected! Use ${CC.GRAY}/customtags${CC.RED} to view which one!",
+                                        tag.ownerId
+                                    )
+                                }
                         }
                     }
             }

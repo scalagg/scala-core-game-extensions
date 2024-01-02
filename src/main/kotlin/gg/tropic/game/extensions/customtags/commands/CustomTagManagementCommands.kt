@@ -13,6 +13,7 @@ import gg.scala.store.storage.type.DataStoreStorageType
 import gg.tropic.game.extensions.customtags.CustomChatTagService
 import gg.tropic.game.extensions.customtags.menu.PendingCustomTagMenu
 import gg.tropic.game.extensions.profile.CorePlayerProfile
+import gg.tropic.game.extensions.profile.CorePlayerProfileService
 import gg.tropic.game.extensions.profile.profile
 import net.evilblock.cubed.util.CC
 import org.bukkit.Bukkit
@@ -32,32 +33,23 @@ object CustomTagManagementCommands : ScalaCommand()
     ) = target.validatePlayers(
         sender, false
     ) {
-        val account = Bukkit.getPlayer(it.uniqueId)
-            ?.profile
-            ?: DataStoreObjectControllerCache
-                .findNotNull<CorePlayerProfile>()
-                .load(
-                    it.uniqueId,
-                    DataStoreStorageType.MONGO
+        CorePlayerProfileService
+            .useAsyncThenSaveGlobally(it.uniqueId) { account ->
+                if (account.customTagTokens == null)
+                {
+                    account.customTagTokens = 0
+                }
+
+                account.customTagTokens = account.customTagTokens!! + amount
+            }
+            .thenRun {
+                sender.sendMessage(
+                    "${
+                        QuickAccess.computeColoredName(it.uniqueId, it.name).join()
+                    } ${CC.GREEN}has been issued ${CC.YELLOW}$amount ${CC.GREEN}custom tag tokens!"
                 )
-                .join()
-            ?: throw ConditionFailedException(
-                "${CC.YELLOW}${it.name}${CC.RED} does not have a core profile."
-            )
-
-        if (account.customTagTokens == null)
-        {
-            account.customTagTokens = 0
-        }
-
-        account.customTagTokens = account.customTagTokens!! + amount
-        account.save().join()
-
-        sender.sendMessage(
-            "${
-                QuickAccess.computeColoredName(it.uniqueId, it.name).join()
-            } ${CC.GREEN}has been issued ${CC.YELLOW}$amount ${CC.GREEN}custom tag tokens!"
-        )
+            }
+            .join()
     }
 
     @CommandAlias("managecustomtags")
