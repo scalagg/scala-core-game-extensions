@@ -6,6 +6,7 @@ import gg.scala.store.storage.type.DataStoreStorageType
 import gg.tropic.game.extensions.cosmetics.CosmeticTickState
 import gg.tropic.game.extensions.cosmetics.DynamicCosmeticConfigStore
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
+import gg.tropic.game.extensions.customtags.CustomChatTag
 import gg.tropic.game.extensions.profile.booster.XpBooster
 import gg.tropic.game.extensions.profile.event.LevelUpEvent
 import net.evilblock.cubed.util.CC
@@ -29,6 +30,9 @@ data class CorePlayerProfile(
 
     var level: Int = 1
         private set
+
+    var customTagTokens: Int? = 0
+    var equippedTag: CustomChatTag? = null
 
     val equippedCosmetics = mutableListOf<ImmutableResource>()
     val ownedCosmetics = mutableListOf<ImmutableResource>()
@@ -71,6 +75,8 @@ data class CorePlayerProfile(
         }
 
     val availableXpBoosters = mutableListOf<XpBooster>()
+
+    fun getCustomTagTokens(): Int = customTagTokens ?: 0
 
     fun activateBooster(booster: XpBooster)
     {
@@ -151,11 +157,6 @@ data class CorePlayerProfile(
                 previousLevel, this.level
             ).callEvent()
         }
-    }
-
-    fun getXpRequiredToLevelUp(): Long
-    {
-        TODO("issue")
     }
 
     fun getPercentageCompleteUntilNextLevel(): Float

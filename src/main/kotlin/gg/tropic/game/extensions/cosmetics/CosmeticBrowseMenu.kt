@@ -80,11 +80,14 @@ class CosmeticBrowseMenu(
                             {
                                 if (!it.canPurchase(player))
                                 {
+                                    Button.playFail(player)
                                     player.sendMessage(
                                         "${CC.RED}You cannot afford this cosmetic item!"
                                     )
                                     return@toButton
                                 }
+
+                                Button.playNeutral(player)
 
                                 ConfirmMenu(
                                     title = "Purchase: ${it.name}",
@@ -117,6 +120,7 @@ class CosmeticBrowseMenu(
                         {
                             if (type!!.isRightClick)
                             {
+                                Button.playNeutral(player)
                                 it.openEditor(player)
                                 return@toButton
                             }
@@ -124,7 +128,9 @@ class CosmeticBrowseMenu(
 
                         if (it.equipped(player))
                         {
+                            Button.playNeutral(player)
                             it.unequipInternal(player)
+
                             player.sendMessage("${CC.RED}You un-equipped this cosmetic!")
                         } else
                         {
@@ -138,6 +144,7 @@ class CosmeticBrowseMenu(
 
                                 if (equippedOnCosmetic != null)
                                 {
+                                    Button.playFail(player)
                                     player.sendMessage(
                                         "${CC.RED}You must un-equip the ${CC.BOLD}${equippedOnCosmetic.name}${CC.RED} cosmetic before equipping another one!"
                                     )
@@ -145,6 +152,7 @@ class CosmeticBrowseMenu(
                                 }
                             }
 
+                            Button.playNeutral(player)
                             it.equipInternal(player)
                             player.sendMessage("${CC.GREEN}You equipped this cosmetic!")
                         }

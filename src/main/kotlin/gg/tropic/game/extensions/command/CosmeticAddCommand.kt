@@ -12,6 +12,7 @@ import gg.scala.store.controller.DataStoreObjectControllerCache
 import gg.scala.store.storage.type.DataStoreStorageType
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import gg.tropic.game.extensions.profile.CorePlayerProfile
+import gg.tropic.game.extensions.profile.CorePlayerProfileService
 import gg.tropic.game.extensions.profile.profile
 import net.evilblock.cubed.util.CC
 import org.bukkit.Bukkit
@@ -35,38 +36,32 @@ object CosmeticAddCommand : ScalaCommand()
     ) = target.validatePlayers(
         player, false
     ) {
-        val account = Bukkit.getPlayer(it.uniqueId)
-            ?.profile
-            ?: DataStoreObjectControllerCache
-                .findNotNull<CorePlayerProfile>()
-                .load(
-                    it.uniqueId,
-                    DataStoreStorageType.MONGO
-                )
-                .join()
-            ?: throw ConditionFailedException(
-                "${CC.YELLOW}${it.name}${CC.RED} does not have a core profile."
-            )
-
         val policy = ImmutableResource(category, resource ?: "*")
-        if (account.ownedCosmetics.contains(policy))
-        {
-            throw ConditionFailedException(
-                "${CC.YELLOW}${it.name}'s${CC.RED} account already contains a similar resource policy."
-            )
-        }
 
-        account.ownedCosmetics.add(policy)
-        account.save().join()
+        CorePlayerProfileService
+            .useAsyncThenSaveGlobally(it.uniqueId) { account ->
+                if (account.ownedCosmetics.contains(policy))
+                {
+                    throw ConditionFailedException(
+                        "${CC.YELLOW}${it.name}'s${CC.RED} account already contains a similar resource policy."
+                    )
+                }
 
-        player.sendMessage(arrayOf(
-            "${CC.GREEN}You've granted ${CC.YELLOW}${it.name}${CC.GREEN} the resource policy ${CC.WHITE}$policy${CC.GREEN}.",
-            "Policy Analysis: ${
-                if (policy.resource == "*") 
-                    "Allows access to all cosmetics in the ${policy.namespace} category"
-                else
-                    "Allows access to the ${policy.resource} cosmetic in the ${policy.namespace} category"
-            }"
-        ))
+                account.ownedCosmetics.add(policy)
+            }
+            .thenRun {
+                player.sendMessage(
+                    arrayOf(
+                        "${CC.GREEN}You've granted ${CC.YELLOW}${it.name}${CC.GREEN} the resource policy ${CC.WHITE}$policy${CC.GREEN}.",
+                        "Policy Analysis: ${
+                            if (policy.resource == "*")
+                                "Allows access to all cosmetics in the ${policy.namespace} category"
+                            else
+                                "Allows access to the ${policy.resource} cosmetic in the ${policy.namespace} category"
+                        }"
+                    )
+                )
+            }
+            .join()
     }
 }

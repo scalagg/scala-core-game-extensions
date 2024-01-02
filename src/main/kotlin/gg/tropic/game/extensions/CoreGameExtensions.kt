@@ -65,16 +65,24 @@ class CoreGameExtensions : ExtendedScalaPlugin()
 
                 player.playSound(
                     player.location,
-                    Sound.FIREWORK_LAUNCH,
+                    Sound.LEVEL_UP,
                     1.0f, 1.0f
                 )
 
                 Tasks.delayed(15L) {
                     player.playSound(
                         player.location,
-                        Sound.FIREWORK_LARGE_BLAST,
+                        Sound.FIREWORK_LAUNCH,
                         1.0f, 1.0f
                     )
+
+                    Tasks.delayed(15L) {
+                        player.playSound(
+                            player.location,
+                            Sound.FIREWORK_LARGE_BLAST,
+                            1.0f, 1.0f
+                        )
+                    }
                 }
             }
             .bindWith(this)
