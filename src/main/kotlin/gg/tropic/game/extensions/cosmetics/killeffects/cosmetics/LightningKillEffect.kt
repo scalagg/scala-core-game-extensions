@@ -64,5 +64,4 @@ object LightningKillEffect : KillEffect
         "with your lightning powers!"
     )
     override val icon = ItemBuilder.of(Material.BLAZE_ROD)
-    override val price = 250.0f
 }
