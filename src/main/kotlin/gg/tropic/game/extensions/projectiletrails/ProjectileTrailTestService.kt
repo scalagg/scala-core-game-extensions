@@ -8,6 +8,7 @@ import me.lucko.helper.Events
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.ProjectileLaunchEvent
+import org.bukkit.potion.PotionEffectType
 import xyz.xenondevs.particle.ParticleBuilder
 import xyz.xenondevs.particle.ParticleEffect
 import java.util.function.BiConsumer
@@ -29,7 +30,7 @@ object ProjectileTrailTestService
             .subscribe(ProjectileLaunchEvent::class.java)
             .filter { event ->
                 event.entity.shooter is Player &&
-                    (event.entity.shooter as Player).isOp
+                    (event.entity.shooter as Player).hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)
             }
             .handler { event: ProjectileLaunchEvent ->
                 ProjectileTrails.INSTANCE.createNewSpiral(
