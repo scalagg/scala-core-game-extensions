@@ -44,7 +44,8 @@ class CustomTagsMenu(
                         )
                             Material.COAL_BLOCK
                         else
-                            Material.NAME_TAG
+                            if (tag.verification == null)
+                                Material.PAPER else Material.NAME_TAG
                     )
                     .apply {
                         if (profile.equippedTag?.identifier == tag.identifier)
