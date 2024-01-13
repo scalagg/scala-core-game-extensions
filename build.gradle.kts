@@ -7,11 +7,16 @@ plugins {
     kotlin("jvm") version "1.9.20"
     kotlin("kapt") version "1.9.20"
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("org.ajoberstar.grgit") version "4.1.1"
 }
+
+var currentBranch: String = grgit.branch.current().name
 
 allprojects {
     group = "gg.tropic.game.extensions"
-    version = "1.2.8"
+    version = "1.2.8${
+        if (currentBranch == "develop") "-dev" else ""
+    }"
 
     repositories {
         mavenCentral()
@@ -72,7 +77,9 @@ tasks.withType<KotlinCompile> {
 }
 
 publishing {
-    repositories.configureScalaRepository(dev = false)
+    repositories.configureScalaRepository(
+        dev = currentBranch == "develop"
+    )
 
     publications {
         register(
