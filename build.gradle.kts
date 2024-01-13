@@ -7,11 +7,16 @@ plugins {
     kotlin("jvm") version "1.9.20"
     kotlin("kapt") version "1.9.20"
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("org.ajoberstar.grgit") version "4.1.1"
 }
+
+var currentBranch: String = grgit.branch.current().name
 
 allprojects {
     group = "gg.tropic.game.extensions"
-    version = "1.2.8"
+    version = "1.2.9${
+        if (currentBranch == "develop") "-dev" else ""
+    }"
 
     repositories {
         mavenCentral()
@@ -24,8 +29,8 @@ dependencies {
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("lib"))
 
-    kapt("gg.scala.commons:bukkit:3.4.2")
-    compileOnly("gg.scala.commons:bukkit:3.4.2")
+    kapt("gg.scala.commons:bukkit:3.4.3")
+    compileOnly("gg.scala.commons:bukkit:3.4.3")
 
     compileOnly("gg.scala.achievements:scala-achievements-plugin:1.0.4")
 
@@ -72,7 +77,9 @@ tasks.withType<KotlinCompile> {
 }
 
 publishing {
-    repositories.configureScalaRepository(dev = false)
+    repositories.configureScalaRepository(
+        dev = currentBranch == "develop"
+    )
 
     publications {
         register(

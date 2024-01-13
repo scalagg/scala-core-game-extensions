@@ -1,6 +1,7 @@
 package gg.tropic.game.extensions.feature
 
 import gg.scala.cloudsync.shared.discovery.CloudSyncDiscoveryService
+import gg.scala.commons.agnostic.sync.ServerSync
 import gg.scala.commons.annotations.plugin.SoftDependency
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
@@ -21,7 +22,9 @@ object CloudSyncFeature
         CloudSyncDiscoveryService
             .discoverable.assets
             .apply {
-                add("gg.tropic.game.extensions:tropic-core-game-extensions:core-game-extensions")
+                add("gg.tropic.game.extensions:tropic-core-game-extensions:core-game-extensions${
+                    if ("dev" in ServerSync.getLocalGameServer().groups) ":gradle-dev" else ""
+                }")
             }
     }
 }
