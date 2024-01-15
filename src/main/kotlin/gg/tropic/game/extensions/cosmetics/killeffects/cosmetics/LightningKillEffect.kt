@@ -46,6 +46,8 @@ object LightningKillEffect : KillEffect
 
         player.playSound(location, Sound.AMBIENCE_THUNDER, 10000.0f, thunderSoundPitch)
         player.playSound(location, Sound.EXPLODE, 2.0f, explodeSoundPitch)
+
+        DeathAnimatorUtilities.animate(player)
     }
 
     @Configure
