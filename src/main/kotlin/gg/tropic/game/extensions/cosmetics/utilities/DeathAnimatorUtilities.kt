@@ -32,35 +32,15 @@ object DeathAnimatorUtilities
 
     fun animate(player: Player)
     {
-        val entityId = (600_000_000..700_000_000).random()
-
-        val spawnPacket = PacketPlayOutNamedEntitySpawn(
-            (player as CraftPlayer).handle as EntityHuman
-        )
-        SPAWN_PACKET_ID_FIELD.set(spawnPacket, entityId)
-
         val statusPacket = WrapperPlayServerEntityStatus()
-        statusPacket.entityID = entityId
+        statusPacket.entityID = player.entityId
         statusPacket.entityStatus = 3.toByte()
-
-        val destroyPacket = WrapperPlayServerEntityDestroy()
-        destroyPacket.setEntityIds(intArrayOf(entityId))
 
         player.world.players
             .filter { it != player }
             .forEach {
-                it.hidePlayer(player)
-
-                MinecraftProtocol.send(it, spawnPacket)
                 statusPacket.sendPacket(it)
             }
-
-        Tasks.delayed(40L) {
-            player.world.players
-                .filter { it != player }
-                .forEach {
-                    destroyPacket.sendPacket(it)
-                }
         }
     }
 }
