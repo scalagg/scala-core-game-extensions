@@ -1,16 +1,9 @@
 package gg.tropic.game.extensions.cosmetics.utilities
 
-import com.comphenix.packetwrapper.WrapperPlayServerEntityDestroy
 import com.comphenix.packetwrapper.WrapperPlayServerEntityStatus
-import com.comphenix.packetwrapper.WrapperPlayServerEntityVelocity
 import net.evilblock.cubed.util.Reflection
-import net.evilblock.cubed.util.bukkit.Tasks
-import net.evilblock.cubed.util.nms.MinecraftProtocol
 import net.evilblock.cubed.util.nms.MinecraftReflection
-import net.minecraft.server.v1_8_R3.EntityHuman
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityVelocity
 import net.minecraft.server.v1_8_R3.PacketPlayOutNamedEntitySpawn
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.entity.Player
 import java.lang.reflect.Field
 
@@ -41,6 +34,5 @@ object DeathAnimatorUtilities
             .forEach {
                 statusPacket.sendPacket(it)
             }
-        }
     }
 }

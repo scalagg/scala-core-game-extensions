@@ -7,7 +7,6 @@ import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticCategory
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
-import gg.tropic.game.extensions.cosmetics.NewlyReleased
 import me.lucko.helper.Events
 import net.evilblock.cubed.util.bukkit.EventUtils
 import net.evilblock.cubed.util.bukkit.ItemBuilder
@@ -19,7 +18,7 @@ import org.bukkit.event.player.PlayerMoveEvent
  * @since 12/23/2023
  */
 @Service
-object WingCosmeticCategory : CosmeticCategory, NewlyReleased
+object WingCosmeticCategory : CosmeticCategory
 {
     @Inject
     lateinit var plugin: ExtendedScalaPlugin

@@ -1,0 +1,73 @@
+package gg.tropic.game.extensions.cosmetics.projectiletrails
+
+import gg.scala.commons.ExtendedScalaPlugin
+import gg.scala.flavor.inject.Inject
+import gg.scala.flavor.service.Configure
+import gg.scala.flavor.service.Service
+import gg.tropic.game.extensions.cosmetics.CosmeticCategory
+import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
+import gg.tropic.game.extensions.cosmetics.ImmutableResource
+import gg.tropic.game.extensions.cosmetics.NewlyReleased
+import gg.tropic.game.extensions.cosmetics.projectiletrails.cosmetics.ProjectileTrailCosmetic
+import gg.tropic.game.extensions.projectiletrails.ProjectileTrails
+import me.lucko.helper.Events
+import net.evilblock.cubed.util.bukkit.ItemBuilder
+import org.bukkit.Material
+import org.bukkit.entity.EntityType
+import org.bukkit.entity.Player
+import org.bukkit.event.entity.ProjectileLaunchEvent
+import xyz.xenondevs.particle.ParticleBuilder
+
+/**
+ * @author GrowlyX
+ * @since 1/17/2024
+ */
+@Service
+object ProjectileTrailCosmeticCategory : CosmeticCategory, NewlyReleased
+{
+    @Inject
+    lateinit var plugin: ExtendedScalaPlugin
+
+    @Configure
+    fun configure()
+    {
+        CosmeticRegistry.registerCategory(this)
+
+        Events
+            .subscribe(ProjectileLaunchEvent::class.java)
+            .filter { event ->
+                event.entity.shooter is Player &&
+                    event.entityType == EntityType.SNOWBALL ||
+                    event.entityType == EntityType.ARROW
+            }
+            .handler { event ->
+                val cosmetic = CosmeticRegistry
+                    .getSingleEquippedAs<ProjectileTrailCosmetic>(
+                        ProjectileTrailCosmeticCategory,
+                        event.entity.shooter as Player
+                    )
+                    ?: return@handler
+
+                ProjectileTrails.INSTANCE.createNewSpiral(
+                    { location, player ->
+                        ParticleBuilder(cosmetic.particleEffect)
+                            .setLocation(location)
+                            .display(player)
+                    },
+                    event.entity,
+                    event.entity.shooter as Player
+                )
+            }
+            .bindWith(plugin)
+    }
+
+    override val resource = ImmutableResource("projectiletrails")
+
+    override val name = "Projectile Trails"
+    override val description = listOf(
+        "Highlight your projectiles with",
+        "fancy spiral particles mid-air!"
+    )
+    override val icon = ItemBuilder
+        .of(Material.BOW)
+}

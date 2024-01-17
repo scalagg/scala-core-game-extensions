@@ -4,7 +4,6 @@ import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
-import gg.tropic.game.extensions.cosmetics.NewlyReleased
 import gg.tropic.game.extensions.cosmetics.wings.WingCosmeticCategory
 import gg.tropic.game.extensions.cosmetics.wings.WingParticleEffects
 import net.evilblock.cubed.util.bukkit.ItemBuilder
@@ -16,7 +15,7 @@ import org.bukkit.Material
  * @since 12/24/2023
  */
 @Service
-object FireWingsEffect : WingParticleEffects, NewlyReleased
+object FireWingsEffect : WingParticleEffects
 {
     @Configure
     fun configure()
