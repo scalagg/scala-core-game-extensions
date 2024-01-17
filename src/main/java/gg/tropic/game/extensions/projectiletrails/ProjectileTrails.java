@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.projectiletrails;
 
+import me.lucko.helper.Helper;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -7,8 +8,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.function.BiConsumer;
-
-import static gg.tropic.game.extensions.projectiletrails.ProjectileTrailTestService.plugin;
 
 public class ProjectileTrails {
     public static final ProjectileTrails INSTANCE = new ProjectileTrails();
@@ -69,7 +68,7 @@ public class ProjectileTrails {
 
                 lastLocation = startLoc;
             }
-        }.runTaskTimer(plugin, 2, delay);
+        }.runTaskTimer(Helper.hostPlugin(), 2, delay);
     }
 
     public static void rotateAroundAxisX(Vector vector, double angle) {
