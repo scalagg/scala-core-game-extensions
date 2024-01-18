@@ -10,6 +10,7 @@ import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import gg.tropic.game.extensions.cosmetics.killeffects.KillEffectCosmeticCategory
 import gg.tropic.game.extensions.cosmetics.utilities.DeathAnimatorUtilities
 import net.evilblock.cubed.util.bukkit.ItemBuilder
+import net.evilblock.cubed.util.bukkit.Tasks
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Sound
@@ -27,6 +28,12 @@ object LightningKillEffect : KillEffect
     {
         viewers.forEach {
             spawnLightning(it, target.location)
+        }
+
+        Tasks.delayed(20L) {
+            viewers.forEach { viewer ->
+                viewer.hidePlayer(target)
+            }
         }
     }
 

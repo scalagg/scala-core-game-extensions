@@ -54,6 +54,12 @@ object ExplosionKillEffect : KillEffect, PurchasableCosmetic
             .setY(0.7)
 
         target.velocity = location
+
+        Tasks.delayed(20L) {
+            viewers.forEach { viewer ->
+                viewer.hidePlayer(target)
+            }
+        }
     }
 
     override val resource = ImmutableResource("killeffects", "explosion")

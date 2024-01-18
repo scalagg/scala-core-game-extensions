@@ -9,6 +9,7 @@ import gg.tropic.game.extensions.cosmetics.killeffects.KillEffectCosmeticCategor
 import gg.tropic.game.extensions.cosmetics.utilities.DeathAnimatorUtilities
 import me.lucko.helper.Schedulers
 import net.evilblock.cubed.util.bukkit.ItemBuilder
+import net.evilblock.cubed.util.bukkit.Tasks
 import org.bukkit.Effect
 import org.bukkit.Location
 import org.bukkit.Material
