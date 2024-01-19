@@ -8,7 +8,6 @@ import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import gg.tropic.game.extensions.cosmetics.killeffects.KillEffectCosmeticCategory
-import gg.tropic.game.extensions.cosmetics.utilities.DeathAnimatorUtilities
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import net.evilblock.cubed.util.bukkit.Tasks
 import org.bukkit.Location
@@ -28,11 +27,16 @@ object LightningKillEffect : KillEffect
     {
         viewers.forEach {
             spawnLightning(it, target.location)
+            target.setAllowFlight(true)
+            target.setFlying(true)
+            target.teleport(target.getLocation().clone().add(0.0,2.0,0.0))
         }
 
-        Tasks.delayed(20L) {
+        Tasks.delayed(30L) {
             viewers.forEach { viewer ->
                 viewer.hidePlayer(target)
+                target.setAllowFlight(false)
+                target.setFlying(false)
             }
         }
     }

@@ -19,8 +19,8 @@ interface KillEffect :
 {
 
     data class KillEffectConfig(
-        var flight: Boolean? = true,
-        var clearInventory: Boolean? = true
+        var flight: Boolean? = false,
+        var clearInventory: Boolean? = false
     ) : DynamicCosmeticConfigStore
     {
         override fun getAbstractType() =
