@@ -5,6 +5,7 @@ import gg.scala.commons.acf.ConditionFailedException
 import gg.scala.commons.acf.annotation.*
 import gg.scala.commons.annotations.commands.AssignPermission
 import gg.scala.commons.annotations.commands.AutoRegister
+import gg.scala.commons.annotations.commands.HighPriority
 import gg.scala.commons.command.ScalaCommand
 import gg.scala.commons.issuer.ScalaPlayer
 import gg.scala.lemon.filter.ChatMessageFilterHandler
@@ -21,6 +22,7 @@ import java.util.concurrent.CompletableFuture
  * @author GrowlyX
  * @since 7/13/2023
  */
+@HighPriority
 @AutoRegister
 @CommandPermission("guilds.command.guild")
 @CommandAlias("guild|g|club|guilds|clan|clans")
