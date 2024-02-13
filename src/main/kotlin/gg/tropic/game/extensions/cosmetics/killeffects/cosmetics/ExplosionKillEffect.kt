@@ -65,8 +65,8 @@ object ExplosionKillEffect : KillEffect, PurchasableCosmetic
     override val resource = ImmutableResource("killeffects", "explosion")
     override val name = "Explosion"
     override val description = listOf(
-        "Blow up your opponent on when",
-        "you kill them!"
+        "Watch your Opponent implode",
+        "when you kill them!"
     )
     override val icon = ItemBuilder.of(Material.FIREBALL)
     override val price = 500.0f

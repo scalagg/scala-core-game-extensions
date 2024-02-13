@@ -79,8 +79,8 @@ object BloodKillEffect : KillEffect, PurchasableCosmetic
     override val resource = ImmutableResource("killeffects", "blood")
     override val name = "Blood"
     override val description = listOf(
-        "Make blood shoot out of your",
-        "opponent."
+        "Cause a pulse-shower of blood",
+        "after beating on your opponent."
     )
     override val icon = ItemBuilder.of(Material.REDSTONE)
     override val price = 750.0f

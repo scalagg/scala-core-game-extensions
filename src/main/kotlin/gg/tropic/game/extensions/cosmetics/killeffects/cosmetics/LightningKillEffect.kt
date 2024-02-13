@@ -68,8 +68,8 @@ object LightningKillEffect : KillEffect
     override val resource = ImmutableResource("killeffects", "lightning")
     override val name = "Lightning"
     override val description = listOf(
-        "Become Zeus! Vaporize your opponent",
-        "with your lightning powers!"
+        "Zap your Opponent and watch",
+        "them get sent to the heavens!"
     )
     override val icon = ItemBuilder.of(Material.BLAZE_ROD)
 }
