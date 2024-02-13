@@ -25,18 +25,15 @@ object LightningKillEffect : KillEffect
 {
     override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
     {
+        target.teleport(target.location.clone().add(0.0,2.0,0.0))
+
         viewers.forEach {
             spawnLightning(it, target.location)
-            target.setAllowFlight(true)
-            target.setFlying(true)
-            target.teleport(target.getLocation().clone().add(0.0,2.0,0.0))
         }
 
         Tasks.delayed(30L) {
             viewers.forEach { viewer ->
                 viewer.hidePlayer(target)
-                target.setAllowFlight(false)
-                target.setFlying(false)
             }
         }
     }
