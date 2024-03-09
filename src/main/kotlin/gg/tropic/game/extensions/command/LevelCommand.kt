@@ -21,7 +21,7 @@ object LevelCommand : ScalaCommand()
     fun onLevel(player: ScalaPlayer)
     {
         player.sendMessage(
-            "${CC.SEC}Level: ${CC.GREEN}${player.profile.level} $levelSymbol"
+            "${CC.GREEN}Level: ${CC.WHITE}${player.profile.level} $levelSymbol"
         )
     }
 

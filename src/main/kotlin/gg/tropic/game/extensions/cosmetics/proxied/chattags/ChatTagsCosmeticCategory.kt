@@ -36,7 +36,7 @@ object ChatTagsCosmeticCategory : ProxyCosmeticCategory<ChatTag>
 
     override fun convert(t: ChatTag) = object : PurchasableCosmetic
     {
-        override val price = 500.0f
+        override val price = 4500.0f
 
         override fun isOwnedBy(player: Player) = ChatTagsPlayerService
             .find(player)

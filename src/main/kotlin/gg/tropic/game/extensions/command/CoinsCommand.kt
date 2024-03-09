@@ -11,6 +11,7 @@ import gg.tropic.game.extensions.profile.booster.XpBoosterMenu
 import gg.tropic.game.extensions.profile.coinSymbol
 import gg.tropic.game.extensions.profile.profile
 import net.evilblock.cubed.util.CC
+import net.evilblock.cubed.util.math.Numbers
 
 /**
  * @author GrowlyX
@@ -23,7 +24,9 @@ object CoinsCommand : ScalaCommand()
     fun onLevel(player: ScalaPlayer)
     {
         player.sendMessage(
-            "${CC.SEC}Coins: ${CC.GOLD}${player.profile.coins} $coinSymbol"
+            "${CC.GOLD}Coins: ${CC.BOLD}${CC.GOLD}${
+                Numbers.format(player.profile.coins)
+            } $coinSymbol"
         )
     }
 
