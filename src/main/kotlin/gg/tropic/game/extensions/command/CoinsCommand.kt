@@ -39,7 +39,7 @@ object CoinsCommand : ScalaCommand()
     @CommandPermission("op")
     fun onAddCoins(player: ScalaPlayer, target: LemonPlayer, amount: Int)
     {
-        target.bukkitPlayer!!.profile.addCoins(amount, feedback = player::sendMessage, reason = "console")
+        target.bukkitPlayer!!.profile.addCoins(amount, feedback = target::sendMessage, reason = "console")
     }
 
 }
