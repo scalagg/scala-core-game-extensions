@@ -33,6 +33,7 @@ dependencies {
     compileOnly("gg.scala.commons:bukkit:3.4.5")
 
     compileOnly("gg.scala.achievements:scala-achievements-plugin:1.0.4")
+    compileOnly("gg.scala.tangerine:tangerine:1.2.4")
 
     compileOnly("gg.scala.store:spigot:0.1.8")
     compileOnly("gg.scala.chattags.plugin:scala-chattags-plugin:1.1.3")
