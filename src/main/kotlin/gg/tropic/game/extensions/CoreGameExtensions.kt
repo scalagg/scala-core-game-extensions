@@ -34,6 +34,7 @@ import org.bukkit.Sound
 @PluginDependency("ScChatTags", soft = true)
 @PluginDependency("Friends", soft = true)
 @PluginDependency("cloudsync", soft = true)
+@PluginDependency("Tangerine", soft = true)
 
 @PluginDependency("anticheat", soft = true)
 class CoreGameExtensions : ExtendedScalaPlugin()
