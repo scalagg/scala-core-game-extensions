@@ -32,20 +32,18 @@ object CosmeticTickService
                         continue
                     }
 
-                    CorePlayerProfileService
+                    val profile = CorePlayerProfileService
                         .find(player)
                         ?: return@runCatching
 
                     CosmeticRegistry.categories()
                         .flatMap { it.cosmetics() }
                         .filterIsInstance<SessionScopeTickableCosmetic<*>>()
-                        .filter { it.equipped(player) }
+                        .filter { profile.equippedCosmetics.contains(it.resource) }
                         .forEach {
                             it.tickWithServedTickState(player)
                         }
                 }
-            }.onFailure {
-                it.printStackTrace()
             }
         }, 0L, 50L, TimeUnit.MILLISECONDS)
     }

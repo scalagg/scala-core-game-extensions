@@ -45,7 +45,7 @@ dependencies {
     compileOnly("gg.scala.spigot:server:1.1.0")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
 
-    compileOnly("gg.scala.lemon:bukkit:1.6.2")
+    compileOnly("gg.scala.lemon:bukkit:1.8.1")
     compileOnly("gg.scala.cloudsync:spigot:1.0.1")
 }
 

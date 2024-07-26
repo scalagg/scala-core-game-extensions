@@ -8,6 +8,7 @@ import gg.scala.commons.annotations.commands.AutoRegister
 import gg.scala.commons.annotations.commands.HighPriority
 import gg.scala.commons.command.ScalaCommand
 import gg.scala.commons.issuer.ScalaPlayer
+import gg.scala.lemon.command.annotations.AllowOffline
 import gg.scala.lemon.filter.ChatMessageFilterHandler
 import gg.scala.lemon.player.wrapper.AsyncLemonPlayer
 import gg.scala.lemon.util.QuickAccess
@@ -15,7 +16,6 @@ import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.FancyMessage
 import net.evilblock.cubed.util.time.TimeUtil
 import net.md_5.bungee.api.chat.ClickEvent
-import java.util.*
 import java.util.concurrent.CompletableFuture
 
 /**
@@ -90,7 +90,7 @@ object GuildCommands : ScalaCommand()
     @Subcommand("kick")
     @CommandCompletion("@players")
     @Description("Kick a player from your guild.")
-    fun onKick(player: ScalaPlayer, target: AsyncLemonPlayer) = target
+    fun onKick(player: ScalaPlayer, @AllowOffline target: AsyncLemonPlayer) = target
         .validatePlayers(player.bukkit(), false) {
             player.guildIdentity
                 .thenCompose { guild ->
@@ -140,7 +140,7 @@ object GuildCommands : ScalaCommand()
     @Subcommand("transfer")
     @CommandCompletion("@players")
     @Description("Transfer your guild to another player.")
-    fun onTransfer(player: ScalaPlayer, target: AsyncLemonPlayer) = target
+    fun onTransfer(player: ScalaPlayer, @AllowOffline target: AsyncLemonPlayer) = target
         .validatePlayers(player.bukkit(), false) {
             player.guildIdentity
                 .thenCompose { guild ->
@@ -205,7 +205,7 @@ object GuildCommands : ScalaCommand()
     @Subcommand("settings promote|demote|role")
     @CommandCompletion("@players *")
     @Description("Promote/demote a player in your guild.")
-    fun onRole(player: ScalaPlayer, target: AsyncLemonPlayer, newRole: GuildRole) = target
+    fun onRole(player: ScalaPlayer, @AllowOffline target: AsyncLemonPlayer, newRole: GuildRole) = target
         .validatePlayers(player.bukkit(), false) {
             if (player.uniqueId == it.uniqueId)
             {
@@ -256,7 +256,7 @@ object GuildCommands : ScalaCommand()
     @Subcommand("invite")
     @CommandCompletion("@players")
     @Description("Invite a player to your guild.")
-    fun onInvite(player: ScalaPlayer, target: AsyncLemonPlayer) = target
+    fun onInvite(player: ScalaPlayer, @AllowOffline target: AsyncLemonPlayer) = target
         .validatePlayers(player.bukkit(), false) {
             player.guildIdentity
                 .thenCompose { guild ->
@@ -435,7 +435,7 @@ object GuildCommands : ScalaCommand()
     @Subcommand("find")
     @CommandCompletion("@players")
     @Description("Find a player's guild.")
-    fun onFind(player: ScalaPlayer, target: AsyncLemonPlayer) =
+    fun onFind(player: ScalaPlayer, @AllowOffline target: AsyncLemonPlayer) =
         target.validatePlayers(player.bukkit(), false) {
             val guild = GuildService
                 .guildByUser(it.uniqueId)
