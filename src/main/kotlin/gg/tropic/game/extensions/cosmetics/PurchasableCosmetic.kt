@@ -20,10 +20,12 @@ interface PurchasableCosmetic : CosmeticLike
         return player.profile.coins >= price
     }
 
-    fun isOwnedBy(player: Player) = player.hasPermission("core.cosmetics.overrides.$resource") || player.profile
-        .ownedCosmetics.any {
-            it.grantsAccessTo(resource)
-        }
+    fun isOwnedBy(player: Player) = player.hasPermission("core.cosmetics.overrides.$resource") ||
+        player.hasPermission("core.cosmetics.overrides.${resource.namespace}") ||
+        player.profile
+            .ownedCosmetics.any {
+                it.grantsAccessTo(resource)
+            }
 
     fun purchase(player: Player)
     {

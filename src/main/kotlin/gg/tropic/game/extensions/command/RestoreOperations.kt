@@ -164,7 +164,7 @@ Sus
             {
                 player.sendMessage("Polling data from $nextURL")
 
-                val data = Serializers.gson.fromJson(fetchData(nextURL, "X-Tebex-Secret", secretKey), PaymentData::class.java)
+                val data = Serializers.gson.fromJson(fetchData(nextURL, "X-Tebex-Secret", ""), PaymentData::class.java)
                 nextURL = data.next_page_url
 
                 val completeTxns = data.data.filter { it.status == "Complete" }
