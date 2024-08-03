@@ -5,6 +5,9 @@ import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.scala.flavor.service.ignore.IgnoreAutoScan
 import gg.scala.friends.menu.FriendUIService
+import gg.scala.lemon.channel.channels.DefaultChatChannel
+import gg.tropic.game.extensions.CoreGameExtensions
+import gg.tropic.game.extensions.profile.CorePlayerProfileService
 import gg.tropic.game.extensions.profile.coinSymbol
 import gg.tropic.game.extensions.profile.levelSymbol
 import gg.tropic.game.extensions.profile.profile
@@ -14,6 +17,7 @@ import net.evilblock.cubed.util.bukkit.Constants
 import net.evilblock.cubed.util.math.Numbers
 import net.evilblock.cubed.util.text.ProgressBarBuilder
 import net.evilblock.cubed.util.text.TextUtil
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 
 /**
  * @author GrowlyX
@@ -27,6 +31,13 @@ object FriendsFeature
     @Configure
     fun configure()
     {
+        DefaultChatChannel.provideAdditionalPrefix { player ->
+            LegacyComponentSerializer.legacySection()
+                .deserialize("${CC.GRAY}[${CC.GREEN}${
+                    CorePlayerProfileService.find(player)?.level ?: 1
+                }✦${CC.GRAY}] ")
+        }
+
         FriendUIService.initialLorePipe = {
             listOf(
                 "${CC.GRAY}Level: ${CC.GREEN}${it.profile.level} $levelSymbol",
@@ -62,7 +73,5 @@ object FriendsFeature
                 }"
             )
         }
-
-
     }
 }

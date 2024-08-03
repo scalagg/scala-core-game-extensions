@@ -111,7 +111,7 @@ data class CorePlayerProfile(
             if (reason.isNotBlank()) " ($reason)" else ""
         }")
 
-        val gainedExperience = if (coins <= 300)
+        val gainedExperience = 10 * if (coins <= 300)
         {
             (150 * log10(coins.toDouble())).toInt()
         } else if (coins < 1000)
@@ -122,11 +122,10 @@ data class CorePlayerProfile(
             (650 * log10(coins.toDouble())).toInt()
         }
 
-        addExperience(
-            (gainedExperience * if (activeXpBooster != null) activeXpBooster!!.multiplier else 1.0f).roundToInt()
-        )
+        val scaledExperience = (gainedExperience * (if (activeXpBooster != null) activeXpBooster!!.multiplier else 1.0f)).roundToInt()
+        addExperience(scaledExperience)
 
-        feedback("${CC.GREEN}+$gainedExperience experience${
+        feedback("${CC.GREEN}+$scaledExperience experience${
             if (reason.isNotBlank()) " ($reason${
                 if (activeXpBooster != null) ", ${"%.2f".format(activeXpBooster!!.multiplier)}x xp booster" else ""
             })" else ""
