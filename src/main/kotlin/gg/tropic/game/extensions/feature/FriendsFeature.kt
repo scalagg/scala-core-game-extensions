@@ -35,7 +35,7 @@ object FriendsFeature
             LegacyComponentSerializer.legacySection()
                 .deserialize("${CC.GRAY}[${CC.GREEN}${
                     CorePlayerProfileService.find(player)?.level ?: 1
-                }✦${CC.GRAY}] ")
+                }$levelSymbol${CC.GRAY}] ")
         }
 
         FriendUIService.initialLorePipe = {
