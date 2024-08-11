@@ -2,6 +2,7 @@ package gg.tropic.game.extensions.cosmetics.discounts
 
 import gg.scala.commons.acf.CommandHelp
 import gg.scala.commons.acf.annotation.CommandAlias
+import gg.scala.commons.acf.annotation.CommandPermission
 import gg.scala.commons.acf.annotation.Default
 import gg.scala.commons.acf.annotation.Description
 import gg.scala.commons.acf.annotation.HelpCommand
@@ -16,7 +17,8 @@ import gg.tropic.game.extensions.cosmetics.discounts.menus.DiscountManageMenu
  * @since 8/11/2024
  */
 @AutoRegister
-@CommandAlias("core.command.discounts")
+@CommandAlias("discounts|discount")
+@CommandPermission("core.command.discounts")
 object DiscountCommands : ScalaCommand()
 {
     @Default

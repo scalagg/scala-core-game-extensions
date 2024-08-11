@@ -19,7 +19,9 @@ import org.bukkit.entity.Player
  * @author GrowlyX
  * @since 8/11/2024
  */
-class EditDiscountMenu(private val resource: String, private val discount: Discount) : Menu()
+class EditDiscountMenu(private val resource: String, private val discount: Discount) : Menu(
+    "Editing discount $resource"
+)
 {
     init
     {
@@ -45,7 +47,7 @@ class EditDiscountMenu(private val resource: String, private val discount: Disco
                         DiscountSyncService.sync(container)
 
                         Button.playSuccess(player)
-                        player.sendMessage("${CC.GREEN}Update percentage for $resource to $discount!")
+                        player.sendMessage("${CC.GREEN}Updatde percentage for $resource to $number!")
                         EditDiscountMenu(resource, discount).openMenu(player)
                     }
                     .start(player)
