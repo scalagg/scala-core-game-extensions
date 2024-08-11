@@ -23,6 +23,7 @@ class CosmeticBrowseMenu(
     {
         placeholdBorders = true
         updateAfterClick = true
+        autoUpdate = true
     }
 
     override fun size(buttons: Map<Int, Button>) = 36
