@@ -6,6 +6,7 @@ import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Tasks
 import net.evilblock.cubed.util.math.Numbers
+import net.evilblock.cubed.util.time.TimeUtil
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import kotlin.math.roundToInt
@@ -50,14 +51,14 @@ class CosmeticBrowseMenu(
                                 addToLore(
                                     "${CC.RED}You don't own this!",
                                     "${CC.WHITE}Price: ${
-                                        if (it.discountPrice != null)
+                                        if (it.discountPrice() != null)
                                         {
-                                            "${CC.GOLD}⛀ ${CC.D_GRAY}${CC.STRIKE_THROUGH}${
+                                            "${CC.D_GRAY}⛀ ${CC.STRIKE_THROUGH}${
                                                 Numbers.format(it.price.toLong())
-                                            }${CC.R} ${CC.GOLD}${
-                                                Numbers.format(it.discountPrice!!.toLong())
+                                            }${CC.R} ${CC.GOLD}⛀ ${
+                                                Numbers.format(it.discountPrice()!!.toLong())
                                             } ${CC.B}(${
-                                                (((it.price - it.discountPrice!!) / it.discountPrice!!) * 100).roundToInt()
+                                                (((it.price - it.discountPrice()!!) / it.price) * 100).roundToInt()
                                             }% off)"
                                         } else
                                         {
@@ -65,7 +66,27 @@ class CosmeticBrowseMenu(
                                                 Numbers.format(it.price.toLong())
                                             }"
                                         }
-                                    }",
+                                    }"
+                                )
+
+                                val discount = it.discount()
+                                val expiration =  if (discount?.expirationDate != null)
+                                {
+                                    "${CC.WHITE}${TimeUtil.formatIntoAbbreviatedString(((System.currentTimeMillis() - discount.expirationDate!!) / 1000L).toInt())}"
+                                } else
+                                {
+                                    null
+                                }
+
+                                if (expiration != null)
+                                {
+                                    addToLore(
+                                        " ${CC.GRAY}($expiration${CC.GRAY} left!)",
+                                        ""
+                                    )
+                                }
+
+                                addToLore(
                                     "${CC.WHITE}Can afford: ${
                                         if (it.canPurchase(player)) "${CC.GREEN}Yes" else "${CC.RED}No"
                                     }",

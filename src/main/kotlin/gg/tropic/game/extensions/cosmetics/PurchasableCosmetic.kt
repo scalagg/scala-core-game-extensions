@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics
 
+import gg.tropic.game.extensions.cosmetics.discounts.DiscountSyncService
 import gg.tropic.game.extensions.profile.profile
 import org.bukkit.entity.Player
 import kotlin.math.roundToInt
@@ -15,10 +16,8 @@ interface PurchasableCosmetic : CosmeticLike
     override fun canEquip(player: Player) =
         super.canEquip(player) && isOwnedBy(player)
 
-    fun discountPrice(): Float?
-    {
-        return null
-    }
+    fun discount() = DiscountSyncService.byResource(resource)
+    fun discountPrice() = discount()?.let { price - ((it.percentage / 100) * price) }
 
     fun truePrice() = discountPrice() ?: price
 

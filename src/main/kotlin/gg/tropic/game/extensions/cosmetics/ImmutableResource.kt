@@ -16,7 +16,16 @@ data class ImmutableResource(
 
     fun withinSameDomainOf(other: ImmutableResource) = other.namespace == namespace
     fun grantsAccessTo(resource: ImmutableResource) =
-        resource.namespace == namespace && (this.resource == "*" || resource.resource == this.resource)
+        (namespace == "*" || resource.namespace == namespace) && (this.resource == "*" || resource.resource == this.resource)
 
     override fun toString() = "$namespace:$resource"
+
+    companion object
+    {
+        fun of(stringOf: String): ImmutableResource
+        {
+            val (namespace, resource) = stringOf.split(":")
+            return ImmutableResource(namespace, resource)
+        }
+    }
 }
