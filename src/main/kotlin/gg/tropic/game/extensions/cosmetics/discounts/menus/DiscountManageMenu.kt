@@ -22,6 +22,7 @@ class DiscountManageMenu : PaginatedMenu()
     init
     {
         autoUpdate = true
+        autoUpdate = true
     }
 
     override fun getGlobalButtons(player: Player) = mapOf(
