@@ -5,8 +5,10 @@ import net.evilblock.cubed.menu.menus.ConfirmMenu
 import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Tasks
+import net.evilblock.cubed.util.math.Numbers
 import org.bukkit.Sound
 import org.bukkit.entity.Player
+import kotlin.math.roundToInt
 
 /**
  * @author GrowlyX
@@ -47,7 +49,23 @@ class CosmeticBrowseMenu(
                             {
                                 addToLore(
                                     "${CC.RED}You don't own this!",
-                                    "${CC.WHITE}Price: ${CC.GOLD}${it.price} ⛀",
+                                    "${CC.WHITE}Price: ${
+                                        if (it.discountPrice != null)
+                                        {
+                                            "${CC.GOLD}⛀ ${CC.D_GRAY}${CC.STRIKE_THROUGH}${
+                                                Numbers.format(it.price.toLong())
+                                            }${CC.R} ${CC.GOLD}${
+                                                Numbers.format(it.discountPrice!!.toLong())
+                                            } ${CC.B}(${
+                                                (((it.price - it.discountPrice!!) / it.discountPrice!!) * 100).roundToInt()
+                                            }% off)"
+                                        } else
+                                        {
+                                            "${CC.GOLD}⛀ ${
+                                                Numbers.format(it.price.toLong())
+                                            }"
+                                        }
+                                    }",
                                     "${CC.WHITE}Can afford: ${
                                         if (it.canPurchase(player)) "${CC.GREEN}Yes" else "${CC.RED}No"
                                     }",

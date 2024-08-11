@@ -15,9 +15,16 @@ interface PurchasableCosmetic : CosmeticLike
     override fun canEquip(player: Player) =
         super.canEquip(player) && isOwnedBy(player)
 
+    fun discountPrice(): Float?
+    {
+        return null
+    }
+
+    fun truePrice() = discountPrice() ?: price
+
     fun canPurchase(player: Player): Boolean
     {
-        return player.profile.coins >= price
+        return player.profile.coins >= truePrice()
     }
 
     fun isOwnedBy(player: Player) = player.hasPermission("core.cosmetics.overrides.$resource") ||
@@ -30,7 +37,7 @@ interface PurchasableCosmetic : CosmeticLike
     fun purchase(player: Player)
     {
         with(player.profile) {
-            removeCoins(price.roundToInt())
+            removeCoins(truePrice().roundToInt())
             ownedCosmetics += resource
             save()
         }
