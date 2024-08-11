@@ -48,7 +48,7 @@ class EditDiscountMenu(private val resource: String, private val discount: Disco
                         DiscountSyncService.sync(container)
 
                         Button.playSuccess(player)
-                        player.sendMessage("${CC.GREEN}Updatde percentage for $resource to $number!")
+                        player.sendMessage("${CC.GREEN}Updated percentage for $resource to $number!")
                         EditDiscountMenu(resource, discount).openMenu(player)
                     }
                     .start(player)
@@ -59,6 +59,8 @@ class EditDiscountMenu(private val resource: String, private val discount: Disco
                 if (discount.active) "${CC.GREEN}Yes" else "${CC.RED}No"
             }")
             .toButton { _, _ ->
+                Button.playNeutral(player)
+
                 val container = DiscountSyncService.cached()
                 discount.active = !discount.active
 
@@ -69,7 +71,7 @@ class EditDiscountMenu(private val resource: String, private val discount: Disco
         12 to ItemBuilder
             .of(Material.WATCH)
             .name("${CC.YELLOW}Expiration: ${CC.WHITE}${
-                if (discount.expirationDate != null)
+                if (discount.expirationDate != null && discount.expirationDate!! > System.currentTimeMillis())
                 {
                     "${CC.WHITE}${TimeUtil.formatIntoAbbreviatedString(((discount.expirationDate!! - System.currentTimeMillis()) / 1000L).toInt())}"
                 } else

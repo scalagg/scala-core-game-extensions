@@ -62,7 +62,7 @@ class DiscountManageMenu : PaginatedMenu()
                     "${CC.GRAY}Discount: ${CC.WHITE}${discount.percentage}%",
                     "${CC.GRAY}Active: ${CC.WHITE}${if (discount.active) "${CC.GREEN}Yes" else "${CC.RED}No"}",
                     "${CC.GRAY}Expiration:",
-                    if (discount.expirationDate != null)
+                    if (discount.expirationDate != null && discount.expirationDate!! > System.currentTimeMillis())
                     {
                         "${CC.WHITE}${TimeUtil.formatIntoAbbreviatedString(((discount.expirationDate!! - System.currentTimeMillis()) / 1000L).toInt())}"
                     } else

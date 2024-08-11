@@ -58,9 +58,7 @@ class CosmeticBrowseMenu(
                                                 Numbers.format(it.price.toLong())
                                             }${CC.R} ${CC.GOLD}⛀ ${
                                                 Numbers.format(it.discountPrice()!!.toLong())
-                                            } ${CC.B}(${
-                                                (((it.price - it.discountPrice()!!) / it.price) * 100).roundToInt()
-                                            }% off)"
+                                            } ${CC.B}(${it.discount()?.percentage}% off)"
                                         } else
                                         {
                                             "${CC.GOLD}⛀ ${

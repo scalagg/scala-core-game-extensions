@@ -17,9 +17,9 @@ interface PurchasableCosmetic : CosmeticLike
         super.canEquip(player) && isOwnedBy(player)
 
     fun discount() = DiscountSyncService.byResource(resource)
-    fun discountPrice() = discount()?.let { price - ((it.percentage / 100) * price) }
+    fun discountPrice() = discount()?.let { price - ((it.percentage.toDouble() / 100.0) * price) }
 
-    fun truePrice() = discountPrice() ?: price
+    fun truePrice() = discountPrice()?.toFloat() ?: price
 
     fun canPurchase(player: Player): Boolean
     {
