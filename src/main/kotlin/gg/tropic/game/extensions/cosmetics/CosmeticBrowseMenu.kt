@@ -73,7 +73,7 @@ class CosmeticBrowseMenu(
                                 val discount = it.discount()
                                 val expiration =  if (discount?.expirationDate != null)
                                 {
-                                    "${CC.WHITE}${TimeUtil.formatIntoAbbreviatedString(((System.currentTimeMillis() - discount.expirationDate!!) / 1000L).toInt())}"
+                                    "${CC.WHITE}${TimeUtil.formatIntoAbbreviatedString(((discount.expirationDate!! - System.currentTimeMillis()) / 1000L).toInt())}"
                                 } else
                                 {
                                     null

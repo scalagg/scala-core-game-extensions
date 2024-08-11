@@ -70,7 +70,7 @@ class EditDiscountMenu(private val resource: String, private val discount: Disco
             .name("${CC.YELLOW}Expiration: ${CC.WHITE}${
                 if (discount.expirationDate != null)
                 {
-                    "${CC.WHITE}${TimeUtil.formatIntoAbbreviatedString(((System.currentTimeMillis() - discount.expirationDate!!) / 1000L).toInt())}"
+                    "${CC.WHITE}${TimeUtil.formatIntoAbbreviatedString(((discount.expirationDate!! - System.currentTimeMillis()) / 1000L).toInt())}"
                 } else
                 {
                     "${CC.RED}None!"
