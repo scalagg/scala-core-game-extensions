@@ -25,6 +25,7 @@ class EditDiscountMenu(private val resource: String, private val discount: Disco
 {
     init
     {
+        autoUpdate = true
         placeholder = true
     }
 
