@@ -39,7 +39,7 @@ object GuildCommands : ScalaCommand()
     @Description("Set your guild's description.")
     fun onDescription(player: ScalaPlayer, description: String) = player.guildIdentity
         .thenCompose {
-            if (it.member(player.uniqueId).role == GuildRole.Member)
+            if (it.member(player.uniqueId).role != GuildRole.Leader)
             {
                 throw ConditionFailedException(
                     "You do not have permission to change your guild's description!"
@@ -70,10 +70,10 @@ object GuildCommands : ScalaCommand()
     @Description("Enable/disable all invite for your guild.")
     fun onAllInvite(player: ScalaPlayer) = player.guildIdentity
         .thenCompose {
-            if (it.member(player.uniqueId).role == GuildRole.Leader)
+            if (it.member(player.uniqueId).role != GuildRole.Leader)
             {
                 throw ConditionFailedException(
-                    "You do not have permission to change your guild's description!"
+                    "You do not have permission to change your guild's allinvite setting!"
                 )
             }
 
