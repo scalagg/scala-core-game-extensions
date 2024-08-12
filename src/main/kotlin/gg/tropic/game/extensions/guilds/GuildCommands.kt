@@ -227,7 +227,7 @@ object GuildCommands : ScalaCommand()
                         )
                     }
 
-                    if (newRole != GuildRole.Leader)
+                    if (newRole == GuildRole.Leader)
                     {
                         throw ConditionFailedException(
                             "You cannot set another user as the guild leader! Use ${CC.BOLD}/guild transfer${CC.RED} to transfer your guild."
