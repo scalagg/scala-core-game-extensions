@@ -32,6 +32,8 @@ dependencies {
     kapt("gg.scala.commons:bukkit:3.4.5")
     compileOnly("gg.scala.commons:bukkit:3.4.5")
 
+    api("com.elmakers.mine.bukkit:EffectLib:10.2")
+
     compileOnly("gg.scala.achievements:scala-achievements-plugin:1.0.4")
     compileOnly("gg.scala.tangerine:tangerine:1.2.4")
 
