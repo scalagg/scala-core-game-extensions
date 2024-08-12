@@ -35,10 +35,10 @@ object FireworksKillEffect : KillEffect, PurchasableCosmetic, NewlyReleased
     @Configure
     fun configure()
     {
-        CosmeticRegistry.register(
+        /*CosmeticRegistry.register(
             KillEffectCosmeticCategory,
             this
-        )
+        )*/
     }
 
     override val price = 3500F
