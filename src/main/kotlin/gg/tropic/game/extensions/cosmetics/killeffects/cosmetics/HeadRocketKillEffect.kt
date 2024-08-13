@@ -5,6 +5,7 @@ import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import gg.tropic.game.extensions.cosmetics.killeffects.KillEffectCosmeticCategory
+import gg.tropic.game.extensions.projectiletrails.InstantFirework
 import me.lucko.helper.Schedulers
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import net.evilblock.cubed.util.bukkit.Tasks
@@ -63,10 +64,7 @@ object HeadRocketKillEffect : KillEffect
                     val location = stand.location
                     stand.remove()
 
-                    val firework = location.world.spawnEntity(location, EntityType.FIREWORK) as Firework
-                    val meta = firework.fireworkMeta
-                    meta.power = 0
-                    meta.addEffect(
+                    InstantFirework(
                         FireworkEffect.builder()
                             .with(FireworkEffect.Type.BALL)
                             .withColor(Color.TEAL)
@@ -74,10 +72,9 @@ object HeadRocketKillEffect : KillEffect
                             .withColor(Color.WHITE)
                             .withFade(Color.GRAY)
                             .trail(true)
-                            .build()
+                            .build(),
+                        location
                     )
-                    firework.fireworkMeta = meta
-                    firework.detonate()
 
                     viewers.forEach { viewer ->
                         viewer.playSound(stand.location, Sound.EXPLODE, 1.0F, 1.0F)
