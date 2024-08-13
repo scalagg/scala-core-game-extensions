@@ -4,6 +4,7 @@ import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
+import gg.tropic.game.extensions.cosmetics.PurchasableCosmetic
 import gg.tropic.game.extensions.cosmetics.killeffects.KillEffectCosmeticCategory
 import gg.tropic.game.extensions.projectiletrails.InstantFirework
 import me.lucko.helper.Schedulers
@@ -25,7 +26,7 @@ import xyz.xenondevs.particle.ParticleEffect
  * @date 8/13/2024
  */
 @Service
-object HeadRocketKillEffect : KillEffect
+object HeadRocketKillEffect : KillEffect, PurchasableCosmetic
 {
     @Configure
     fun configure()
@@ -85,12 +86,15 @@ object HeadRocketKillEffect : KillEffect
                 newLoc.yaw += 20
                 stand.teleport(newLoc)
                 ParticleBuilder(ParticleEffect.FIREWORKS_SPARK, stand.location).display(viewers)
+
                 viewers.forEach { viewer ->
                     viewer.playSound(stand.location, Sound.CHICKEN_EGG_POP, 1f, 1f)
                 }
                 times++
             }, 0L, 1L)
     }
+
+    override val price = 1500f
 
     override val resource = ImmutableResource("Killeffects", "headRocket")
     override val name = "Head Rocket"
