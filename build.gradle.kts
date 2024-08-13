@@ -38,7 +38,7 @@ dependencies {
     compileOnly("gg.scala.tangerine:tangerine:1.2.4")
 
     compileOnly("gg.scala.store:spigot:0.1.8")
-    compileOnly("gg.scala.chattags.plugin:scala-chattags-plugin:1.1.3")
+    compileOnly("gg.scala.chattags.plugin:scala-chattags-plugin:1.2.0")
     compileOnly("gg.scala.friends:scala-friends:2.1.0")
     compileOnly("gg.scala.basics.plugin:scala-basics-plugin:1.0.5")
 

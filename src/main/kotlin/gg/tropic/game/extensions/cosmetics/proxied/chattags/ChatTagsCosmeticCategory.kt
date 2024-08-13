@@ -38,9 +38,9 @@ object ChatTagsCosmeticCategory : ProxyCosmeticCategory<ChatTag>
     {
         override val price = 4500.0f
 
-        override fun isOwnedBy(player: Player) = ChatTagsPlayerService
+        override fun isOwnedBy(player: Player) = super.isOwnedBy(player) || ChatTagsPlayerService
             .find(player)
-            ?.ownedTags
+            ?.fixedOwnedTags
             ?.contains(t.uniqueId) == true || player.hasPermission("chattags.all-chattags")
 
         override fun purchase(player: Player)
@@ -49,7 +49,9 @@ object ChatTagsCosmeticCategory : ProxyCosmeticCategory<ChatTag>
                 .find(player)
                 ?: return
 
-            chatTagPlayer.ownedTags.add(t.uniqueId)
+            super.purchase(player)
+
+            chatTagPlayer.fixedOwnedTags.add(t.uniqueId)
             chatTagPlayer.save()
         }
 
@@ -77,7 +79,7 @@ object ChatTagsCosmeticCategory : ProxyCosmeticCategory<ChatTag>
 
         }
 
-        override val resource = ImmutableResource("chattag", t.uniqueId.toString())
+        override val resource = ImmutableResource("chattags", t.uniqueId.toString())
         override val name = t.displayName
         override val description = listOf(
             "Shows in chat as:",
@@ -87,7 +89,7 @@ object ChatTagsCosmeticCategory : ProxyCosmeticCategory<ChatTag>
             .of(Material.NAME_TAG)
     }
 
-    override val resource = ImmutableResource("chattag")
+    override val resource = ImmutableResource("chattags")
     override val name = "Chat Tags"
     override val description = listOf(
         "A cosmetic tag that is added",
