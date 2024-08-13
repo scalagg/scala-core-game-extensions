@@ -65,7 +65,7 @@ object KingArmorSetCosmetic :
         )
     }
 
-    override val price = 2500.0f
+    override val price = 2000.0f
 
     override fun unequip(player: Player)
     {
