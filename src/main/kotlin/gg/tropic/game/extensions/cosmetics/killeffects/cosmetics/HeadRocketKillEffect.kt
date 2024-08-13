@@ -8,11 +8,13 @@ import gg.tropic.game.extensions.cosmetics.killeffects.KillEffectCosmeticCategor
 import me.lucko.helper.Schedulers
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import net.evilblock.cubed.util.bukkit.Tasks
-import net.evilblock.cubed.util.nms.MinecraftReflection
+import org.bukkit.Color
+import org.bukkit.FireworkEffect
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
+import org.bukkit.entity.Firework
 import org.bukkit.entity.Player
 import xyz.xenondevs.particle.ParticleBuilder
 import xyz.xenondevs.particle.ParticleEffect
@@ -57,10 +59,28 @@ object HeadRocketKillEffect : KillEffect
             .runRepeating({task ->
                 if (times >= 30 || stand.isDead) {
                     task.closeAndReportException()
+
+                    val location = stand.location
+                    stand.remove()
+
+                    val firework = location.world.spawnEntity(location, EntityType.FIREWORK) as Firework
+                    val meta = firework.fireworkMeta
+                    meta.power = 0
+                    meta.addEffect(
+                        FireworkEffect.builder()
+                            .with(FireworkEffect.Type.BALL)
+                            .withColor(Color.TEAL)
+                            .withColor(Color.AQUA)
+                            .withColor(Color.WHITE)
+                            .withFade(Color.GRAY)
+                            .trail(true)
+                            .build()
+                    )
+                    firework.fireworkMeta = meta
+                    firework.detonate()
+
                     viewers.forEach { viewer ->
-                        stand.remove()
                         viewer.playSound(stand.location, Sound.EXPLODE, 1.0F, 1.0F)
-                        ParticleBuilder(ParticleEffect.EXPLOSION_HUGE, stand.location)
                     }
                     return@runRepeating
                 }

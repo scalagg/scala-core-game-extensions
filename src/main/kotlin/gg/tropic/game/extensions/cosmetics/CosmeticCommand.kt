@@ -13,7 +13,7 @@ import org.bukkit.entity.Player
  * @since 7/14/2023
  */
 @AutoRegister
-@CommandAlias("cosmetic|cosmetics|armor|customizer")
+@CommandAlias("cosmetic|cosmetics|armor|customizer|chattags|chattag|prefixes|killeffects|killmessages|nametags")
 object CosmeticCommand : ScalaCommand()
 {
     var preventCosmeticUsage = { player: Player -> false }

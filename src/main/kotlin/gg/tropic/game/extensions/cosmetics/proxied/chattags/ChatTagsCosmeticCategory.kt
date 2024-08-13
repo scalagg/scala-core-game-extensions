@@ -40,7 +40,7 @@ object ChatTagsCosmeticCategory : ProxyCosmeticCategory<ChatTag>
 
         override fun isOwnedBy(player: Player) = super.isOwnedBy(player) || ChatTagsPlayerService
             .find(player)
-            ?.ownedTags
+            ?.fixedOwnedTags
             ?.contains(t.uniqueId) == true || player.hasPermission("chattags.all-chattags")
 
         override fun purchase(player: Player)
@@ -51,7 +51,7 @@ object ChatTagsCosmeticCategory : ProxyCosmeticCategory<ChatTag>
 
             super.purchase(player)
 
-            chatTagPlayer.ownedTags.add(t.uniqueId)
+            chatTagPlayer.fixedOwnedTags.add(t.uniqueId)
             chatTagPlayer.save()
         }
 
