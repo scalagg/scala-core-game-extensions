@@ -78,7 +78,8 @@ object HeadRocketKillEffect : KillEffect
     override val resource = ImmutableResource("Killeffects", "headRocket")
     override val name = "Head Rocket"
     override val description = listOf(
-        ""
+        "Launch your enemy head",
+        "to the sky!"
     )
     override val icon = ItemBuilder.of(Material.SKULL_ITEM).data(3)
 }
