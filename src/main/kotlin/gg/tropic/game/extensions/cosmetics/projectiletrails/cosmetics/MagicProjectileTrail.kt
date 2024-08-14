@@ -29,7 +29,7 @@ object MagicProjectileTrail : ProjectileTrailCosmetic, NewlyReleased
     }
 
     override val resource = ImmutableResource("projectiletrails", "magic")
-    override val name = "Portal"
+    override val name = "Magic"
     override val description = listOf(
         "Surround your projectiles",
         "with magic effects!"
