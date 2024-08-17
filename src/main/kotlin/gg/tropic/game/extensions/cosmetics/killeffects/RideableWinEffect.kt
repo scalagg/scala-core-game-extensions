@@ -36,7 +36,8 @@ open class RideableWinEffect(
         Schedulers
             .async()
             .runRepeating({_ ->
-                val direction = killer.location.direction.normalize().multiply(1.5)
+                dragon.passenger = killer
+                val direction = killer.location.direction.normalize().multiply(1) // Make faster by multiplying
 
                 dragon.velocity = direction
             }, 0L, 1L)
