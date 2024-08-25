@@ -4,6 +4,7 @@ import gg.scala.commons.annotations.custom.CustomAnnotationProcessors
 import gg.scala.flavor.service.Configure
 import gg.tropic.game.extensions.cosmetics.autoregister.AutoRegisterCategory
 import gg.tropic.game.extensions.cosmetics.autoregister.AutoRegisterCosmetic
+import gg.tropic.game.extensions.cosmetics.proxied.ProxyCosmeticCategory
 import org.bukkit.entity.Player
 
 /**
@@ -24,21 +25,26 @@ object CosmeticRegistry
         .flatMap { it.value }
         .filterIsInstance<EquipOnLogin>()
 
-    fun findRelatedTo(category: CosmeticCategory) =
+    fun findRelatedTo(category: CosmeticCategory) = if (category is ProxyCosmeticCategory<*>)
+    {
+        category.cosmetics()
+    } else
+    {
         cosmetics[category] ?: listOf()
+    }
 
-    fun getSingleEquipped(category: CosmeticCategory, player: Player) = cosmetics[category]!!
+    fun getSingleEquipped(category: CosmeticCategory, player: Player) = findRelatedTo(category)
         .firstOrNull {
             it.equipped(player)
         }
 
-    inline fun <reified T : CosmeticLike> getSingleEquippedAs(category: CosmeticCategory, player: Player) = cosmetics[category]!!
+    inline fun <reified T : CosmeticLike> getSingleEquippedAs(category: CosmeticCategory, player: Player) = findRelatedTo(category)
         .filterIsInstance<T>()
         .firstOrNull {
             it.equipped(player)
         }
 
-    fun getAllEquipped(category: CosmeticCategory, player: Player) = cosmetics[category]!!
+    fun getAllEquipped(category: CosmeticCategory, player: Player) = findRelatedTo(category)
         .filter {
             it.equipped(player)
         }
@@ -77,7 +83,7 @@ object CosmeticRegistry
         )
 
         cosmetics.putIfAbsent(category, listOf())
-        cosmetics[category] = cosmetics[category]!!
+        cosmetics[category] = findRelatedTo(category)
             .toMutableList()
             .apply {
                 add(cosmeticLike)
