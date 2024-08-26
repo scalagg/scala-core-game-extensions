@@ -25,12 +25,17 @@ object CosmeticRegistry
         .flatMap { it.value }
         .filterIsInstance<EquipOnLogin>()
 
-    fun findRelatedTo(category: CosmeticCategory) = if (category is ProxyCosmeticCategory<*>)
-    {
-        category.cosmetics()
-    } else
-    {
-        cosmetics[category] ?: listOf()
+    fun findRelatedTo(category: CosmeticCategory) = runCatching {
+        if (category is ProxyCosmeticCategory<*>)
+        {
+            category.cosmetics()
+        } else
+        {
+            cosmetics[category] ?: listOf()
+        }
+    }.getOrElse {
+        it.printStackTrace()
+        listOf()
     }
 
     fun getSingleEquipped(category: CosmeticCategory, player: Player) = findRelatedTo(category)

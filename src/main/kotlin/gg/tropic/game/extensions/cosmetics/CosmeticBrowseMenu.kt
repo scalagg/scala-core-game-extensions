@@ -49,6 +49,14 @@ class CosmeticBrowseMenu(
                                 )
                             } else
                             {
+                                if (!it.purchasable())
+                                {
+                                    addToLore(
+                                        "${CC.RED}This cannot be purchased!"
+                                    )
+                                    return@apply
+                                }
+
                                 addToLore(
                                     "${CC.RED}You don't own this!",
                                     "${CC.WHITE}Price: ${
@@ -116,6 +124,12 @@ class CosmeticBrowseMenu(
                         {
                             if (!it.isOwnedBy(player))
                             {
+                                if (!it.purchasable())
+                                {
+                                    player.sendMessage("${CC.RED}This item cannot be purchased!")
+                                    return@toButton
+                                }
+
                                 if (!it.canPurchase(player))
                                 {
                                     Button.playFail(player)

@@ -16,6 +16,8 @@ interface PurchasableCosmetic : CosmeticLike
     override fun canEquip(player: Player) =
         super.canEquip(player) && isOwnedBy(player)
 
+    fun purchasable() = true
+
     fun discount() = DiscountSyncService.byResource(resource)
     fun discountPrice() = discount()?.let { price - ((it.percentage.toDouble() / 100.0) * price) }
 
