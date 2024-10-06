@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.discounts.menus
 
+import com.cryptomorin.xseries.XMaterial
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import gg.tropic.game.extensions.cosmetics.discounts.Discount
 import gg.tropic.game.extensions.cosmetics.discounts.DiscountSyncService
@@ -32,7 +33,7 @@ class EditDiscountMenu(private val resource: String, private val discount: Disco
     override fun size(buttons: Map<Int, Button>) = 27
     override fun getButtons(player: Player) = mapOf(
         10 to ItemBuilder
-            .of(Material.GOLD_INGOT)
+            .of(XMaterial.GOLD_INGOT)
             .name("${CC.YELLOW}Percentage: ${CC.WHITE}${discount.percentage}")
             .toButton { _, _ ->
                 player.closeInventory()
@@ -54,7 +55,7 @@ class EditDiscountMenu(private val resource: String, private val discount: Disco
                     .start(player)
             },
         11 to ItemBuilder
-            .of(Material.MAP)
+            .of(XMaterial.MAP)
             .name("${CC.YELLOW}Active: ${CC.WHITE}${
                 if (discount.active) "${CC.GREEN}Yes" else "${CC.RED}No"
             }")
@@ -69,7 +70,7 @@ class EditDiscountMenu(private val resource: String, private val discount: Disco
                 openMenu(player)
             },
         12 to ItemBuilder
-            .of(Material.WATCH)
+            .of(XMaterial.CLOCK)
             .name("${CC.YELLOW}Expiration: ${CC.WHITE}${
                 if (discount.expirationDate != null && discount.expirationDate!! > System.currentTimeMillis())
                 {

@@ -3,6 +3,7 @@ package gg.tropic.game.extensions.cosmetics.killeffects.cosmetics
 import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.ProtocolLibrary
 import com.comphenix.protocol.events.PacketContainer
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
@@ -70,5 +71,5 @@ object LightningKillEffect : KillEffect
         "Zap your Opponent and watch",
         "them get sent to the heavens!"
     )
-    override val icon = ItemBuilder.of(Material.BLAZE_ROD)
+    override val icon = ItemBuilder.of(XMaterial.BLAZE_ROD)
 }

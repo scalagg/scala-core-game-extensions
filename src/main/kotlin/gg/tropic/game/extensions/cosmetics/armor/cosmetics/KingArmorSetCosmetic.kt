@@ -34,22 +34,22 @@ object KingArmorSetCosmetic :
         }
 
         player.inventory.chestplate = colorLeatherArmor(
-            ItemStack(Material.LEATHER_CHESTPLATE), Color.fromRGB(235, 53, 16)
+            ItemStack(XMaterial.LEATHER_CHESTPLATE.parseMaterial()), Color.fromRGB(235, 53, 16)
         )
 
         player.inventory.leggings = colorLeatherArmor(
-            ItemStack(Material.LEATHER_LEGGINGS), Color.fromRGB(250, 105, 75)
+            ItemStack(XMaterial.LEATHER_LEGGINGS.parseMaterial()), Color.fromRGB(250, 105, 75)
         )
 
         player.inventory.helmet = ItemBuilder
-            .of(Material.SKULL_ITEM)
+            .of(XMaterial.SKELETON_SKULL)
             .data(3)
             .name("${CC.YELLOW}King's Helmet")
             .owner("gaetan202")
             .build()
 
         player.inventory.boots = colorLeatherArmor(
-            ItemStack(Material.LEATHER_BOOTS), Color.fromRGB(255, 228, 92)
+            ItemStack(XMaterial.LEATHER_BOOTS.parseMaterial()), Color.fromRGB(255, 228, 92)
         )
 
         player.updateInventory()
@@ -84,6 +84,6 @@ object KingArmorSetCosmetic :
         "Become a king!"
     )
     override val icon = ItemBuilder
-        .of(Material.GOLD_HELMET)
+        .of(XMaterial.GOLDEN_HELMET)
         .glow()
 }

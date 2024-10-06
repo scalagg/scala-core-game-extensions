@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.projectiletrails.cosmetics
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
@@ -34,6 +35,6 @@ object MagicProjectileTrail : ProjectileTrailCosmetic, NewlyReleased
         "Surround your projectiles",
         "with magic effects!"
     )
-    override val icon = ItemBuilder.of(Material.POTION)
+    override val icon = ItemBuilder.of(XMaterial.POTION)
     override val price = 1350.0f
 }

@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.killeffects.cosmetics
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
@@ -48,7 +49,7 @@ object HeadRocketKillEffect : KillEffect, PurchasableCosmetic
         val stand = target.world.spawnEntity(target.location, EntityType.ARMOR_STAND) as ArmorStand
         stand.setGravity(false)
         stand.isVisible = false
-        stand.helmet = ItemBuilder.of(Material.SKULL_ITEM).data(3).owner(target.name).build()
+        stand.helmet = ItemBuilder.of(XMaterial.SKELETON_SKULL).data(3).owner(target.name).build()
 
         var times = 0
 
@@ -102,5 +103,5 @@ object HeadRocketKillEffect : KillEffect, PurchasableCosmetic
         "Launch your enemy head",
         "to the sky!"
     )
-    override val icon = ItemBuilder.of(Material.SKULL_ITEM).data(3)
+    override val icon = ItemBuilder.of(XMaterial.SKELETON_SKULL).data(3)
 }

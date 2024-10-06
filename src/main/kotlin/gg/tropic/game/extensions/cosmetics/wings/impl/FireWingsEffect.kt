@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.wings.impl
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
@@ -36,7 +37,7 @@ object FireWingsEffect : WingParticleEffects
         "trail behind you!"
     )
     override val icon = ItemBuilder
-        .of(Material.BLAZE_POWDER)
+        .of(XMaterial.BLAZE_POWDER)
 
     override val resource = ImmutableResource("wings", "fire")
     override val price = 20_000.0f

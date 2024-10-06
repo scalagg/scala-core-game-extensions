@@ -34,11 +34,11 @@ object AstronautArmorSetCosmetic :
         }
 
         player.inventory.chestplate = colorLeatherArmor(
-            ItemStack(Material.LEATHER_CHESTPLATE), color
+            ItemStack(XMaterial.LEATHER_CHESTPLATE.parseMaterial()), color
         )
 
         player.inventory.leggings = colorLeatherArmor(
-            ItemStack(Material.LEATHER_LEGGINGS), color
+            ItemStack(XMaterial.LEATHER_LEGGINGS.parseMaterial()), color
         )
 
         player.inventory.helmet = ItemBuilder
@@ -46,7 +46,7 @@ object AstronautArmorSetCosmetic :
             .build()
 
         player.inventory.boots = colorLeatherArmor(
-            ItemStack(Material.LEATHER_BOOTS), color
+            ItemStack(XMaterial.LEATHER_BOOTS.parseMaterial()), color
         )
 
         player.updateInventory()

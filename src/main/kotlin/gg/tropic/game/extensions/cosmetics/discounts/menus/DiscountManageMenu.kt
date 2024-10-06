@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.discounts.menus
 
+import com.cryptomorin.xseries.XMaterial
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
 import gg.tropic.game.extensions.cosmetics.discounts.Discount
 import gg.tropic.game.extensions.cosmetics.discounts.DiscountSyncService
@@ -56,7 +57,7 @@ class DiscountManageMenu : PaginatedMenu()
         for ((key, discount) in DiscountSyncService.cached().discounts)
         {
             buttons[buttons.size] = ItemBuilder
-                .of(Material.NAME_TAG)
+                .of(XMaterial.NAME_TAG)
                 .name("${CC.GREEN}${discount.resource}")
                 .addToLore(
                     "${CC.GRAY}Discount: ${CC.WHITE}${discount.percentage}%",

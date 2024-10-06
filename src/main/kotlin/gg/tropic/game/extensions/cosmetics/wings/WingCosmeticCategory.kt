@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.wings
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.commons.ExtendedScalaPlugin
 import gg.scala.flavor.inject.Inject
 import gg.scala.flavor.service.Configure
@@ -48,5 +49,5 @@ object WingCosmeticCategory : CosmeticCategory
         "butterfly!"
     )
     override val icon = ItemBuilder
-        .of(Material.WATER_LILY)
+        .of(XMaterial.LILY_PAD)
 }

@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.killeffects.cosmetics
 
+import com.cryptomorin.xseries.XMaterial
 import gg.tropic.game.extensions.cosmetics.*
 import gg.tropic.game.extensions.cosmetics.killeffects.KillEffectCosmeticCategory
 import net.evilblock.cubed.menu.Button
@@ -51,7 +52,7 @@ interface KillEffect :
             override fun populate(player: Player, buttons: MutableMap<Int, Button>)
             {
                 buttons[0] = ItemBuilder
-                    .of(Material.FEATHER)
+                    .of(XMaterial.FEATHER)
                     .name("${CC.YELLOW}Flight: ${
                         if (configuration.flight != false) "${CC.GREEN}Enabled" else "${CC.RED}Disabled"
                     }")
@@ -61,7 +62,7 @@ interface KillEffect :
                     }
 
                 buttons[1] = ItemBuilder
-                    .of(Material.CHEST)
+                    .of(XMaterial.CHEST)
                     .name("${CC.YELLOW}Clear Inventory: ${
                         if (configuration.clearInventory != false) "${CC.GREEN}Enabled" else "${CC.RED}Disabled"
                     }")

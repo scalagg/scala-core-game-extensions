@@ -64,7 +64,7 @@ class XpBoosterMenu : PaginatedMenu()
         player.profile.availableXpBoosters
             .forEach {
                 buttons[buttons.size] = ItemBuilder
-                    .of(Material.PAPER)
+                    .of(XMaterial.PAPER)
                     .name("${CC.GREEN}${
                         "%.2f".format(it.multiplier)
                     }x Booster")

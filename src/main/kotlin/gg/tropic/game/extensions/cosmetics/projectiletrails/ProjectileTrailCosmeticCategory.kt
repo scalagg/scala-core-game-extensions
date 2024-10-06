@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.projectiletrails
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.commons.ExtendedScalaPlugin
 import gg.scala.flavor.inject.Inject
 import gg.scala.flavor.service.Configure
@@ -69,5 +70,5 @@ object ProjectileTrailCosmeticCategory : CosmeticCategory, NewlyReleased
         "fancy spiral particles mid-air!"
     )
     override val icon = ItemBuilder
-        .of(Material.BOW)
+        .of(XMaterial.BOW)
 }

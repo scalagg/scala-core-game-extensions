@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.particles
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticCategory
@@ -29,5 +30,5 @@ object ParticleEffectCategory : CosmeticCategory
         "having particles surround you!"
     )
     override val icon = ItemBuilder
-        .of(Material.BLAZE_POWDER)
+        .of(XMaterial.BLAZE_POWDER)
 }

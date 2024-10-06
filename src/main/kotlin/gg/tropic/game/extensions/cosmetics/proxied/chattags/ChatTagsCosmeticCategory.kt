@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.proxied.chattags
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.chattags.plugin.handler.ChatTagsService
 import gg.scala.chattags.plugin.model.ChatTag
 import gg.scala.chattags.plugin.service.ChatTagsPlayerService
@@ -86,7 +87,7 @@ object ChatTagsCosmeticCategory : ProxyCosmeticCategory<ChatTag>
             "${CC.WHITE}${t.legacy}"
         )
         override val icon = ItemBuilder
-            .of(Material.NAME_TAG)
+            .of(XMaterial.NAME_TAG)
     }
 
     override val resource = ImmutableResource("chattags")
@@ -97,5 +98,5 @@ object ChatTagsCosmeticCategory : ProxyCosmeticCategory<ChatTag>
         "when you send chat messages!"
     )
 
-    override val icon = ItemBuilder.of(Material.NAME_TAG)
+    override val icon = ItemBuilder.of(XMaterial.NAME_TAG)
 }

@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.killeffects
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticCategory
@@ -29,5 +30,5 @@ object KillEffectCosmeticCategory : CosmeticCategory
         "using custom kill effects on them!"
     )
     override val icon = ItemBuilder
-        .of(Material.REDSTONE_BLOCK)
+        .of(XMaterial.REDSTONE_BLOCK)
 }

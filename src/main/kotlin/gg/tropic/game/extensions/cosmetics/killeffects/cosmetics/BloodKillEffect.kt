@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.killeffects.cosmetics
 
+import com.cryptomorin.xseries.XMaterial
 import de.slikey.effectlib.effect.BleedEffect
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
@@ -45,6 +46,6 @@ object BloodKillEffect : KillEffect, PurchasableCosmetic
         "Cause a pulse-shower of blood",
         "after beating on your opponent."
     )
-    override val icon = ItemBuilder.of(Material.REDSTONE)
+    override val icon = ItemBuilder.of(XMaterial.REDSTONE)
     override val price = 750.0f
 }

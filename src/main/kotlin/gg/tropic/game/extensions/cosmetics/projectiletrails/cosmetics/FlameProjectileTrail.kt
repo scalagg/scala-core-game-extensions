@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.projectiletrails.cosmetics
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
@@ -34,6 +35,6 @@ object FlameProjectileTrail : ProjectileTrailCosmetic, NewlyReleased
         "Surround your projectiles",
         "with swirls of flames!"
     )
-    override val icon = ItemBuilder.of(Material.BLAZE_POWDER)
+    override val icon = ItemBuilder.of(XMaterial.BLAZE_POWDER)
     override val price = 1350.0f
 }

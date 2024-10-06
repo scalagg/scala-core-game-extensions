@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.killeffects.cosmetics
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
@@ -27,7 +28,7 @@ object DragonWinEffect : PurchasableCosmetic, RideableWinEffect(
         "${CC.GRAY}Ride a Dragon",
     ),
     ItemBuilder
-        .of(Material.DRAGON_EGG),
+        .of(XMaterial.DRAGON_EGG),
     EntityType.ENDER_DRAGON
 )
 {

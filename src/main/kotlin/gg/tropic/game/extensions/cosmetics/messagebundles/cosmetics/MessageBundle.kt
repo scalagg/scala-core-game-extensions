@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.messagebundles.cosmetics
 
+import com.cryptomorin.xseries.XMaterial
 import gg.tropic.game.extensions.cosmetics.CosmeticLike
 import gg.tropic.game.extensions.cosmetics.MultiEquipCosmetic
 import gg.tropic.game.extensions.cosmetics.PurchasableCosmetic
@@ -31,7 +32,7 @@ interface MessageBundle : CosmeticLike, PurchasableCosmetic, MultiEquipCosmetic
 
     override val icon: ItemBuilder
         get() = ItemBuilder
-            .of(Material.BOOK)
+            .of(XMaterial.BOOK)
 
     override val description: List<String>
         get()

@@ -53,19 +53,19 @@ object LeatherArmorSetCosmetic :
         }
 
         player.inventory.chestplate = colorLeatherArmor(
-            ItemStack(Material.LEATHER_CHESTPLATE), color
+            ItemStack(XMaterial.LEATHER_CHESTPLATE.parseMaterial()), color
         )
 
         player.inventory.leggings = colorLeatherArmor(
-            ItemStack(Material.LEATHER_LEGGINGS), color
+            ItemStack(XMaterial.LEATHER_LEGGINGS.parseMaterial()), color
         )
 
         player.inventory.helmet = colorLeatherArmor(
-            ItemStack(Material.LEATHER_HELMET), color
+            ItemStack(XMaterial.LEATHER_HELMET.parseMaterial()), color
         )
 
         player.inventory.boots = colorLeatherArmor(
-            ItemStack(Material.LEATHER_BOOTS), color
+            ItemStack(XMaterial.LEATHER_BOOTS.parseMaterial()), color
         )
 
         player.updateInventory()
@@ -197,5 +197,5 @@ object LeatherArmorSetCosmetic :
         "Equips a suit of leather armor!"
     )
     override val icon = ItemBuilder
-        .of(Material.LEATHER_CHESTPLATE)
+        .of(XMaterial.LEATHER_CHESTPLATE)
 }

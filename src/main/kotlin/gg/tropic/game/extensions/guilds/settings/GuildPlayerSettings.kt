@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.guilds.settings
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.basics.plugin.settings.SettingCategory
 import gg.scala.basics.plugin.settings.SettingContainer.buildEntry
 import gg.scala.basics.plugin.settings.defaults.values.StateSettingValue
@@ -31,7 +32,7 @@ object GuildPlayerSettings : SettingCategory
             description += "Allows you to disable"
             description += "guild invites."
 
-            item = ItemBuilder.of(Material.LEATHER_CHESTPLATE)
+            item = ItemBuilder.of(XMaterial.LEATHER_CHESTPLATE)
         },
     )
 

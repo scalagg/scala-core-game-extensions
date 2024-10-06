@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.projectiletrails.cosmetics
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
@@ -34,6 +35,6 @@ object SnowProjectileTrail : ProjectileTrailCosmetic, NewlyReleased
         "Surround your projectiles",
         "with swirls of snowflakes!"
     )
-    override val icon = ItemBuilder.of(Material.SNOW_BALL)
+    override val icon = ItemBuilder.of(XMaterial.SNOWBALL)
     override val price = 1350.0f
 }

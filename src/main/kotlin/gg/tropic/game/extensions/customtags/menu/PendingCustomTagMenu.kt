@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.customtags.menu
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.lemon.util.QuickAccess
 import gg.tropic.game.extensions.customtags.CustomChatTag
 import gg.tropic.game.extensions.customtags.CustomChatTagService
@@ -28,7 +29,7 @@ class PendingCustomTagMenu(private val pendingTags: List<CustomChatTag>) : Pagin
         pendingTags
             .filter { it.verification == null }
             .forEach { tag ->
-                buttons[buttons.size] = ItemBuilder.of(Material.NAME_TAG)
+                buttons[buttons.size] = ItemBuilder.of(XMaterial.NAME_TAG)
                     .name(LegacyComponentSerializer.legacySection().serialize(tag.design))
                     .apply {
                         this.addToLore("${CC.GRAY}Creator: ${CC.WHITE}${QuickAccess.nameOrConsole(tag.ownerId)}")

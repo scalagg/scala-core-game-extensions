@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.killeffects.cosmetics
 
+import com.cryptomorin.xseries.XMaterial
 import de.slikey.effectlib.effect.BigBangEffect
 import de.slikey.effectlib.util.DynamicLocation
 import gg.scala.flavor.service.Configure
@@ -47,5 +48,5 @@ object FireworksKillEffect : KillEffect, PurchasableCosmetic, NewlyReleased
     override val description = listOf(
         "Celebrate with fireworks!"
     )
-    override val icon = ItemBuilder.of(Material.FIREWORK)
+    override val icon = ItemBuilder.of(XMaterial.FIREWORK_ROCKET)
 }

@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.messagebundles
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticCategory
@@ -29,5 +30,5 @@ object KillMessageBundleCosmeticCategory : CosmeticCategory
         "using custom kill messages!"
     )
     override val icon = ItemBuilder
-        .of(Material.BOOK_AND_QUILL)
+        .of(XMaterial.WRITABLE_BOOK)
 }

@@ -1,5 +1,6 @@
 package gg.tropic.game.extensions.cosmetics.armor
 
+import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticCategory
@@ -30,5 +31,5 @@ object ArmorCosmeticCategory : CosmeticCategory
         "gamemode!"
     )
     override val icon = ItemBuilder
-        .of(Material.GOLD_CHESTPLATE)
+        .of(XMaterial.GOLDEN_CHESTPLATE)
 }
