@@ -6,6 +6,9 @@ import gg.scala.flavor.service.Service
 import gg.tropic.game.extensions.cosmetics.CosmeticCategory
 import gg.tropic.game.extensions.cosmetics.CosmeticRegistry
 import gg.tropic.game.extensions.cosmetics.ImmutableResource
+import gg.tropic.game.extensions.cosmetics.particles.cosmetics.FireRingParticleEffect
+import gg.tropic.game.extensions.cosmetics.particles.cosmetics.SnowRingParticleEffect
+import net.evilblock.cubed.util.ServerVersion
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Material
 
@@ -19,7 +22,13 @@ object ParticleEffectCategory : CosmeticCategory
     @Configure
     fun configure()
     {
-        CosmeticRegistry.registerCategory(this)
+        if (ServerVersion.getVersion().isOlderThanOrEquals(ServerVersion.v1_8_8))
+        {
+            CosmeticRegistry.registerCategory(this)
+
+            FireRingParticleEffect.configure()
+            SnowRingParticleEffect.configure()
+        }
     }
 
     override val resource = ImmutableResource("particleeffects")

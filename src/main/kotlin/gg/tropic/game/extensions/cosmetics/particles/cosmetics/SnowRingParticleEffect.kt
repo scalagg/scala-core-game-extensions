@@ -13,7 +13,6 @@ import org.bukkit.Material
  * @author GrowlyX
  * @since 10/27/2023
  */
-@Service
 object SnowRingParticleEffect : RingParticleEffects
 {
     override val particleType = MinecraftReflection
