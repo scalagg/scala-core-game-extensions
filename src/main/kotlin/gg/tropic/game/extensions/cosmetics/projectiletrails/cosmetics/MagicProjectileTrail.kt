@@ -15,12 +15,10 @@ import xyz.xenondevs.particle.ParticleEffect
  * @author TastyCake
  * @date 8/13/2024
  */
-@Service
 object MagicProjectileTrail : ProjectileTrailCosmetic, NewlyReleased
 {
     override val particleEffect = ParticleEffect.PORTAL
 
-    @Configure
     fun configure()
     {
         CosmeticRegistry.register(

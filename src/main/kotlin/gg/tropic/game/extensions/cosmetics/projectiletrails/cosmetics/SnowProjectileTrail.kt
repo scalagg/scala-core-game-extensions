@@ -15,12 +15,10 @@ import xyz.xenondevs.particle.ParticleEffect
  * @author GrowlyX
  * @since 1/17/2024
  */
-@Service
 object SnowProjectileTrail : ProjectileTrailCosmetic, NewlyReleased
 {
     override val particleEffect = ParticleEffect.SNOWBALL
 
-    @Configure
     fun configure()
     {
         CosmeticRegistry.register(
