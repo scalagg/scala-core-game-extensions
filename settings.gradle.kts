@@ -1,1 +1,1 @@
-rootProject.name = "tropic-core-game-extensions"
+rootProject.name = "scala-core-game-extensions"
