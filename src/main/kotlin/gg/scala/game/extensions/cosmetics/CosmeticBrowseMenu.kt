@@ -198,7 +198,11 @@ class CosmeticBrowseMenu(
 
                                 if (equippedOnCosmetic != null && equippedOnCosmetic != it && equippedOnCosmetic is ProxyCosmetic)
                                 {
+                                    Button.playNeutral(player)
                                     equippedOnCosmetic.unequip(player)
+                                    it.equipInternal(player)
+                                    player.sendMessage("${CC.GREEN}You equipped this cosmetic!")
+                                    return@toButton
                                 }
 
                                 if (equippedOnCosmetic != null)
