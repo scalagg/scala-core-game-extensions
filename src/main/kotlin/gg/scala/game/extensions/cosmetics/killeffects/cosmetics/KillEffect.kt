@@ -22,7 +22,7 @@ interface KillEffect :
     data class KillEffectConfig(
         var flight: Boolean? = false,
         var clearInventory: Boolean? = false
-    ) : gg.scala.game.extensions.cosmetics.DynamicCosmeticConfigStore
+    ) : DynamicCosmeticConfigStore
     {
         override fun getAbstractType() =
             KillEffectConfig::class.java

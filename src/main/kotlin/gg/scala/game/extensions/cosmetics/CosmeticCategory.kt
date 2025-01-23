@@ -10,7 +10,7 @@ import org.bukkit.entity.Player
  * @author GrowlyX
  * @since 7/14/2023
  */
-interface CosmeticCategory : gg.scala.game.extensions.cosmetics.ResourceHolder, FrontendComponent
+interface CosmeticCategory : ResourceHolder, FrontendComponent
 {
     fun cosmetics(): List<CosmeticLike>
     {

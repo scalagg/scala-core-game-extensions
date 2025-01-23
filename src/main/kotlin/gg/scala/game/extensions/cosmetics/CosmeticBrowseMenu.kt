@@ -1,5 +1,7 @@
 package gg.scala.game.extensions.cosmetics
 
+import gg.scala.chattags.plugin.model.ChatTag
+import gg.scala.game.extensions.cosmetics.proxied.ProxyCosmeticCategory
 import net.evilblock.cubed.menu.Button
 import net.evilblock.cubed.menu.menus.ConfirmMenu
 import net.evilblock.cubed.menu.pagination.PaginatedMenu
@@ -193,6 +195,11 @@ class CosmeticBrowseMenu(
                                     .firstOrNull { cosmetic ->
                                         cosmetic.equipped(player)
                                     }
+
+                                if (equippedOnCosmetic != null && equippedOnCosmetic != it && equippedOnCosmetic is ProxyCosmetic)
+                                {
+                                    equippedOnCosmetic.unequip(player)
+                                }
 
                                 if (equippedOnCosmetic != null)
                                 {

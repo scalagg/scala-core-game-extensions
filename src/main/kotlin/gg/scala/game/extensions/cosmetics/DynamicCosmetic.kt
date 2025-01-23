@@ -12,7 +12,7 @@ import org.bukkit.entity.Player
  * @author GrowlyX
  * @since 7/15/2023
  */
-interface DynamicCosmetic<T : gg.scala.game.extensions.cosmetics.DynamicCosmeticConfigStore> : CosmeticLike
+interface DynamicCosmetic<T : DynamicCosmeticConfigStore> : CosmeticLike
 {
     override fun equip(player: Player)
     {

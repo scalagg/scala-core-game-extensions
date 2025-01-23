@@ -12,7 +12,7 @@ import gg.scala.game.extensions.cosmetics.messagebundles.KillMessageBundleCosmet
  * @since 8/12/2024
  */
 @Service
-object DramaticMessageBundle : gg.scala.game.extensions.cosmetics.messagebundles.cosmetics.MessageBundle
+object DramaticMessageBundle : MessageBundle
 {
     override val phrases = listOf(
         "was tragically backstabbed by", "was heartlessly let go by", "had their heart pierced by", "was delivered into nothingness by", "was dismembered by"

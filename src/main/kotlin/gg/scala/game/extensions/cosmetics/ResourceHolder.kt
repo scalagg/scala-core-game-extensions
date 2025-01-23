@@ -6,5 +6,5 @@ package gg.scala.game.extensions.cosmetics
  */
 interface ResourceHolder
 {
-    val resource: gg.scala.game.extensions.cosmetics.ImmutableResource
+    val resource: ImmutableResource
 }

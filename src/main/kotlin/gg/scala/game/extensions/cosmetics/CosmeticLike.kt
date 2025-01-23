@@ -9,7 +9,7 @@ import org.bukkit.entity.Player
  * @author GrowlyX
  * @since 7/14/2023
  */
-interface CosmeticLike : gg.scala.game.extensions.cosmetics.ResourceHolder, FrontendComponent
+interface CosmeticLike : ResourceHolder, FrontendComponent
 {
     fun unequip(player: Player)
     fun equip(player: Player)

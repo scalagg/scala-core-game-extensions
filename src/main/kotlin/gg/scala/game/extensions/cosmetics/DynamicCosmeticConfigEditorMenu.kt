@@ -13,7 +13,7 @@ import org.bukkit.entity.Player
  * @author GrowlyX
  * @since 7/15/2023
  */
-abstract class DynamicCosmeticConfigEditorMenu<T : gg.scala.game.extensions.cosmetics.DynamicCosmeticConfigStore>(
+abstract class DynamicCosmeticConfigEditorMenu<T : DynamicCosmeticConfigStore>(
     private val category: CosmeticCategory,
     private val cosmetic: DynamicCosmetic<T>,
     val configuration: T

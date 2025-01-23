@@ -8,9 +8,7 @@ import gg.scala.commons.annotations.plugin.SoftDependency
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.scala.flavor.service.ignore.IgnoreAutoScan
-import gg.scala.game.extensions.cosmetics.CosmeticRegistry
-import gg.scala.game.extensions.cosmetics.ImmutableResource
-import gg.scala.game.extensions.cosmetics.PurchasableCosmetic
+import gg.scala.game.extensions.cosmetics.*
 import gg.scala.game.extensions.cosmetics.proxied.ProxyCosmeticCategory
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.ItemBuilder
@@ -24,7 +22,7 @@ import org.bukkit.entity.Player
 @Service
 @IgnoreAutoScan
 @SoftDependency("ScChatTags")
-object ChatTagsCosmeticCategory : ProxyCosmeticCategory<ChatTag>
+object ChatTagsCosmeticCategory : ProxyCosmeticCategory<ChatTag>, ProxyCosmetic
 {
     @Configure
     fun configure()

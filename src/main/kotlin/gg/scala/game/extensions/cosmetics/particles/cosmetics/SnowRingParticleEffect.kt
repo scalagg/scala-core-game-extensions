@@ -13,7 +13,7 @@ import org.bukkit.Material
  * @author GrowlyX
  * @since 10/27/2023
  */
-object SnowRingParticleEffect : gg.scala.game.extensions.cosmetics.particles.cosmetics.RingParticleEffects
+object SnowRingParticleEffect : RingParticleEffects
 {
     override val particleType = MinecraftReflection
         .getEnumParticle("SNOW_SHOVEL")!!

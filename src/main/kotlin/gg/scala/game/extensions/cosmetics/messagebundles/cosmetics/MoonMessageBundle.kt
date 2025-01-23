@@ -11,7 +11,7 @@ import gg.scala.game.extensions.cosmetics.messagebundles.KillMessageBundleCosmet
  * @since 8/12/2024
  */
 @Service
-object MoonMessageBundle : gg.scala.game.extensions.cosmetics.messagebundles.cosmetics.MessageBundle
+object MoonMessageBundle : MessageBundle
 {
     override val phrases = listOf(
         "was crushed into moon dust by", "was sent the wrong way by", "was hit by an asteroid from", "was blasted to the moon by"
