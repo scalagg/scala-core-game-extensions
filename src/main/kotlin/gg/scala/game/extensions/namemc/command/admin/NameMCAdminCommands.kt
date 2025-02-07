@@ -30,7 +30,7 @@ object NameMCAdminCommands : ScalaCommand()
         help.showHelp()
     }
 
-    @CommandAlias("rewards")
+    @Subcommand("rewards")
     fun onRewards(player: ScalaPlayer) = with(NameMCDataSync.cached()) {
         with(
             object : TextEditorMenu(rewardCommand)
@@ -66,7 +66,6 @@ object NameMCAdminCommands : ScalaCommand()
     }
 
     @Subcommand("check")
-    @CommandPermission("namemc.admin")
     fun onCheck(player: ScalaPlayer, target: LemonPlayer)
     {
         NameMCService.submit(NameMCVoteRequest(player.uniqueId) { hasVoted ->
