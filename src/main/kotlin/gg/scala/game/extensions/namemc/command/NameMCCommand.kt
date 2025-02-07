@@ -14,6 +14,7 @@ import gg.scala.lemon.metadata.NetworkMetadataDataSync
 import gg.scala.lemon.player.LemonPlayer
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Constants
+import net.evilblock.cubed.util.time.TimeUtil
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 
@@ -30,18 +31,19 @@ object NameMCCommand : ScalaCommand()
     @HelpCommand
     fun onHelp(player: ScalaPlayer)
     {
-        player.sendMessage("""
-        ${CC.GRAY}--------------------------------------------------
-        ${CC.B_PRI}NameMC Voting Rewards
-        ${CC.YELLOW}Want to earn exclusive rewards? Follow these steps:
-        
-        ${CC.WHITE}1. Visit: ${CC.GREEN}${NameMCDataSync.cached().targetUrl}
-        ${CC.WHITE}2. Click on the ${CC.GREEN}"❤ Like" ${CC.WHITE}button (You need to be logged in).
-        ${CC.WHITE}3. Use ${CC.PRI}/namemc verify ${CC.WHITE}to claim your reward!
-        
-        ${CC.YELLOW}Thank you for supporting our server! ${CC.RED}❤
-        ${CC.GRAY}--------------------------------------------------
-    """.trimIndent())
+       player.sendMessage(
+        "",
+        "${CC.B_PRI}NameMC Voting Rewards",
+        "",
+        "${CC.YELLOW}Want to earn exclusive rewards? Follow these steps:",
+        "",
+        "${CC.WHITE}1. Visit: ${CC.GREEN}https://namemc.com/server/${NetworkMetadataDataSync.cached().domain}",
+        "${CC.WHITE}2. Click on the ${CC.RED}❤ Like ${CC.WHITE}button (You need to be logged in).",
+        "${CC.WHITE}3. Use ${CC.PRI}/namemc verify ${CC.WHITE}to claim your reward!",
+        "",
+        "${CC.YELLOW}Thank you for supporting our server! ${CC.RED}❤",
+        ""
+       )
     }
 
     @Subcommand("verify")
@@ -64,9 +66,9 @@ object NameMCCommand : ScalaCommand()
 
                 profile?.hasVotedOnNameMC = System.currentTimeMillis()
 
-                player.sendMessage("${CC.B_PRI}${NetworkMetadataDataSync.serverName()}${CC.GRAY}${Constants.DOUBLE_ARROW_RIGHT} ${CC.GREEN}✔ Thank you for liking our server! You have been rewarded.")
+                player.sendMessage("${CC.B_PRI}${NetworkMetadataDataSync.serverName()}${CC.GRAY} ${Constants.DOUBLE_ARROW_RIGHT} ${CC.GREEN}✔ Thank you for liking our server! You have been rewarded.")
             } else {
-                player.sendMessage("${CC.B_PRI}${NetworkMetadataDataSync.serverName()}${CC.GRAY}${Constants.DOUBLE_ARROW_RIGHT} ${CC.RED}✖ You haven't liked our server yet! ${CC.YELLOW}Like us on NameMC to claim your reward.")
+                player.sendMessage("${CC.B_PRI}${NetworkMetadataDataSync.serverName()}${CC.GRAY} ${Constants.DOUBLE_ARROW_RIGHT} ${CC.RED}✖ You haven't liked our server yet! ${CC.YELLOW}Like us on NameMC to claim your reward.")
             }
         })
     }
