@@ -1,7 +1,5 @@
 package gg.scala.game.extensions.cosmetics
 
-import gg.scala.chattags.plugin.model.ChatTag
-import gg.scala.game.extensions.cosmetics.proxied.ProxyCosmeticCategory
 import net.evilblock.cubed.menu.Button
 import net.evilblock.cubed.menu.menus.ConfirmMenu
 import net.evilblock.cubed.menu.pagination.PaginatedMenu
@@ -11,7 +9,6 @@ import net.evilblock.cubed.util.math.Numbers
 import net.evilblock.cubed.util.time.TimeUtil
 import org.bukkit.Sound
 import org.bukkit.entity.Player
-import kotlin.math.roundToInt
 
 /**
  * @author GrowlyX
@@ -188,7 +185,8 @@ class CosmeticBrowseMenu(
                             player.sendMessage("${CC.RED}You un-equipped this cosmetic!")
                         } else
                         {
-                            if (it !is MultiEquipCosmetic)
+
+                            if (it is ProxyCosmetic)
                             {
                                 val equippedOnCosmetic = CosmeticRegistry
                                     .findRelatedTo(category)
@@ -204,15 +202,15 @@ class CosmeticBrowseMenu(
                                     player.sendMessage("${CC.GREEN}You equipped this cosmetic!")
                                     return@toButton
                                 }
+                            }
+                            if (it !is MultiEquipCosmetic)
+                            {
 
-                                if (equippedOnCosmetic != null)
-                                {
-                                    Button.playFail(player)
-                                    player.sendMessage(
-                                        "${CC.RED}You must un-equip the ${CC.BOLD}${equippedOnCosmetic.name}${CC.RED} cosmetic before equipping another one!"
-                                    )
-                                    return@toButton
-                                }
+                                CosmeticRegistry
+                                    .findRelatedTo(category)
+                                    .firstOrNull { cosmetic ->
+                                        cosmetic.equipped(player)
+                                    }?.unequip(player)
                             }
 
                             Button.playNeutral(player)

@@ -7,6 +7,7 @@ import gg.scala.game.extensions.cosmetics.CosmeticCategory
 import gg.scala.game.extensions.cosmetics.CosmeticRegistry
 import gg.scala.game.extensions.cosmetics.ImmutableResource
 import gg.scala.game.extensions.cosmetics.particles.cosmetics.FireRingParticleEffect
+import gg.scala.game.extensions.cosmetics.particles.cosmetics.SnowRingParticleEffect
 import net.evilblock.cubed.util.ServerVersion
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 
@@ -25,7 +26,7 @@ object ParticleEffectCategory : CosmeticCategory
             CosmeticRegistry.registerCategory(this)
 
             FireRingParticleEffect.configure()
-            gg.scala.game.extensions.cosmetics.particles.cosmetics.SnowRingParticleEffect.configure()
+            SnowRingParticleEffect.configure()
         }
     }
 

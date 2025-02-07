@@ -14,7 +14,7 @@ var currentBranch: String = grgit.branch.current().name
 
 allprojects {
     group = "gg.scala.game.extensions"
-    version = "1.3.2${
+    version = "1.3.3${
         if (currentBranch == "develop") "-dev" else ""
     }"
 
@@ -33,6 +33,7 @@ dependencies {
     compileOnly("gg.scala.commons:bukkit:3.4.5")
 
     api("com.elmakers.mine.bukkit:EffectLib:10.2")
+    implementation("com.squareup.okhttp3:okhttp:3.2.0")
 
     compileOnly("gg.scala.achievements:scala-achievements-plugin:1.0.4")
     compileOnly("gg.scala.tangerine:tangerine:1.2.4")
@@ -47,7 +48,7 @@ dependencies {
     compileOnly("gg.scala.spigot:server:1.1.0")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
 
-    compileOnly("gg.scala.lemon:bukkit:1.8.1")
+    compileOnly("gg.scala.lemon:bukkit:1.9.1")
     compileOnly("gg.scala.cloudsync:spigot:1.0.1")
 }
 

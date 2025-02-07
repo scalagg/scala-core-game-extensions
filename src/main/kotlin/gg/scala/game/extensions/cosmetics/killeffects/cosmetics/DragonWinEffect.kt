@@ -22,7 +22,7 @@ import org.bukkit.entity.Player
  */
 @Service
 object DragonWinEffect : PurchasableCosmetic, RideableWinEffect(
-    ImmutableResource("killeffects", "dragon"), // TODO: Change to kill effects or someth
+    ImmutableResource("killeffects", "dragon"),
     "Dragon",
     arrayListOf(
         "${CC.GRAY}Ride a Dragon",

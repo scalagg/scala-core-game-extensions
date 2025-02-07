@@ -32,12 +32,14 @@ data class CorePlayerProfile(
         private set
 
     var customTagTokens: Int? = 0
-    var equippedTag: gg.scala.game.extensions.customtags.CustomChatTag? = null
+    var equippedTag: CustomChatTag? = null
+
+    var hasVotedOnNameMC: Long? = null
 
     val equippedCosmetics = mutableListOf<ImmutableResource>()
     val ownedCosmetics = mutableListOf<ImmutableResource>()
 
-    val cosmeticConfigs = mutableMapOf<String, gg.scala.game.extensions.cosmetics.DynamicCosmeticConfigStore>()
+    val cosmeticConfigs = mutableMapOf<String, DynamicCosmeticConfigStore>()
 
     @Transient
     private var backingLocalTickerConfigs: MutableMap<String, CosmeticTickState>? = null
