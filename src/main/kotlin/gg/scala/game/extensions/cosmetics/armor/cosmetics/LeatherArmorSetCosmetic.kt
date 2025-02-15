@@ -5,6 +5,7 @@ import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.scala.game.extensions.cosmetics.*
 import gg.scala.game.extensions.cosmetics.armor.ArmorCosmeticCategory
+import gg.scala.lemon.LemonConstants
 import net.evilblock.cubed.menu.Button
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.ColorUtil
@@ -102,7 +103,7 @@ object LeatherArmorSetCosmetic :
                         if (!player.hasPermission("core.cosmetics.armor.color.custom"))
                         {
                             Button.playFail(player)
-                            player.sendMessage("${CC.RED}You do not have permission to use this feature! Purchase ${CC.GOLD}Pro${CC.RED} rank to gain access.")
+                            player.sendMessage("${CC.RED}You do not have permission to use this feature! Purchase at ${CC.GREEN}${LemonConstants.STORE_LINK} to gain access.")
                             return@toButton
                         }
 
