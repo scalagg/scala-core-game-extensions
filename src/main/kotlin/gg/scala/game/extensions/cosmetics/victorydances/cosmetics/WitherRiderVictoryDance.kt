@@ -1,4 +1,4 @@
-package gg.scala.game.extensions.cosmetics.killeffects.cosmetics
+package gg.scala.game.extensions.cosmetics.victorydances.cosmetics
 
 import com.cryptomorin.xseries.XMaterial
 import gg.scala.flavor.service.Configure
@@ -6,24 +6,23 @@ import gg.scala.flavor.service.Service
 import gg.scala.game.extensions.cosmetics.CosmeticRegistry
 import gg.scala.game.extensions.cosmetics.ImmutableResource
 import gg.scala.game.extensions.cosmetics.PurchasableCosmetic
-import gg.scala.game.extensions.cosmetics.killeffects.KillEffectCosmeticCategory
-import gg.scala.game.extensions.cosmetics.killeffects.RideableWinEffect
+import gg.scala.game.extensions.cosmetics.victorydances.RideableVictoryDance
+import gg.scala.game.extensions.cosmetics.victorydances.VictoryDanceCosmeticCategory
 import me.lucko.helper.Schedulers
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.ItemBuilder
-import org.bukkit.Material
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Fireball
 import org.bukkit.entity.Player
 
 /**
- * @author TastyCake
- * @date 8/17/2024
+ * @author Topu
+ * @date 2/26/2025
  */
 @Service
-object WitherWinEffect : PurchasableCosmetic, RideableWinEffect(
-    ImmutableResource("killeffects", "wither"), // TODO: Change to kill effects or someth
-    "Wither",
+object WitherRiderVictoryDance : PurchasableCosmetic, RideableVictoryDance(
+    ImmutableResource("victorydances", "witherrider"),
+    "Wither Rider",
     arrayListOf(
         "${CC.GRAY}Ride a Wither",
     ),
@@ -36,7 +35,7 @@ object WitherWinEffect : PurchasableCosmetic, RideableWinEffect(
     fun configure()
     {
         CosmeticRegistry.register(
-            KillEffectCosmeticCategory,
+            VictoryDanceCosmeticCategory,
             this
         )
     }

@@ -1,7 +1,7 @@
-package gg.scala.game.extensions.cosmetics.killeffects
+package gg.scala.game.extensions.cosmetics.victorydances
 
 import gg.scala.game.extensions.cosmetics.ImmutableResource
-import gg.scala.game.extensions.cosmetics.killeffects.cosmetics.KillEffect
+import gg.scala.game.extensions.cosmetics.victorydances.cosmetics.VictoryDance
 import me.lucko.helper.Events
 import me.lucko.helper.Schedulers
 import me.lucko.helper.terminable.composite.CompositeTerminable
@@ -12,16 +12,16 @@ import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerQuitEvent
 
 /**
- * @author TastyCake
- * @date 8/17/2024
+ * @author Topu
+ * @date 2/26/2025
  */
-open class RideableWinEffect(
+open class RideableVictoryDance(
     resourceI: ImmutableResource,
     nameI: String,
     descriptionI: ArrayList<String>,
     iconI: ItemBuilder,
     var entityType: EntityType
-) : KillEffect
+) : VictoryDance
 {
     override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
     {
