@@ -49,7 +49,7 @@ object NameMCAdminCommands : ScalaCommand()
                     rewardCommand.addAll(list)
 
                     NameMCDataSync.sync(this@with)
-                    player.sendMessage("${CC.GREEN}Saved login MOTD text!")
+                    player.sendMessage("${CC.GREEN}Updated namemc rewards!")
                 }
             }
         ) {
