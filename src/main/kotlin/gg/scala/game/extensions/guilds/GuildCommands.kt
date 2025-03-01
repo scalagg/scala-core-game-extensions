@@ -198,7 +198,7 @@ object GuildCommands : ScalaCommand()
             }
 
             guild.sendMessage(
-                "${CC.GREEN}${player.bukkit().name}: ${CC.WHITE}$message"
+                "${CC.GRAY}[${guild.member(player.uniqueId).role.name[0]}] ${QuickAccess.coloredName(player.bukkit())}${CC.WHITE}: $message"
             )
         }
 
@@ -271,10 +271,28 @@ object GuildCommands : ScalaCommand()
                         )
                     }
 
+                    if (guild.members.size >= 100)
+                    {
+                        throw ConditionFailedException(
+                            "Your guild is full! You cannot invite any more players."
+                        )
+                    }
+
                     if (it.uniqueId == player.uniqueId)
                     {
                         throw ConditionFailedException(
                             "You cannot invite yourself to a guild!"
+                        )
+                    }
+
+                    if (
+                        GuildService
+                            .guildByUser(it.uniqueId)
+                            .join() != null
+                    )
+                    {
+                        throw ConditionFailedException(
+                            "${CC.YELLOW}${it.name}${CC.RED} is already in another guild!"
                         )
                     }
 

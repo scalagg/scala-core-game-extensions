@@ -75,8 +75,8 @@ object RestoreOperations : ScalaCommand()
         val name: String
     )
 
-    val ranks = listOf("VIP", "VIP+", "MVP", "ESTA")
-    val upgrades = mapOf("VIP ➔ VIP+" to "VIP+", "VIP+ ➔ MVP" to "MVP")
+    val ranks = listOf("Ember", "Pyro", "Phoenix", "Dragon")
+    val upgrades = ranks.zipWithNext { from, to -> "$from ➔ $to" to to }.toMap()
     val tags = """
 Verified
 Love
