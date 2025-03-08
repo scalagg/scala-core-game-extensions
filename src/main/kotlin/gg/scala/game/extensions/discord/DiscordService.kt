@@ -15,7 +15,7 @@ object DiscordService
 {
     fun fetchDiscordMembers(): String {
         val guildId = "999774017223409714"
-        val botToken = "MTM0NTg3ODY0NzQzMjU0NDM0Ng.GAtQhg.7iAqqOUFE6Xw5GroLHgd6bdAZaceypSBRM5DaI"
+        val botToken = "MTMzNzk1NzkzNDEzMDI3MDI4MQ.GHlI1Y.CWJlwjvAk-6Oe398qa2e6HmoljzxU6gRJJO8Jw"
         val apiUrl = "https://discord.com/api/v10/guilds/$guildId"
 
         return try {

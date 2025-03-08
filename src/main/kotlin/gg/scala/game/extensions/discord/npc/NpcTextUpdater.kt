@@ -49,7 +49,7 @@ object NpcTextUpdater : Runnable
             replaced.add(
                 message.replace(
                     "%discord-memberCount%",
-                    DiscordService.fetchDiscordMembers()
+                    DiscordService.fetchOnlineDiscordMembers()
                 )
             )
         }
