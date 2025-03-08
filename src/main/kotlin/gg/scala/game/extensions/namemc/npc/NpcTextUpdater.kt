@@ -29,9 +29,13 @@ object NpcTextUpdater : Runnable
     {
         getNpcEntities()
             .forEach {
-                it.hologram.updateLines(
-                    handle(it.getLines())
-                )
+                if (it.condition != "namemc")
+                {
+                    return@forEach
+                }
+                    it.hologram.updateLines(
+                        handle(it.getLines())
+                    )
             }
     }
 

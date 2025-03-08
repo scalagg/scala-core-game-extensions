@@ -14,7 +14,7 @@ var currentBranch: String = grgit.branch.current().name
 
 allprojects {
     group = "gg.scala.game.extensions"
-    version = "1.4.4${
+    version = "1.4.6${
         if (currentBranch == "develop") "-dev" else ""
     }"
 
@@ -29,8 +29,8 @@ dependencies {
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("lib"))
 
-    kapt("gg.scala.commons:bukkit:3.4.5")
-    compileOnly("gg.scala.commons:bukkit:3.4.5")
+    kapt("gg.scala.commons:bukkit:4.0.2")
+    compileOnly("gg.scala.commons:bukkit:4.0.2")
 
     api("com.elmakers.mine.bukkit:EffectLib:10.2")
     implementation("com.squareup.okhttp3:okhttp:3.2.0")
