@@ -5,9 +5,11 @@ import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import gg.scala.game.extensions.CoreGameExtensions
 import gg.scala.lemon.metadata.NetworkMetadataDataSync
+import net.evilblock.cubed.util.CC
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.bukkit.Bukkit
+import org.json.JSONArray
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.LinkedList
@@ -45,34 +47,25 @@ object NameMCService : Runnable
         queue.addLast(request)
     }
 
-    fun fetchLikes(callback: (Int) -> Unit) {
-        CompletableFuture.supplyAsync {
-            getNameMCLikes()
-        }.thenAccept { likes ->
-            Bukkit.getScheduler().runTask(plugin) {
-                callback(likes)
-            }
-        }
-    }
-
-    private fun getNameMCLikes(): Int {
+    fun fetchLikes(): String {
         val serverIp = NetworkMetadataDataSync.cached().domain
+        val apiUrl = "https://api.namemc.com/server/$serverIp/likes"
 
         return try {
-            val url = "https://namemc.com/server/$serverIp"
-            val connection = URL(url).openConnection() as HttpURLConnection
+            val url = URL(apiUrl)
+            val connection = url.openConnection() as HttpURLConnection
             connection.requestMethod = "GET"
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0")
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
+            connection.setRequestProperty("Accept", "application/json")
 
             val response = connection.inputStream.bufferedReader().use { it.readText() }
             connection.disconnect()
 
-            // Regex to extract like count
-            val regex = """<div class="server-likes">\s*([\d,]+)\s*</div>""".toRegex()
-            regex.find(response)?.groups?.get(1)?.value?.replace(",", "")?.toIntOrNull() ?: 0
+            val jsonResponse = JSONArray(response)
+            "${CC.WHITE}${jsonResponse.length()}"
         } catch (e: Exception) {
             e.printStackTrace()
-            0 // Return 0 in case of failure
+            "${CC.WHITE}0"
         }
     }
 

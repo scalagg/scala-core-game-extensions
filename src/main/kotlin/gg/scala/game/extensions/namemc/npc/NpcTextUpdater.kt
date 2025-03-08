@@ -25,26 +25,31 @@ object NpcTextUpdater : Runnable
     fun getNpcEntities(): List<NpcEntity> =
         EntityHandler.getEntitiesByType(NpcEntity::class.java)
 
-    override fun run() {
-        getNpcEntities().forEach { npc ->
-            handle(npc.getLines()) { updatedLines ->
-                npc.hologram.updateLines(updatedLines)
-            }
-        }
-    }
-
-    fun handle(list: List<String>, callback: (MutableList<String>) -> Unit)
+    override fun run()
     {
-        NameMCService.fetchLikes { likes ->
-            val replaced = mutableListOf<String>()
-
-            for (message in list) {
-                replaced.add(
-                    message.replace("%namemc-likes%", likes.toString())
+        getNpcEntities()
+            .forEach {
+                it.hologram.updateLines(
+                    handle(it.getLines())
                 )
             }
+    }
 
-            callback(replaced)
+    fun handle(list: List<String>): MutableList<String>
+    {
+        val replaced =
+            mutableListOf<String>()
+
+        for (message in list)
+        {
+            replaced.add(
+                message.replace(
+                    "%namemc-likes%",
+                    NameMCService.fetchLikes()
+                )
+            )
         }
+
+        return replaced
     }
 }
