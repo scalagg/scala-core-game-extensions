@@ -7,7 +7,11 @@ import gg.scala.game.extensions.CoreGameExtensions
 import gg.scala.lemon.metadata.NetworkMetadataDataSync
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.bukkit.Bukkit
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.LinkedList
+import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -39,6 +43,37 @@ object NameMCService : Runnable
     fun submit(request: NameMCVoteRequest)
     {
         queue.addLast(request)
+    }
+
+    fun fetchLikes(callback: (Int) -> Unit) {
+        CompletableFuture.supplyAsync {
+            getNameMCLikes()
+        }.thenAccept { likes ->
+            Bukkit.getScheduler().runTask(plugin) {
+                callback(likes)
+            }
+        }
+    }
+
+    private fun getNameMCLikes(): Int {
+        val serverIp = NetworkMetadataDataSync.cached().domain
+
+        return try {
+            val url = "https://namemc.com/server/$serverIp"
+            val connection = URL(url).openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0")
+
+            val response = connection.inputStream.bufferedReader().use { it.readText() }
+            connection.disconnect()
+
+            // Regex to extract like count
+            val regex = """<div class="server-likes">\s*([\d,]+)\s*</div>""".toRegex()
+            regex.find(response)?.groups?.get(1)?.value?.replace(",", "")?.toIntOrNull() ?: 0
+        } catch (e: Exception) {
+            e.printStackTrace()
+            0 // Return 0 in case of failure
+        }
     }
 
     override fun run()
