@@ -10,6 +10,7 @@ import gg.scala.commons.command.ScalaCommand
 import gg.scala.commons.issuer.ScalaPlayer
 import gg.scala.lemon.command.annotations.AllowOffline
 import gg.scala.lemon.filter.ChatMessageFilterHandler
+import gg.scala.lemon.handler.PlayerHandler
 import gg.scala.lemon.player.wrapper.AsyncLemonPlayer
 import gg.scala.lemon.util.QuickAccess
 import net.evilblock.cubed.util.CC
@@ -131,6 +132,53 @@ object GuildCommands : ScalaCommand()
                         .thenCompose { _ ->
                             guild.sendMessage(
                                 "${CC.YELLOW}${it.name}${CC.RED} was kicked from the guild by ${CC.YELLOW}${player.bukkit().name}${CC.RED}!"
+                            )
+                        }
+                }
+                .join()
+        }
+
+    @Subcommand("tag")
+    @CommandCompletion("@players")
+    @Description("Set the tag of your guild.")
+    fun onTag(player: ScalaPlayer, guildTag: String) {
+            player.guildIdentity
+                .thenCompose { guild ->
+                    val role = guild
+                        .member(player.uniqueId)
+                        .role
+
+                    if (role == GuildRole.Member)
+                    {
+                        throw ConditionFailedException(
+                            "You do not have permission to set the tag your guild!"
+                        )
+                    }
+
+                    if (guildTag.length > 5)
+                    {
+                        throw ConditionFailedException(
+                            "The guild tag must be less than 5 characters!"
+                        )
+                    }
+
+                    if (ChatMessageFilterHandler.handleMessageFilter(player.bukkit(), guildTag, true)) {
+                        throw ConditionFailedException(
+                            "You cannot have profanity in your guild tag!"
+                        )
+                    }
+
+                    val profile = PlayerHandler
+                        .find(player.uniqueId)
+                        ?: throw ConditionFailedException(
+                            "An error occurred while fetching your profile!"
+                        )
+
+                    guild
+                        .setTag(guildTag)
+                        .thenCompose { _ ->
+                            guild.sendMessage(
+                                "${profile.getColoredName(prefixIncluded = true)}${CC.GREEN} has set the guild tag to ${CC.GOLD}[${guildTag}]${CC.GREEN}!"
                             )
                         }
                 }
@@ -548,14 +596,14 @@ object GuildCommands : ScalaCommand()
 
     private fun ScalaPlayer.describe(guild: Guild)
     {
-        sendMessage("${CC.GREEN}${guild.name}")
+        sendMessage("${CC.GREEN}${guild.name}${if (!guild.tag.isEmpty()) " ${CC.GRAY}[${guild.tag}]" else ""}")
 
         guild.description?.apply {
             sendMessage(this)
             sendMessage("")
         }
 
-        sendMessage(CC.GRAY + "ID: " + CC.WHITE + guild.id)
+//        sendMessage(CC.GRAY + "ID: " + CC.WHITE + guild.id)
         sendMessage(CC.GRAY + "Created: " + CC.WHITE + TimeUtil.formatIntoDateString(guild.createdOn))
         sendMessage(CC.GRAY + "Members: " + CC.GREEN + (guild.members.size + 1) + "/∞")
         sendMessage(CC.GRAY + "Leader: " + CC.PRI + QuickAccess.fetchColoredName(guild.creator.uniqueId) + " " + (if (guild.creator.online().join()) CC.GREEN else CC.RED) + "■")

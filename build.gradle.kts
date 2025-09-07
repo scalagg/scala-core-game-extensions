@@ -14,7 +14,7 @@ var currentBranch: String = grgit.branch.current().name
 
 allprojects {
     group = "gg.scala.game.extensions"
-    version = "1.4.9${
+    version = "1.5.0${
         if (currentBranch == "develop") "-dev" else ""
     }"
 
@@ -46,7 +46,6 @@ dependencies {
     compileOnly("xyz.xenondevs:particle:1.8.4")
 
     compileOnly("gg.scala.spigot:server:1.1.0")
-    compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
 
     compileOnly("gg.scala.lemon:bukkit:1.9.1")
     compileOnly("gg.scala.cloudsync:spigot:1.0.1")

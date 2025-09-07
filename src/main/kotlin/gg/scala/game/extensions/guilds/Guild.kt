@@ -18,7 +18,8 @@ data class Guild(
     override val identifier: UUID =
         UUID.randomUUID(),
     val name: String,
-    val id: Int = gg.scala.game.extensions.guilds.GuildIds.incrementGuid(),
+    val id: Int = GuildIds.incrementGuid(),
+    var tag: String = "",
     var creator: GuildMember,
     var createdOn: Date = Date(),
     var members: MutableMap<UUID, GuildMember> = mutableMapOf(),
@@ -49,6 +50,12 @@ data class Guild(
     fun updateAllInvite() =
         run {
             allInvite = !allInvite
+            save()
+        }
+
+    fun setTag(guildTag: String) =
+        run {
+            tag = guildTag
             save()
         }
 
