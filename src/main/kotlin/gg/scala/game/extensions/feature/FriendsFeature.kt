@@ -31,12 +31,12 @@ object FriendsFeature
     @Configure
     fun configure()
     {
-        DefaultChatChannel.provideAdditionalPrefix { player ->
-            LegacyComponentSerializer.legacySection()
-                .deserialize("${CC.GRAY}[${CC.GREEN}${
-                    CorePlayerProfileService.find(player)?.level ?: 1
-                }$levelSymbol${CC.GRAY}] ")
-        }
+//        DefaultChatChannel.provideAdditionalPrefix { player ->
+//            LegacyComponentSerializer.legacySection()
+//                .deserialize("${CC.GRAY}[${CC.GREEN}${
+//                    CorePlayerProfileService.find(player)?.level ?: 1
+//                }$levelSymbol${CC.GRAY}] ")
+//        }
 
         FriendUIService.initialLorePipe = {
             listOf(

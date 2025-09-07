@@ -185,6 +185,40 @@ object GuildCommands : ScalaCommand()
                 .join()
         }
 
+    @Subcommand("tag remove")
+    @CommandCompletion("@players")
+    @Description("Remove the tag of your guild.")
+    fun onTagRemove(player: ScalaPlayer) {
+        player.guildIdentity
+            .thenCompose { guild ->
+                val role = guild
+                    .member(player.uniqueId)
+                    .role
+
+                if (role == GuildRole.Member)
+                {
+                    throw ConditionFailedException(
+                        "You do not have permission to remove the tag your guild!"
+                    )
+                }
+
+                val profile = PlayerHandler
+                    .find(player.uniqueId)
+                    ?: throw ConditionFailedException(
+                        "An error occurred while fetching your profile!"
+                    )
+
+                guild
+                    .setTag("")
+                    .thenCompose { _ ->
+                        guild.sendMessage(
+                            "${profile.getColoredName(prefixIncluded = true)}${CC.GREEN} has removed the guild tag!"
+                        )
+                    }
+            }
+            .join()
+    }
+
     @Subcommand("transfer")
     @CommandCompletion("@players")
     @Description("Transfer your guild to another player.")
