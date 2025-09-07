@@ -19,7 +19,7 @@ data class Guild(
         UUID.randomUUID(),
     val name: String,
     val id: Int = GuildIds.incrementGuid(),
-    var tag: String = "",
+    var tag: String,
     var creator: GuildMember,
     var createdOn: Date = Date(),
     var members: MutableMap<UUID, GuildMember> = mutableMapOf(),

@@ -209,7 +209,7 @@ object GuildCommands : ScalaCommand()
                     )
 
                 guild
-                    .setTag("")
+                    .setTag(null)
                     .thenCompose { _ ->
                         guild.sendMessage(
                             "${profile.getColoredName(prefixIncluded = true)}${CC.GREEN} has removed the guild tag!"
