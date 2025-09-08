@@ -630,14 +630,14 @@ object GuildCommands : ScalaCommand()
 
     private fun ScalaPlayer.describe(guild: Guild)
     {
-        sendMessage("${CC.GREEN}${guild.name}${if (!guild.tag.isEmpty()) " ${CC.GRAY}[${guild.tag}]" else ""}")
+        sendMessage("${CC.GREEN}${guild.name}${if (guild.tag == null) " ${CC.GRAY}[${guild.tag}]" else ""}")
 
         guild.description?.apply {
             sendMessage(this)
             sendMessage("")
         }
 
-//        sendMessage(CC.GRAY + "ID: " + CC.WHITE + guild.id)
+        sendMessage(CC.GRAY + "ID: " + CC.WHITE + guild.id)
         sendMessage(CC.GRAY + "Created: " + CC.WHITE + TimeUtil.formatIntoDateString(guild.createdOn))
         sendMessage(CC.GRAY + "Members: " + CC.GREEN + (guild.members.size + 1) + "/∞")
         sendMessage(CC.GRAY + "Leader: " + CC.PRI + QuickAccess.fetchColoredName(guild.creator.uniqueId) + " " + (if (guild.creator.online().join()) CC.GREEN else CC.RED) + "■")
