@@ -5,10 +5,6 @@ import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
 import java.util.*
 
-/**
- * @author GrowlyX
- * @since 7/5/2023
- */
 @Service
 object CorePlayerProfileService : ProfileOrchestrator<CorePlayerProfile>()
 {

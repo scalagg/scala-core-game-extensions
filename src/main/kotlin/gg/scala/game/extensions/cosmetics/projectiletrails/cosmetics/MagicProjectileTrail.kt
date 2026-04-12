@@ -12,7 +12,6 @@ import org.bukkit.Material
 import xyz.xenondevs.particle.ParticleEffect
 
 /**
- * @author TastyCake
  * @date 8/13/2024
  */
 object MagicProjectileTrail : ProjectileTrailCosmetic, NewlyReleased

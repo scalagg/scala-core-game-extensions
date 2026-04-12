@@ -7,10 +7,6 @@ import gg.scala.flavor.service.ignore.IgnoreAutoScan
 import gg.scala.tangerine.TangerineSpigotPlugin
 import gg.scala.game.extensions.profile.CorePlayerProfileService
 
-/**
- * @author GrowlyX
- * @since 7/20/2024
- */
 @Service
 @IgnoreAutoScan
 @SoftDependency("Tangerine")

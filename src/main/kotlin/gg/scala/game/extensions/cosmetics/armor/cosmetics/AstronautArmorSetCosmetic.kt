@@ -12,10 +12,6 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.LeatherArmorMeta
 
-/**
- * @author GrowlyX
- * @since 7/14/2023
- */
 @Service
 object AstronautArmorSetCosmetic :
     PurchasableCosmetic,
@@ -51,7 +47,6 @@ object AstronautArmorSetCosmetic :
 
         player.updateInventory()
     }
-
 
     @Configure
     fun configure()

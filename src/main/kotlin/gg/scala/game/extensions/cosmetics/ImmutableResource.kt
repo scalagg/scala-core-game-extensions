@@ -1,12 +1,5 @@
 package gg.scala.game.extensions.cosmetics
 
-/**
- * Defines a policy or resource for a particular, or wildcard (*) resource
- * under a specified domain (called namespaces).
- *
- * @author GrowlyX
- * @since 7/14/2023
- */
 data class ImmutableResource(
     val namespace: String,
     val resource: String

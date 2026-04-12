@@ -12,10 +12,6 @@ import gg.scala.commons.command.ScalaCommand
 import gg.scala.commons.issuer.ScalaPlayer
 import gg.scala.game.extensions.cosmetics.discounts.menus.DiscountManageMenu
 
-/**
- * @author GrowlyX
- * @since 8/11/2024
- */
 @AutoRegister
 @CommandAlias("discounts|discount")
 @CommandPermission("core.command.discounts")

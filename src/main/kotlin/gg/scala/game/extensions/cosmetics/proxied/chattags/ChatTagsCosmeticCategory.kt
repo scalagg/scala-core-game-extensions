@@ -15,10 +15,6 @@ import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 7/15/2023
- */
 @Service
 @IgnoreAutoScan
 @SoftDependency("ScChatTags")

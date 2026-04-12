@@ -23,10 +23,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.entity.ProjectileLaunchEvent
 import xyz.xenondevs.particle.ParticleBuilder
 
-/**
- * @author GrowlyX
- * @since 1/17/2024
- */
 @Service
 object ProjectileTrailCosmeticCategory : CosmeticCategory, NewlyReleased
 {
@@ -36,7 +32,7 @@ object ProjectileTrailCosmeticCategory : CosmeticCategory, NewlyReleased
     @Configure
     fun configure()
     {
-        if (ServerVersion.getVersion().isOlderThanOrEquals(ServerVersion.v1_8_8))
+        if (ServerVersion.getVersion().isOlderThanOrEquals(ServerVersion.v1_8_8) || ServerVersion.getVersion().isNewerThan(ServerVersion.v1_20_R3))
         {
             CosmeticRegistry.registerCategory(this)
 

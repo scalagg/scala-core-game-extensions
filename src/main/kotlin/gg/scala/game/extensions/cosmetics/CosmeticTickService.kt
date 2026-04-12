@@ -7,10 +7,6 @@ import me.lucko.helper.utils.Players
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-/**
- * @author GrowlyX
- * @since 10/26/2023
- */
 @Service
 object CosmeticTickService
 {

@@ -3,10 +3,6 @@ package gg.scala.game.extensions.profile
 import gg.scala.commons.issuer.ScalaPlayer
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 6/12/2023
- */
 const val coinSymbol = "⛀"
 const val levelSymbol = "✪"
 

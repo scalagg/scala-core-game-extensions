@@ -14,10 +14,6 @@ import org.bukkit.entity.Player
 import xyz.xenondevs.particle.ParticleEffect
 import kotlin.random.Random
 
-/**
- * @author Pawful
- * @since 06/01/2025
- */
 @Service
 object ConfettiKillEffect : KillEffect, PurchasableCosmetic
 {
@@ -33,15 +29,15 @@ object ConfettiKillEffect : KillEffect, PurchasableCosmetic
     override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
     {
         val location = target.location.clone().add(0.0, 1.0, 0.0)
+
         
-        // Create confetti explosion with fireworks effect
         ParticleEffect.FIREWORKS_SPARK
             .display(
                 location.clone().add(0.0, 1.0, 0.0),
                 *viewers.toTypedArray()
             )
-            
-        // Add some heart particles for celebration
+
+        
         ParticleEffect.HEART
             .display(
                 location.clone().add(0.0, 1.5, 0.0),

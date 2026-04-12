@@ -15,14 +15,10 @@ import gg.scala.game.extensions.progress.ProgressBar
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Constants
 import net.evilblock.cubed.util.math.Numbers
-import net.evilblock.cubed.util.text.ProgressBarBuilder
+
 import net.evilblock.cubed.util.text.TextUtil
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 
-/**
- * @author GrowlyX
- * @since 7/5/2023
- */
 @Service
 @IgnoreAutoScan
 @SoftDependency("Friends")
@@ -31,12 +27,6 @@ object FriendsFeature
     @Configure
     fun configure()
     {
-//        DefaultChatChannel.provideAdditionalPrefix { player ->
-//            LegacyComponentSerializer.legacySection()
-//                .deserialize("${CC.GRAY}[${CC.GREEN}${
-//                    CorePlayerProfileService.find(player)?.level ?: 1
-//                }$levelSymbol${CC.GRAY}] ")
-//        }
 
         FriendUIService.initialLorePipe = {
             listOf(

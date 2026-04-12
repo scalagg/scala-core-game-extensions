@@ -9,10 +9,6 @@ import gg.scala.game.extensions.cosmetics.ImmutableResource
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Material
 
-/**
- * @author GrowlyX
- * @since 7/14/2023
- */
 @Service
 object ArmorCosmeticCategory : CosmeticCategory
 {

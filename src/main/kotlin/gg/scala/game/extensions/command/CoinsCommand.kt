@@ -13,10 +13,6 @@ import gg.scala.game.extensions.profile.profile
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.math.Numbers
 
-/**
- * @author GrowlyX
- * @since 7/5/2023
- */
 @AutoRegister
 object CoinsCommand : ScalaCommand()
 {

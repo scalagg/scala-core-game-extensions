@@ -6,14 +6,10 @@ import gg.scala.flavor.service.Service
 import gg.scala.game.extensions.cosmetics.CosmeticRegistry
 import gg.scala.game.extensions.cosmetics.ImmutableResource
 import gg.scala.game.extensions.cosmetics.particles.ParticleEffectCategory
+import gg.scala.game.extensions.cosmetics.particles.ParticleResolver
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.ItemBuilder
-import net.evilblock.cubed.util.nms.MinecraftReflection
 
-/**
- * @author Pawful
- * @since 06/01/2025
- */
 @Service
 object FlameAuraParticleEffect : RingParticleEffects
 {
@@ -35,5 +31,5 @@ object FlameAuraParticleEffect : RingParticleEffects
     override val resource = ImmutableResource("particles", "flameaura")
     override val price = 25000f
 
-    override val particleType = MinecraftReflection.getEnumParticle("FLAME")!!
+    override val particleType = ParticleResolver.resolve("FLAME", "FLAME")
 } 

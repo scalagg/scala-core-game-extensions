@@ -8,10 +8,6 @@ import gg.scala.commons.command.ScalaCommand
 import gg.scala.commons.issuer.ScalaPlayer
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 7/14/2023
- */
 @AutoRegister
 @CommandAlias("cosmetic|cosmetics|armor|customizer|chattags|chattag|prefixes|killeffects|killmessages|nametags|tags")
 object CosmeticCommand : ScalaCommand()

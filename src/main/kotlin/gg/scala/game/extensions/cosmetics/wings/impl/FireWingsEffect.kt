@@ -11,10 +11,6 @@ import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Color
 import org.bukkit.Material
 
-/**
- * @author GrowlyX
- * @since 12/24/2023
- */
 @Service
 object FireWingsEffect : WingParticleEffects
 {

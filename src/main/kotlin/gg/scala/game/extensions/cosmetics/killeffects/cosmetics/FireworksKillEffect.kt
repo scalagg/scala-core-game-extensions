@@ -16,10 +16,6 @@ import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 10/28/2023
- */
 @Service
 object FireworksKillEffect : KillEffect, PurchasableCosmetic, NewlyReleased
 {
@@ -36,10 +32,7 @@ object FireworksKillEffect : KillEffect, PurchasableCosmetic, NewlyReleased
     @Configure
     fun configure()
     {
-        /*CosmeticRegistry.register(
-            KillEffectCosmeticCategory,
-            this
-        )*/
+
     }
 
     override val price = 3500F

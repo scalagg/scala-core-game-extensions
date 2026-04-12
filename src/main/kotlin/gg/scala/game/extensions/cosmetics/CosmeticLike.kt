@@ -3,12 +3,6 @@ package gg.scala.game.extensions.cosmetics
 import gg.scala.game.extensions.profile.profile
 import org.bukkit.entity.Player
 
-/**
- * Resembles cosmetic items.
- *
- * @author GrowlyX
- * @since 7/14/2023
- */
 interface CosmeticLike : ResourceHolder, FrontendComponent
 {
     fun unequip(player: Player)

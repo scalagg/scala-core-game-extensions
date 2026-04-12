@@ -19,10 +19,6 @@ import net.evilblock.cubed.util.time.TimeUtil
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 
-/**
- * @author GrowlyX
- * @since 7/13/2023
- */
 @AutoRegister
 object BoosterAddCommand : ScalaCommand()
 {

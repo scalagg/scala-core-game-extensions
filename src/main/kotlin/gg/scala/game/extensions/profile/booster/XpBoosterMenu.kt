@@ -11,10 +11,6 @@ import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 7/13/2023
- */
 class XpBoosterMenu : PaginatedMenu()
 {
     init

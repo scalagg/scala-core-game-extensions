@@ -5,10 +5,6 @@ import gg.scala.game.extensions.profile.profile
 import org.bukkit.entity.Player
 import kotlin.math.roundToInt
 
-/**
- * @author GrowlyX
- * @since 7/14/2023
- */
 interface PurchasableCosmetic : CosmeticLike
 {
     val price: Float

@@ -10,10 +10,6 @@ import gg.scala.game.extensions.cosmetics.wings.WingParticleEffects
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Color
 
-/**
- * @author Pawful
- * @since 06/01/2025
- */
 @Service
 object IceWingsEffect : WingParticleEffects
 {
@@ -28,7 +24,7 @@ object IceWingsEffect : WingParticleEffects
 
     override val primary: Color = Color.AQUA
     override val secondary: Color = Color.WHITE
-    override val tertiary: Color = Color.fromRGB(173, 216, 230) // Light blue
+    override val tertiary: Color = Color.fromRGB(173, 216, 230) 
 
     override val name = "Ice"
     override val description = listOf(

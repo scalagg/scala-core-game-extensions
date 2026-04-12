@@ -6,13 +6,6 @@ import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.bukkit.Tasks
 import org.bukkit.entity.Player
 
-/**
- * Abstract menu class which saves the customized [DynamicCosmeticConfigStore] instance
- * of type T to the player's profile when the menu is closed by the player.
- *
- * @author GrowlyX
- * @since 7/15/2023
- */
 abstract class DynamicCosmeticConfigEditorMenu<T : DynamicCosmeticConfigStore>(
     private val category: CosmeticCategory,
     private val cosmetic: DynamicCosmetic<T>,
@@ -40,7 +33,7 @@ abstract class DynamicCosmeticConfigEditorMenu<T : DynamicCosmeticConfigStore>(
     {
         val buttons = mutableMapOf<Int, Button>()
         populate(player, buttons)
-        // TODO: header item
+
         return buttons
     }
 
@@ -57,7 +50,7 @@ abstract class DynamicCosmeticConfigEditorMenu<T : DynamicCosmeticConfigStore>(
 
             if (cosmetic.equipped(player))
             {
-                // refresh to respect new configuration changes
+
                 cosmetic.unequip(player)
                 cosmetic.equip(player)
             }

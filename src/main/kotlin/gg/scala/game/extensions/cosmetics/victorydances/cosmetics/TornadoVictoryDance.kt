@@ -12,7 +12,6 @@ import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.entity.Player
 
 /**
- * @author Pawful
  * @date 2/26/2025
  */
 @Service
@@ -37,7 +36,7 @@ object TornadoVictoryDance : PurchasableCosmetic, SimpleVictoryDance(
 
     override val price = 18000f
 
-    override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
+    override fun applyTo(viewers: List<Player>, killer: Player, target: Player?)
     {
         viewers.forEach {
             it.playSound(
@@ -47,7 +46,7 @@ object TornadoVictoryDance : PurchasableCosmetic, SimpleVictoryDance(
                 2.0F
             )
         }
-        
+
         killer.sendMessage("${CC.AQUA}🌪️ ${CC.YELLOW}Tornado Victory Dance! ${CC.AQUA}🌪️")
     }
 } 

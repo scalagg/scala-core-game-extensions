@@ -14,10 +14,6 @@ import org.bukkit.Sound
 import org.bukkit.entity.Player
 import xyz.xenondevs.particle.ParticleEffect
 
-/**
- * @author Pawful
- * @since 06/01/2025
- */
 @Service
 object FreezeKillEffect : KillEffect, PurchasableCosmetic
 {
@@ -33,12 +29,12 @@ object FreezeKillEffect : KillEffect, PurchasableCosmetic
     override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
     {
         val location = target.location.clone()
+
         
-        // Create ice block at target location temporarily
         val originalBlock = location.block.type
         location.block.type = Material.ICE
+
         
-        // Create freezing particle effects
         ParticleEffect.CLOUD
             .display(
                 location.clone().add(0.0, 1.0, 0.0),
@@ -54,7 +50,6 @@ object FreezeKillEffect : KillEffect, PurchasableCosmetic
             )
         }
 
-        // Remove ice block after delay and hide player
         Tasks.delayed(40L) {
             location.block.type = originalBlock
             viewers.forEach { viewer ->

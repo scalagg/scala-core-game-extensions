@@ -19,7 +19,6 @@ import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 
 /**
- * @author Topu
  * @date 2/7/2025
  */
 @AutoRegister

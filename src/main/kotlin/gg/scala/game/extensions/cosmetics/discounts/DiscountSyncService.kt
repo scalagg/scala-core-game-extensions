@@ -5,10 +5,6 @@ import gg.scala.commons.persist.datasync.DataSyncSource
 import gg.scala.flavor.service.Service
 import gg.scala.game.extensions.cosmetics.ImmutableResource
 
-/**
- * @author GrowlyX
- * @since 10/16/2022
- */
 @Service
 object DiscountSyncService : DataSyncService<DiscountContainer>()
 {

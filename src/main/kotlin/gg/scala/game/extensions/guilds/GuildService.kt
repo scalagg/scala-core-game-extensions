@@ -14,10 +14,6 @@ import org.bson.conversions.Bson
 import org.bukkit.event.player.PlayerJoinEvent
 import java.util.UUID
 
-/**
- * @author GrowlyX
- * @since 7/13/2023
- */
 @Service
 object GuildService
 {

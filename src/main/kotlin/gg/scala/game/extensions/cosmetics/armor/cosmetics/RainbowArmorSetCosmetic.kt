@@ -12,10 +12,6 @@ import net.evilblock.cubed.util.bukkit.ItemUtils.colorLeatherArmor
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 7/14/2023
- */
 @Service
 object RainbowArmorSetCosmetic :
     PurchasableCosmetic,

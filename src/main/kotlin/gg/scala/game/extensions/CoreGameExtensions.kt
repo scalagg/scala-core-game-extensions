@@ -14,10 +14,6 @@ import net.evilblock.cubed.util.text.TextUtil
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 
-/**
- * @author GrowlyX
- * @since 7/5/2023
- */
 @Plugin(
     name = "CoreGameExtensions",
     version = "%remote%/%branch%/%id%"

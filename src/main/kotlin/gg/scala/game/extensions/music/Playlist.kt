@@ -4,10 +4,6 @@ import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Tasks
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 8/9/2023
- */
 class Playlist(
     private val musicDiscs: List<Music>,
     private var currentIndex: Int = 0,

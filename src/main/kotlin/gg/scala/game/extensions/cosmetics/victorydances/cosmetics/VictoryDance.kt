@@ -9,7 +9,6 @@ import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.entity.Player
 
 /**
- * @author Topu
  * @date 2/26/2025
  */
 interface VictoryDance :
@@ -79,5 +78,5 @@ interface VictoryDance :
 
     override fun buildDefaultConfiguration() = VictoryDanceConfig()
 
-    fun applyTo(viewers: List<Player>, killer: Player, target: Player)
+    fun applyTo(viewers: List<Player>, killer: Player, target: Player?)
 }

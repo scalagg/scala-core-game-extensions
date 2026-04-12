@@ -1,9 +1,5 @@
 package gg.scala.game.extensions.profile.booster
 
-/**
- * @author GrowlyX
- * @since 7/13/2023
- */
 data class XpBooster(
     val multiplier: Float,
     val duration: Long,

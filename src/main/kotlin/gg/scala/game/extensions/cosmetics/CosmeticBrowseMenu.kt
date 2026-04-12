@@ -10,10 +10,6 @@ import net.evilblock.cubed.util.time.TimeUtil
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 7/14/2023
- */
 class CosmeticBrowseMenu(
     private val category: CosmeticCategory
 ) : PaginatedMenu()

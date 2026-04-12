@@ -16,7 +16,6 @@ import org.bukkit.entity.Fireball
 import org.bukkit.entity.Player
 
 /**
- * @author Topu
  * @date 2/26/2025
  */
 @Service
@@ -40,7 +39,7 @@ object DragonRiderVictoryDance : PurchasableCosmetic, RideableVictoryDance(
         )
     }
 
-    override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
+    override fun applyTo(viewers: List<Player>, killer: Player, target: Player?)
     {
         super.applyTo(viewers, killer, target)
 

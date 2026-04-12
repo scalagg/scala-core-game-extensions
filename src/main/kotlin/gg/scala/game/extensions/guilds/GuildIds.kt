@@ -2,10 +2,6 @@ package gg.scala.game.extensions.guilds
 
 import net.evilblock.cubed.ScalaCommonsSpigot
 
-/**
- * @author GrowlyX
- * @since 7/4/2023
- */
 object GuildIds
 {
     private const val diff = 1L

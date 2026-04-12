@@ -7,13 +7,6 @@ import gg.scala.game.extensions.cosmetics.autoregister.AutoRegisterCosmetic
 import gg.scala.game.extensions.cosmetics.proxied.ProxyCosmeticCategory
 import org.bukkit.entity.Player
 
-/**
- * Holds default mappings of cosmetic categories to
- * their respective list of cosmetics.
- *
- * @author GrowlyX
- * @since 7/14/2023
- */
 object CosmeticRegistry
 {
     private val categories = mutableMapOf<String, CosmeticCategory>()

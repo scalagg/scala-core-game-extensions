@@ -16,10 +16,6 @@ import net.evilblock.cubed.ScalaCommonsSpigot
 import net.evilblock.cubed.util.CC
 import org.bukkit.command.CommandSender
 
-/**
- * @author GrowlyX
- * @since 7/12/2023
- */
 @AutoRegister
 @CommandAlias("whitelisttokens|wltoken|wltokens|wlts")
 object WhitelistTokenCommand : ScalaCommand()

@@ -13,7 +13,6 @@ import org.bukkit.Sound
 import org.bukkit.entity.Player
 
 /**
- * @author Pawful
  * @date 2/26/2025
  */
 @Service
@@ -38,7 +37,7 @@ object SnowstormVictoryDance : PurchasableCosmetic, SimpleVictoryDance(
 
     override val price = 14000f
 
-    override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
+    override fun applyTo(viewers: List<Player>, killer: Player, target: Player?)
     {
         viewers.forEach {
             it.playSound(
@@ -48,7 +47,7 @@ object SnowstormVictoryDance : PurchasableCosmetic, SimpleVictoryDance(
                 1.8F
             )
         }
-        
+
         killer.sendMessage("${CC.AQUA}❄️ ${CC.YELLOW}Snowstorm Victory Dance! ${CC.AQUA}❄️")
     }
 } 

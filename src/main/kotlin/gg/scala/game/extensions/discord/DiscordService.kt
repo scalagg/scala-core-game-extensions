@@ -7,7 +7,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 /**
- * @author Topu
  * @date 3/8/2025
  */
 @Service
@@ -30,7 +29,7 @@ object DiscordService
             connection.disconnect()
 
             val jsonResponse = JSONObject(response)
-            val memberCount = jsonResponse.getInt("member_count") // Fetch total members
+            val memberCount = jsonResponse.getInt("member_count") 
 
             "${CC.WHITE}$memberCount"
         } catch (e: Exception) {
@@ -54,7 +53,7 @@ object DiscordService
             connection.disconnect()
 
             val jsonResponse = JSONObject(response)
-            val memberCount = jsonResponse.getInt("presence_count") // Online members
+            val memberCount = jsonResponse.getInt("presence_count") 
 
             "${CC.WHITE}$memberCount"
         } catch (e: Exception) {

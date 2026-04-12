@@ -6,14 +6,10 @@ import gg.scala.flavor.service.Service
 import gg.scala.game.extensions.cosmetics.CosmeticRegistry
 import gg.scala.game.extensions.cosmetics.ImmutableResource
 import gg.scala.game.extensions.cosmetics.particles.ParticleEffectCategory
+import gg.scala.game.extensions.cosmetics.particles.ParticleResolver
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.ItemBuilder
-import net.evilblock.cubed.util.nms.MinecraftReflection
 
-/**
- * @author Pawful
- * @since 06/01/2025
- */
 @Service
 object HeartTrailParticleEffect : RingParticleEffects
 {
@@ -35,5 +31,5 @@ object HeartTrailParticleEffect : RingParticleEffects
     override val resource = ImmutableResource("particles", "hearttrail")
     override val price = 12000f
 
-    override val particleType = MinecraftReflection.getEnumParticle("HEART")!!
+    override val particleType = ParticleResolver.resolve("HEART", "HEART")
 } 

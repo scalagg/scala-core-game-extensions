@@ -8,7 +8,6 @@ import net.evilblock.cubed.entity.EntityHandler
 import net.evilblock.cubed.entity.npc.NpcEntity
 
 /**
- * @author Topu
  * @date 3/8/2025
  */
 @Service

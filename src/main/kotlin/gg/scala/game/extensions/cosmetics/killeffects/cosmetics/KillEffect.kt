@@ -9,10 +9,6 @@ import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 10/28/2023
- */
 interface KillEffect :
     CosmeticLike,
     DynamicCosmetic<KillEffect.KillEffectConfig>,

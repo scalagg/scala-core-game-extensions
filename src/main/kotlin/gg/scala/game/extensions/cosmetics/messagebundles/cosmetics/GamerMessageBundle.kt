@@ -6,10 +6,6 @@ import gg.scala.game.extensions.cosmetics.CosmeticRegistry
 import gg.scala.game.extensions.cosmetics.ImmutableResource
 import gg.scala.game.extensions.cosmetics.messagebundles.KillMessageBundleCosmeticCategory
 
-/**
- * @author GrowlyX
- * @since 10/26/2023
- */
 @Service
 object GamerMessageBundle : MessageBundle
 {

@@ -12,11 +12,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.concurrent.thread
 
-/**
- * @author GrowlyX
- * @since 7/26/2024
- */
-//@AutoRegister
 object RestoreOperations : ScalaCommand()
 {
     data class PaymentData(
@@ -84,53 +79,53 @@ Star
 YinYang
 Lightning
 Dropped
- 
+
 Money
- 
+
 L
- 
+
 Weed
- 
+
 First
- 
+
 69
- 
+
 GG
- 
+
 EZ
- 
+
 Daddy
- 
+
 Vape
- 
+
 Abuse
- 
+
 Rage
- 
+
 Fake
- 
+
 Sexy
- 
+
 AFK
- 
+
 Rekt
- 
+
 Toxic
- 
+
 Savage
- 
+
 IQ200
- 
+
 Scam
- 
+
 Hacker
- 
+
 BestEU
- 
+
 Quicked
- 
+
 Salty
- 
+
 Bat
 Halloween
 DDOS
@@ -152,7 +147,6 @@ Sus
     """
     val actualTags = tags.split("\n")
         .filter { it.isNotBlank() }
-
 
     @CommandAlias("restoreoperations")
     @CommandPermission("op")

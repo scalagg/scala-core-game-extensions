@@ -9,7 +9,6 @@ import gg.scala.game.extensions.cosmetics.ImmutableResource
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 
 /**
- * @author Topu
  * @date 2/26/2025
  */
 @Service

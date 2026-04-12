@@ -14,7 +14,6 @@ import net.evilblock.cubed.util.CC
 import org.bukkit.entity.Player
 
 /**
- * @author Topu
  * @date 2/7/2025
  */
 @AutoRegister

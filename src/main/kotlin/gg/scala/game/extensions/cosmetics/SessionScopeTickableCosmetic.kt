@@ -4,10 +4,6 @@ import gg.scala.game.extensions.profile.profile
 import org.bukkit.entity.Player
 import kotlin.reflect.KClass
 
-/**
- * @author GrowlyX
- * @since 7/17/2023
- */
 interface SessionScopeTickableCosmetic<S : CosmeticTickState> : CosmeticLike
 {
     fun tick(player: Player, state: S)

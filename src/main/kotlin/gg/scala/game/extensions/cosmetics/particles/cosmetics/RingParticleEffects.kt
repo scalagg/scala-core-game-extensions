@@ -9,10 +9,6 @@ import org.bukkit.entity.Player
 import kotlin.math.cos
 import kotlin.math.sin
 
-/**
- * @author GrowlyX
- * @since 10/27/2023
- */
 interface RingParticleEffects :
     CosmeticLike,
     PurchasableCosmetic,

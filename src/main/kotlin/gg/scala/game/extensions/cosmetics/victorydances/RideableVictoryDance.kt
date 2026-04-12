@@ -12,7 +12,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerQuitEvent
 
 /**
- * @author Topu
  * @date 2/26/2025
  */
 open class RideableVictoryDance(
@@ -23,7 +22,7 @@ open class RideableVictoryDance(
     var entityType: EntityType
 ) : VictoryDance
 {
-    override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
+    override fun applyTo(viewers: List<Player>, killer: Player, target: Player?)
     {
         val terminable = CompositeTerminable.create()
         val dragon = killer.location.world.spawnEntity(killer.location, entityType)
@@ -37,7 +36,7 @@ open class RideableVictoryDance(
             .async()
             .runRepeating({_ ->
                 dragon.passenger = killer
-                val direction = killer.location.direction.normalize().multiply(1) // Make faster by multiplying
+                val direction = killer.location.direction.normalize().multiply(1) 
 
                 dragon.velocity = direction
             }, 0L, 1L)
@@ -48,9 +47,12 @@ open class RideableVictoryDance(
             .handler { terminable.closeAndReportException() }
             .bindWith(terminable)
 
-        Tasks.delayed(20L) {
-            viewers.forEach { viewer ->
-                viewer.hidePlayer(target)
+        if (target != null)
+        {
+            Tasks.delayed(20L) {
+                viewers.forEach { viewer ->
+                    viewer.hidePlayer(target)
+                }
             }
         }
     }

@@ -5,10 +5,6 @@ import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 7/14/2023
- */
 class CosmeticCategoryMenu : PaginatedMenu()
 {
     init

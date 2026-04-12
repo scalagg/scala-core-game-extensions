@@ -11,17 +11,13 @@ import gg.scala.game.extensions.cosmetics.particles.cosmetics.SnowRingParticleEf
 import net.evilblock.cubed.util.ServerVersion
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 
-/**
- * @author GrowlyX
- * @since 10/27/2023
- */
 @Service
 object ParticleEffectCategory : CosmeticCategory
 {
     @Configure
     fun configure()
     {
-        if (ServerVersion.getVersion().isOlderThanOrEquals(ServerVersion.v1_8_8))
+        if (ServerVersion.getVersion().isOlderThanOrEquals(ServerVersion.v1_8_8) || ServerVersion.getVersion().isNewerThan(ServerVersion.v1_20_R3))
         {
             CosmeticRegistry.registerCategory(this)
 

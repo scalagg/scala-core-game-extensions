@@ -4,7 +4,6 @@ import de.slikey.effectlib.EffectManager
 import me.lucko.helper.Helper
 
 /**
- * @author Topu
  * @date 2/26/2025
  */
 object Effects

@@ -117,7 +117,6 @@ class CustomTagsMenu(
         return buttons
     }
 
-
     override fun getPrePaginatedTitle(player: Player): String
     {
         return "Viewing your custom tags"

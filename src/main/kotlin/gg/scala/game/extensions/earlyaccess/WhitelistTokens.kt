@@ -4,10 +4,6 @@ import net.evilblock.cubed.ScalaCommonsSpigot
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
 
-/**
- * @author GrowlyX
- * @since 7/12/2023
- */
 object WhitelistTokens
 {
     fun of(user: UUID) = CompletableFuture
@@ -20,7 +16,6 @@ object WhitelistTokens
                 )
                 ?.toIntOrNull()
         }
-
 
     fun isWhitelisted(user: UUID) = CompletableFuture
         .supplyAsync {

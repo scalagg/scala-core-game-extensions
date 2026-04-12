@@ -1,7 +1,6 @@
 package gg.scala.game.extensions.namemc
 
 /**
- * @author Topu
  * @date 2/7/2025
  */
 data class NameMCConfig(

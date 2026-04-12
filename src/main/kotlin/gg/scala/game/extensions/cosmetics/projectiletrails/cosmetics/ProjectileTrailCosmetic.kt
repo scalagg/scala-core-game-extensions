@@ -11,10 +11,6 @@ import xyz.xenondevs.particle.ParticleEffect
 import kotlin.math.cos
 import kotlin.math.sin
 
-/**
- * @author GrowlyX
- * @since 10/27/2023
- */
 interface ProjectileTrailCosmetic :
     CosmeticLike,
     PurchasableCosmetic

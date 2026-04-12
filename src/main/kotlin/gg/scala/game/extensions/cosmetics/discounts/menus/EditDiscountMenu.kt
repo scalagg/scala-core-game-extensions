@@ -16,10 +16,6 @@ import net.evilblock.cubed.util.time.TimeUtil
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 8/11/2024
- */
 class EditDiscountMenu(private val resource: String, private val discount: Discount) : Menu(
     "Editing discount $resource"
 )

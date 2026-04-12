@@ -7,7 +7,6 @@ import gg.scala.flavor.service.Service
 import net.kyori.adventure.key.Key
 
 /**
- * @author Topu
  * @date 2/7/2025
  */
 @Service

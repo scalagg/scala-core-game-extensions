@@ -19,10 +19,6 @@ import net.evilblock.cubed.util.time.TimeUtil
 import net.md_5.bungee.api.chat.ClickEvent
 import java.util.concurrent.CompletableFuture
 
-/**
- * @author GrowlyX
- * @since 7/13/2023
- */
 @HighPriority
 @AutoRegister
 @CommandPermission("guilds.command.guild")
@@ -509,7 +505,6 @@ object GuildCommands : ScalaCommand()
                 )
             }
 
-            // hacky way because save() returns CompletableFuture<Void>
             val guild = Guild(
                 name = name,
                 creator = GuildMember(

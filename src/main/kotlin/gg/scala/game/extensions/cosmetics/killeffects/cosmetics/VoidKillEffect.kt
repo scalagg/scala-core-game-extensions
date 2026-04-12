@@ -13,10 +13,6 @@ import org.bukkit.Sound
 import org.bukkit.entity.Player
 import xyz.xenondevs.particle.ParticleEffect
 
-/**
- * @author Pawful
- * @since 06/01/2025
- */
 @Service
 object VoidKillEffect : KillEffect, PurchasableCosmetic
 {
@@ -32,22 +28,21 @@ object VoidKillEffect : KillEffect, PurchasableCosmetic
     override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
     {
         val location = target.location.clone().add(0.0, 0.5, 0.0)
+
         
-        // Create void portal effect
         ParticleEffect.PORTAL
             .display(
                 location,
                 *viewers.toTypedArray()
             )
-            
-        // Add some smoke for darkness
+
+        
         ParticleEffect.SMOKE_LARGE
             .display(
                 location.clone().add(0.0, 1.0, 0.0),
                 *viewers.toTypedArray()
             )
 
-        // Final void sound
         viewers.forEach {
             it.playSound(
                 it.location,

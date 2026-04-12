@@ -9,10 +9,6 @@ import java.time.Duration
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
-/**
- * @author GrowlyX
- * @since 7/13/2023
- */
 @Model
 data class Guild(
     override val identifier: UUID =

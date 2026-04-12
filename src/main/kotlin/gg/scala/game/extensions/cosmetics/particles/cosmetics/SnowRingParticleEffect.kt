@@ -5,18 +5,13 @@ import gg.scala.flavor.service.Service
 import gg.scala.game.extensions.cosmetics.CosmeticRegistry
 import gg.scala.game.extensions.cosmetics.ImmutableResource
 import gg.scala.game.extensions.cosmetics.particles.ParticleEffectCategory
+import gg.scala.game.extensions.cosmetics.particles.ParticleResolver
 import net.evilblock.cubed.util.bukkit.ItemBuilder
-import net.evilblock.cubed.util.nms.MinecraftReflection
 import org.bukkit.Material
 
-/**
- * @author GrowlyX
- * @since 10/27/2023
- */
 object SnowRingParticleEffect : RingParticleEffects
 {
-    override val particleType = MinecraftReflection
-        .getEnumParticle("SNOW_SHOVEL")!!
+    override val particleType = ParticleResolver.resolve("SNOW_SHOVEL", "SNOWFLAKE")
 
     @Configure
     fun configure()

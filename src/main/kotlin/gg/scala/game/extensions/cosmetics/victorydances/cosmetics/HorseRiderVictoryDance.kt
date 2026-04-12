@@ -13,7 +13,6 @@ import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.entity.EntityType
 
 /**
- * @author Topu
  * @date 2/26/2025
  */
 @Service

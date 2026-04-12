@@ -11,10 +11,6 @@ import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Material
 import xyz.xenondevs.particle.ParticleEffect
 
-/**
- * @author GrowlyX
- * @since 1/17/2024
- */
 object SnowProjectileTrail : ProjectileTrailCosmetic, NewlyReleased
 {
     override val particleEffect = ParticleEffect.SNOWBALL

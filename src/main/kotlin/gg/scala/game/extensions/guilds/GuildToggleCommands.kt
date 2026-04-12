@@ -11,10 +11,6 @@ import gg.scala.commons.issuer.ScalaPlayer
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.visibility.VisibilityHandler
 
-/**
- * @author GrowlyX
- * @since 7/14/2023
- */
 @AutoRegister
 object GuildToggleCommands : ScalaCommand()
 {

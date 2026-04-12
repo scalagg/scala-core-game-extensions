@@ -10,10 +10,6 @@ import gg.scala.game.extensions.cosmetics.wings.WingParticleEffects
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Color
 
-/**
- * @author Pawful
- * @since 06/01/2025
- */
 @Service
 object RainbowWingsEffect : WingParticleEffects
 {
@@ -26,9 +22,9 @@ object RainbowWingsEffect : WingParticleEffects
         )
     }
 
-    override val primary: Color = Color.fromRGB(255, 0, 128) // Hot pink
-    override val secondary: Color = Color.fromRGB(128, 255, 0) // Lime green
-    override val tertiary: Color = Color.fromRGB(0, 128, 255) // Sky blue
+    override val primary: Color = Color.fromRGB(255, 0, 128) 
+    override val secondary: Color = Color.fromRGB(128, 255, 0) 
+    override val tertiary: Color = Color.fromRGB(0, 128, 255) 
 
     override val name = "Rainbow"
     override val description = listOf(

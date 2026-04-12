@@ -7,6 +7,9 @@ import gg.scala.game.extensions.cosmetics.CosmeticTickState
 import gg.scala.game.extensions.cosmetics.DynamicCosmeticConfigStore
 import gg.scala.game.extensions.cosmetics.ImmutableResource
 import gg.scala.game.extensions.customtags.CustomChatTag
+import gg.scala.game.extensions.leveling.LevelSystem
+import gg.scala.game.extensions.leveling.LevelSystemSyncService
+import gg.scala.game.extensions.leveling.PlayerLevelData
 import gg.scala.game.extensions.profile.booster.XpBooster
 import gg.scala.game.extensions.profile.event.LevelUpEvent
 import net.evilblock.cubed.util.CC
@@ -17,10 +20,6 @@ import kotlin.math.log10
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-/**
- * @author GrowlyX
- * @since 7/5/2023
- */
 data class CorePlayerProfile(
     override val identifier: UUID,
 ) : IDataStoreObject
@@ -78,7 +77,152 @@ data class CorePlayerProfile(
 
     val availableXpBoosters = mutableListOf<XpBooster>()
 
+    val gameLevels: MutableMap<String, PlayerLevelData> = mutableMapOf()
+
+    val gameBalances: MutableMap<String, Long> = mutableMapOf()
+
+    @Suppress("UNCHECKED_CAST")
+    private fun mutableGameLevels(): MutableMap<String, PlayerLevelData>
+    {
+        val field = this::class.java.getDeclaredField("gameLevels")
+        field.isAccessible = true
+
+        val current = field.get(this) as? MutableMap<String, PlayerLevelData>
+        if (current != null)
+        {
+            return current
+        }
+
+        val fallback = mutableMapOf<String, PlayerLevelData>()
+        field.set(this, fallback)
+        return fallback
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun mutableGameBalances(): MutableMap<String, Long>
+    {
+        val field = this::class.java.getDeclaredField("gameBalances")
+        field.isAccessible = true
+
+        val current = field.get(this) as? MutableMap<String, Long>
+        if (current != null)
+        {
+            return current
+        }
+
+        val fallback = mutableMapOf<String, Long>()
+        field.set(this, fallback)
+        return fallback
+    }
+
+    fun getGameLevelData(levelSystemId: String): PlayerLevelData
+    {
+        val levels = mutableGameLevels()
+
+        val levelData = levels.getOrPut(levelSystemId) {
+            val system = LevelSystemSyncService.byId(levelSystemId)
+            PlayerLevelData(
+                levelSystemId = levelSystemId,
+                level = system?.startingLevel ?: 0,
+                experience = system?.startingXp ?: 0L
+            )
+        }
+
+        LevelSystemSyncService.byId(levelSystemId)
+            ?.let(levelData::crossCheckLevel)
+
+        return levelData
+    }
+
+    fun addGameExperience(
+        levelSystemId: String,
+        amount: Long,
+        feedback: (String) -> Unit = {}
+    ): CompletableFuture<Void>
+    {
+        val system = LevelSystemSyncService.byId(levelSystemId) ?: return CompletableFuture.completedFuture(null)
+        val levelData = getGameLevelData(levelSystemId)
+        val previousLevel = levelData.level
+
+        levelData.addExperience(amount, system)
+
+        feedback("${CC.GREEN}+$amount ${system.prettyName} experience")
+
+        if (system.eventsEnabled && levelData.level > previousLevel)
+        {
+            LevelUpEvent(
+                this,
+                previousLevel,
+                levelData.level,
+                levelSystemId
+            ).callEvent()
+        }
+
+        return save()
+    }
+
+    fun getFormattedGameLevel(levelSystemId: String): String
+    {
+        val system = LevelSystemSyncService.byId(levelSystemId) ?: return "???"
+        val levelData = getGameLevelData(levelSystemId)
+        levelData.crossCheckLevel(system)
+        return system.formatLevel(levelData.level)
+    }
+
+    fun getGameLevelInfo(levelSystemId: String): LevelInfo
+    {
+        val system = LevelSystemSyncService.byId(levelSystemId) ?: return LevelInfo("???", 0.0, 0.0)
+        val levelData = getGameLevelData(levelSystemId)
+
+        levelData.crossCheckLevel(system)
+
+        val rawRequired = levelData.getXpForNextLevel(system)
+        val rawCurrent = levelData.getXpInCurrentLevel(system)
+
+        val normalizedRequired = if (rawRequired <= 0L) 1L else rawRequired
+        val normalizedCurrent = if (rawRequired <= 0L)
+            normalizedRequired
+        else
+            rawCurrent.coerceIn(0L, normalizedRequired)
+
+        return LevelInfo(
+            formattedDisplay = system.formatLevel(levelData.level),
+            currentXP = normalizedCurrent.toDouble(),
+            xpRequiredForNext = normalizedRequired.toDouble()
+        )
+    }
+
     fun getCustomTagTokens(): Int = customTagTokens ?: 0
+
+    fun getGameBalance(currencyId: String): Long
+    {
+        return mutableGameBalances()[currencyId] ?: 0L
+    }
+
+    fun addGameBalance(
+        currencyId: String,
+        amount: Long,
+        feedback: (String) -> Unit = {}
+    ): CompletableFuture<Void>
+    {
+        if (amount <= 0) return CompletableFuture.completedFuture(null)
+
+        val balances = mutableGameBalances()
+        balances[currencyId] = (balances[currencyId] ?: 0L) + amount
+
+        feedback("${CC.GOLD}+$amount ${currencyId.replace("_", " ")}")
+
+        return save()
+    }
+
+    fun removeGameBalance(currencyId: String, amount: Long): Boolean
+    {
+        val balances = mutableGameBalances()
+        val current = balances[currencyId] ?: 0L
+        if (current < amount) return false
+        balances[currencyId] = current - amount
+        return true
+    }
 
     fun activateBooster(booster: XpBooster)
     {
@@ -109,9 +253,11 @@ data class CorePlayerProfile(
         assert(coins > 0)
         this.coins += coins
 
-        feedback("${CC.GOLD}+$coins coins${
-            if (reason.isNotBlank()) " ($reason)" else ""
-        }")
+        feedback(
+            "${CC.GOLD}+$coins coins${
+                if (reason.isNotBlank()) " ($reason)" else ""
+            }"
+        )
 
         val gainedExperience = 10 * if (coins <= 300)
         {
@@ -124,14 +270,17 @@ data class CorePlayerProfile(
             (650 * log10(coins.toDouble())).toInt()
         }
 
-        val scaledExperience = (gainedExperience * (if (activeXpBooster != null) activeXpBooster!!.multiplier else 1.0f)).roundToInt()
+        val scaledExperience =
+            (gainedExperience * (if (activeXpBooster != null) activeXpBooster!!.multiplier else 1.0f)).roundToInt()
         addExperience(scaledExperience)
 
-        feedback("${CC.GREEN}+$scaledExperience experience${
-            if (reason.isNotBlank()) " ($reason${
-                if (activeXpBooster != null) ", ${"%.2f".format(activeXpBooster!!.multiplier)}x xp booster" else ""
-            })" else ""
-        }")
+        feedback(
+            "${CC.GREEN}+$scaledExperience experience${
+                if (reason.isNotBlank()) " ($reason${
+                    if (activeXpBooster != null) ", ${"%.2f".format(activeXpBooster!!.multiplier)}x xp booster" else ""
+                })" else ""
+            }"
+        )
 
         return save()
     }
@@ -140,6 +289,50 @@ data class CorePlayerProfile(
     {
         assert(experience > 0)
         this.experience += experience
+        return save()
+    }
+
+    @JvmOverloads
+    fun addXPRewardedBalance(
+        amount: Long,
+        currency: String = "coins",
+        reason: String = "",
+        feedback: (String) -> Unit = {}
+    ): CompletableFuture<Void>
+    {
+        if (amount <= 0) return CompletableFuture.completedFuture(null)
+
+        this.coins += amount.toInt()
+
+        feedback(
+            "${CC.GOLD}+$amount $currency${
+                if (reason.isNotBlank()) " ($reason)" else ""
+            }"
+        )
+
+        val gainedExperience = 10 * if (amount <= 300)
+        {
+            (150 * log10(amount.toDouble())).toInt()
+        } else if (amount < 1000)
+        {
+            (300 * log10(amount.toDouble())).toInt()
+        } else
+        {
+            (650 * log10(amount.toDouble())).toInt()
+        }
+
+        val scaledExperience =
+            (gainedExperience * (if (activeXpBooster != null) activeXpBooster!!.multiplier else 1.0f)).roundToInt()
+        addExperience(scaledExperience)
+
+        feedback(
+            "${CC.GREEN}+$scaledExperience experience${
+                if (reason.isNotBlank()) " ($reason${
+                    if (activeXpBooster != null) ", ${"%.2f".format(activeXpBooster!!.multiplier)}x xp booster" else ""
+                })" else ""
+            }"
+        )
+
         return save()
     }
 
@@ -181,4 +374,22 @@ data class CorePlayerProfile(
 
     private fun calculateExactLevelBasedOnXp() =
         ((1 / 50.0) * (sqrt((2.0 * experience) + 30625.0) - 175.0)) + 1.0
+
+    fun getLevelInfo(game: String): LevelInfo
+    {
+        if (LevelSystemSyncService.byId(game) != null)
+        {
+            return getGameLevelInfo(game)
+        }
+
+        val xpForNext = getXpRequiredToAdvanceToLevel(level + 1)
+        val xpForCurrent = if (level > 1) getXpRequiredToAdvanceToLevel(level) else 0L
+        val currentXP = experience - xpForCurrent
+
+        return LevelInfo(
+            formattedDisplay = "$level",
+            currentXP = currentXP.toDouble(),
+            xpRequiredForNext = (xpForNext - xpForCurrent).toDouble()
+        )
+    }
 }

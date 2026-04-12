@@ -13,10 +13,6 @@ import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 12/22/2023
- */
 @Service
 object BloodKillEffect : KillEffect, PurchasableCosmetic
 {

@@ -3,10 +3,6 @@ package gg.scala.game.extensions.cosmetics
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 
-/**
- * @author GrowlyX
- * @since 7/14/2023
- */
 interface FrontendComponent
 {
     val name: String

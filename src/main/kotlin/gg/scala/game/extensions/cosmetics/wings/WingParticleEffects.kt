@@ -3,17 +3,13 @@ package gg.scala.game.extensions.cosmetics.wings
 import gg.scala.game.extensions.cosmetics.CosmeticLike
 import gg.scala.game.extensions.cosmetics.PurchasableCosmetic
 import gg.scala.game.extensions.cosmetics.SessionScopeTickableCosmetic
-import net.evilblock.cubed.util.nms.MinecraftReflection
+import gg.scala.game.extensions.cosmetics.particles.ParticleResolver
 import net.evilblock.cubed.util.nms.particle.ParticleMeta
 import net.evilblock.cubed.util.nms.particle.ParticleUtil
 import org.bukkit.Color
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
-/**
- * @author GrowlyX
- * @since 10/27/2023
- */
 interface WingParticleEffects :
     CosmeticLike,
     PurchasableCosmetic,
@@ -87,7 +83,7 @@ interface WingParticleEffects :
         return arrayListOf<ParticleMeta>().also { particles ->
             var loc2 = loc2
 
-            val particle = MinecraftReflection.getEnumParticle("REDSTONE")!!
+            val particle = ParticleResolver.resolve("REDSTONE", "DUST")
 
             particles.add(
                 ParticleMeta(

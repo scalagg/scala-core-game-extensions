@@ -10,10 +10,6 @@ import gg.scala.game.extensions.cosmetics.wings.WingParticleEffects
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Color
 
-/**
- * @author Pawful
- * @since 06/01/2025
- */
 @Service
 object AngelWingsEffect : WingParticleEffects
 {
@@ -27,8 +23,8 @@ object AngelWingsEffect : WingParticleEffects
     }
 
     override val primary: Color = Color.WHITE
-    override val secondary: Color = Color.fromRGB(255, 215, 0) // Gold
-    override val tertiary: Color = Color.fromRGB(255, 255, 224) // Light yellow
+    override val secondary: Color = Color.fromRGB(255, 215, 0) 
+    override val tertiary: Color = Color.fromRGB(255, 255, 224) 
 
     override val name = "Angel"
     override val description = listOf(

@@ -7,10 +7,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventPriority
 import org.bukkit.event.player.PlayerJoinEvent
 
-/**
- * @author GrowlyX
- * @since 7/14/2023
- */
 @Service
 object EquipOnLoginCosmeticService
 {

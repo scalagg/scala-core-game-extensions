@@ -6,11 +6,6 @@ import gg.scala.game.extensions.cosmetics.CosmeticRegistry
 import gg.scala.game.extensions.cosmetics.ImmutableResource
 import gg.scala.game.extensions.cosmetics.messagebundles.KillMessageBundleCosmeticCategory
 
-
-/**
- * @author OhEmilyy
- * @since 8/12/2024
- */
 @Service
 object PirateMessageBundle : MessageBundle
 {

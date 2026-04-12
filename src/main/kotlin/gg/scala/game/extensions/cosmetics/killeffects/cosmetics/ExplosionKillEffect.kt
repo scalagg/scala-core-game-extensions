@@ -15,10 +15,6 @@ import org.bukkit.Sound
 import org.bukkit.entity.Player
 import xyz.xenondevs.particle.ParticleEffect
 
-/**
- * @author GrowlyX
- * @since 12/22/2023
- */
 @Service
 object ExplosionKillEffect : KillEffect, PurchasableCosmetic
 {

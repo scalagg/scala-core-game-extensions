@@ -18,10 +18,6 @@ import net.evilblock.cubed.util.CC
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 
-/**
- * @author GrowlyX
- * @since 7/13/2023
- */
 @AutoRegister
 object CosmeticAddCommand : ScalaCommand()
 {

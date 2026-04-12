@@ -3,10 +3,6 @@ package gg.scala.game.extensions.cosmetics.armor.cosmetics.rainbow
 import gg.scala.game.extensions.cosmetics.CosmeticTickState
 import org.bukkit.Color
 
-/**
- * @author GrowlyX
- * @since 10/26/2023
- */
 data class RainbowData(
     var colorHsl: Double = 0.0,
     var color: Color = hue2rgb(0.0),

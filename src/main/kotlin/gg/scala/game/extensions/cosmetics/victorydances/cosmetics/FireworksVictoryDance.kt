@@ -17,7 +17,6 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.meta.FireworkMeta
 
 /**
- * @author Pawful
  * @date 2/26/2025
  */
 @Service
@@ -42,9 +41,9 @@ object FireworksVictoryDance : PurchasableCosmetic, SimpleVictoryDance(
 
     override val price = 15000f
 
-    override fun applyTo(viewers: List<Player>, killer: Player, target: Player)
+    override fun applyTo(viewers: List<Player>, killer: Player, target: Player?)
     {
-        // Simple fireworks effect using particles
+
         viewers.forEach {
             it.playSound(
                 it.location,
@@ -53,7 +52,7 @@ object FireworksVictoryDance : PurchasableCosmetic, SimpleVictoryDance(
                 1.0F
             )
         }
-        
+
         killer.sendMessage("${CC.GOLD}🎆 ${CC.YELLOW}Fireworks Victory Dance! ${CC.GOLD}🎆")
     }
 } 
