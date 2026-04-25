@@ -14,7 +14,7 @@ var currentBranch: String = grgit.branch.current().name
 
 allprojects {
     group = "gg.scala.game.extensions"
-    version = "1.5.3${
+    version = "1.5.5${
         if (currentBranch == "develop") "-dev" else ""
     }"
 
@@ -33,13 +33,13 @@ dependencies {
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("lib"))
 
-    kapt("gg.scala.commons:bukkit:4.0.7")
-    compileOnly("gg.scala.commons:bukkit:4.0.7")
+    kapt("gg.scala.commons:bukkit:4.1.0")
+    compileOnly("gg.scala.commons:bukkit:4.1.0")
 
-    kapt("gg.scala.commons:core:4.0.7")
-    compileOnly("gg.scala.commons:core:4.0.7")
-    compileOnly("gg.scala.commons:serversync:4.0.7")
-    compileOnly("gg.scala.commons:serializers:4.0.7")
+    kapt("gg.scala.commons:core:4.1.0")
+    compileOnly("gg.scala.commons:core:4.1.0")
+    compileOnly("gg.scala.commons:serversync:4.1.0")
+    compileOnly("gg.scala.commons:serializers:4.1.0")
 
     kapt("me.lucko:helper:5.6.14")
     kapt("co.aikar:acf-paper:0.5.1-SNAPSHOT")
